@@ -1,0 +1,26 @@
+{
+  "name": "ceu",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Yusuf",
+  "license": "BSD-3-Clause",
+  "dependencies": {
+    "hapi": "^13.5.3",
+    "hapi-auth-cookie": "6.x.x",
+    "good": "6.x.x",
+    "good-console": "5.x.x",
+    "xlsx": "^0.8.5",
+    "mysql": "^2.10.2",
+    "inert": "3.x.x",
+    "vision": "4.x.x",
+    "handlebars": "4.0.x",
+    "uuid": "^3.0.1",
+    "wreck": "7.x.x",
+    "hapi-auth-bearer-token": "4.x.x",
+    "nimble": "0.0.2"
+  }
+}
