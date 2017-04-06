@@ -13,5 +13,10 @@ module.exports = [
       method: 'GET',
       path: '/{param*}',
       handler: Assets.servePublicDirectory
+  },
+  {
+    method: 'GET',
+    path: '/test_component',
+    handler: Pages.testComponent
   }
 ];

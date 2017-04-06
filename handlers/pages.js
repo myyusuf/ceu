@@ -17,6 +17,12 @@ exports.home = function (request, reply) {
 
 };
 
+exports.testComponent = function (request, reply) {
+
+  reply.view('test_component', {});
+
+};
+
 // exports.login = function (request, reply) {
 //     reply.view('login', {}, {layout: 'login_layout'});
 // };
