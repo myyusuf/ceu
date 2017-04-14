@@ -1,0 +1,23 @@
+.layout {
+  width: 100%;
+  height: 100%;
+}
+
+.sider {
+  width: 400px;
+}
+
+.side-menu {
+  height: 100%;
+}
+
+.content {
+  height: 500px;
+}
+
+.header {
+  background-color: #1976D2;
+}
+
+.student-card {
+}
