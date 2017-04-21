@@ -33,7 +33,7 @@
   font-weight: bold;
   margin-left: -5px;
   font-size: 1.9em;
-  font-family: Roboto, "Helvetica Neue";
+  font-family: "Helvetica Neue";
   color: #fff;
 }
 
@@ -58,4 +58,34 @@
 
 .login-info-role {
   font-weight: bold;
+}
+
+.workspace-title {
+  padding: 20px;
+  padding-top: 15px;
+  border: 1px solid silver;
+  border-top: 0;
+  border-right: 0;
+  background-color: #fff;
+}
+
+.workspace-title .title {
+  font-size: 1.9em;
+  font-family: "Helvetica Neue";
+}
+
+.dashboard {
+  padding: 20px;
+}
+
+.dashboard-simple-info .description {
+  font-size: 30px;
+  font-family: "Helvetica Neue";
+  /*font-weight: bold;*/
+}
+
+.dashboard-simple-info .title {
+  color: gray;
+  font-family: "Helvetica Neue";
+  /*font-weight: bold;*/
 }

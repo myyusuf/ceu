@@ -25242,6 +25242,14 @@
 
 	var _SideMenu2 = _interopRequireDefault(_SideMenu);
 
+	var _WorkspaceTitle = __webpack_require__(319);
+
+	var _WorkspaceTitle2 = _interopRequireDefault(_WorkspaceTitle);
+
+	var _Dashboard = __webpack_require__(323);
+
+	var _Dashboard2 = _interopRequireDefault(_Dashboard);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var Header = _layout2.default.Header,
@@ -25277,7 +25285,12 @@
 	        _react2.default.createElement(_LoginInfo2.default, { name: 'Yusuf', roleName: 'Administrator' }),
 	        _react2.default.createElement(_SideMenu2.default, null)
 	      ),
-	      _react2.default.createElement(Content, null)
+	      _react2.default.createElement(
+	        Content,
+	        null,
+	        _react2.default.createElement(_WorkspaceTitle2.default, null),
+	        _react2.default.createElement(_Dashboard2.default, null)
+	      )
 	    ),
 	    _react2.default.createElement(Footer, null)
 	  );
@@ -29603,6 +29616,1567 @@
 	module.exports = warning;
 
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+
+/***/ },
+/* 319 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _row = __webpack_require__(282);
+
+	var _row2 = _interopRequireDefault(_row);
+
+	var _col = __webpack_require__(286);
+
+	var _col2 = _interopRequireDefault(_col);
+
+	var _icon = __webpack_require__(280);
+
+	var _icon2 = _interopRequireDefault(_icon);
+
+	var _breadcrumb = __webpack_require__(320);
+
+	var _breadcrumb2 = _interopRequireDefault(_breadcrumb);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var WorkspaceTitle = function WorkspaceTitle() {
+	  return _react2.default.createElement(
+	    'div',
+	    { className: 'workspace-title' },
+	    _react2.default.createElement(
+	      _row2.default,
+	      null,
+	      _react2.default.createElement(
+	        _col2.default,
+	        { span: 24 },
+	        _react2.default.createElement(
+	          'span',
+	          { className: 'title' },
+	          'Dashboard'
+	        )
+	      )
+	    ),
+	    _react2.default.createElement(
+	      _row2.default,
+	      null,
+	      _react2.default.createElement(
+	        _col2.default,
+	        { span: 24 },
+	        _react2.default.createElement(
+	          _breadcrumb2.default,
+	          { separator: '>' },
+	          _react2.default.createElement(
+	            _breadcrumb2.default.Item,
+	            null,
+	            'Application'
+	          ),
+	          _react2.default.createElement(
+	            _breadcrumb2.default.Item,
+	            null,
+	            'Dashboard'
+	          )
+	        )
+	      )
+	    )
+	  );
+	};
+
+	exports.default = WorkspaceTitle;
+
+/***/ },
+/* 320 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _Breadcrumb = __webpack_require__(321);
+
+	var _Breadcrumb2 = _interopRequireDefault(_Breadcrumb);
+
+	var _BreadcrumbItem = __webpack_require__(322);
+
+	var _BreadcrumbItem2 = _interopRequireDefault(_BreadcrumbItem);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+	_Breadcrumb2["default"].Item = _BreadcrumbItem2["default"];
+	exports["default"] = _Breadcrumb2["default"];
+	module.exports = exports['default'];
+
+/***/ },
+/* 321 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports["default"] = undefined;
+
+	var _classCallCheck2 = __webpack_require__(225);
+
+	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+	var _possibleConstructorReturn2 = __webpack_require__(226);
+
+	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+	var _inherits2 = __webpack_require__(262);
+
+	var _inherits3 = _interopRequireDefault(_inherits2);
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _warning = __webpack_require__(317);
+
+	var _warning2 = _interopRequireDefault(_warning);
+
+	var _BreadcrumbItem = __webpack_require__(322);
+
+	var _BreadcrumbItem2 = _interopRequireDefault(_BreadcrumbItem);
+
+	var _classnames = __webpack_require__(223);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+	;
+	function getBreadcrumbName(route, params) {
+	    if (!route.breadcrumbName) {
+	        return null;
+	    }
+	    var paramsKeys = Object.keys(params).join('|');
+	    var name = route.breadcrumbName.replace(new RegExp(':(' + paramsKeys + ')', 'g'), function (replacement, key) {
+	        return params[key] || replacement;
+	    });
+	    return name;
+	}
+	function defaultItemRender(route, params, routes, paths) {
+	    var isLastItem = routes.indexOf(route) === routes.length - 1;
+	    var name = getBreadcrumbName(route, params);
+	    return isLastItem ? _react2["default"].createElement(
+	        'span',
+	        null,
+	        name
+	    ) : _react2["default"].createElement(
+	        'a',
+	        { href: '#/' + paths.join('/') },
+	        name
+	    );
+	}
+
+	var Breadcrumb = function (_React$Component) {
+	    (0, _inherits3["default"])(Breadcrumb, _React$Component);
+
+	    function Breadcrumb() {
+	        (0, _classCallCheck3["default"])(this, Breadcrumb);
+	        return (0, _possibleConstructorReturn3["default"])(this, _React$Component.apply(this, arguments));
+	    }
+
+	    Breadcrumb.prototype.componentDidMount = function componentDidMount() {
+	        var props = this.props;
+	        (0, _warning2["default"])(!('linkRender' in props || 'nameRender' in props), '`linkRender` and `nameRender` are removed, please use `itemRender` instead, ' + 'see: http://u.ant.design/item-render.');
+	    };
+
+	    Breadcrumb.prototype.render = function render() {
+	        var crumbs = void 0;
+	        var _props = this.props,
+	            separator = _props.separator,
+	            prefixCls = _props.prefixCls,
+	            style = _props.style,
+	            className = _props.className,
+	            routes = _props.routes,
+	            _props$params = _props.params,
+	            params = _props$params === undefined ? {} : _props$params,
+	            children = _props.children,
+	            _props$itemRender = _props.itemRender,
+	            itemRender = _props$itemRender === undefined ? defaultItemRender : _props$itemRender;
+
+	        if (routes && routes.length > 0) {
+	            var paths = [];
+	            crumbs = routes.map(function (route) {
+	                route.path = route.path || '';
+	                var path = route.path.replace(/^\//, '');
+	                Object.keys(params).forEach(function (key) {
+	                    path = path.replace(':' + key, params[key]);
+	                });
+	                if (path) {
+	                    paths.push(path);
+	                }
+	                return _react2["default"].createElement(
+	                    _BreadcrumbItem2["default"],
+	                    { separator: separator, key: route.breadcrumbName || path },
+	                    itemRender(route, params, routes, paths)
+	                );
+	            });
+	        } else if (children) {
+	            crumbs = _react2["default"].Children.map(children, function (element, index) {
+	                if (!element) {
+	                    return element;
+	                }
+	                (0, _warning2["default"])(element.type && element.type.__ANT_BREADCRUMB_ITEM, 'Breadcrumb only accepts Breadcrumb.Item as it\'s children');
+	                return (0, _react.cloneElement)(element, {
+	                    separator: separator,
+	                    key: index
+	                });
+	            });
+	        }
+	        return _react2["default"].createElement(
+	            'div',
+	            { className: (0, _classnames2["default"])(className, prefixCls), style: style },
+	            crumbs
+	        );
+	    };
+
+	    return Breadcrumb;
+	}(_react2["default"].Component);
+
+	exports["default"] = Breadcrumb;
+
+	Breadcrumb.defaultProps = {
+	    prefixCls: 'ant-breadcrumb',
+	    separator: '/'
+	};
+	Breadcrumb.propTypes = {
+	    prefixCls: _react2["default"].PropTypes.string,
+	    separator: _react2["default"].PropTypes.node,
+	    routes: _react2["default"].PropTypes.array,
+	    params: _react2["default"].PropTypes.object,
+	    linkRender: _react2["default"].PropTypes.func,
+	    nameRender: _react2["default"].PropTypes.func
+	};
+	module.exports = exports['default'];
+
+/***/ },
+/* 322 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports["default"] = undefined;
+
+	var _extends2 = __webpack_require__(181);
+
+	var _extends3 = _interopRequireDefault(_extends2);
+
+	var _classCallCheck2 = __webpack_require__(225);
+
+	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+	var _possibleConstructorReturn2 = __webpack_require__(226);
+
+	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+	var _inherits2 = __webpack_require__(262);
+
+	var _inherits3 = _interopRequireDefault(_inherits2);
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+	var __rest = undefined && undefined.__rest || function (s, e) {
+	    var t = {};
+	    for (var p in s) {
+	        if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
+	    }if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+	        if (e.indexOf(p[i]) < 0) t[p[i]] = s[p[i]];
+	    }return t;
+	};
+
+	var BreadcrumbItem = function (_React$Component) {
+	    (0, _inherits3["default"])(BreadcrumbItem, _React$Component);
+
+	    function BreadcrumbItem() {
+	        (0, _classCallCheck3["default"])(this, BreadcrumbItem);
+	        return (0, _possibleConstructorReturn3["default"])(this, _React$Component.apply(this, arguments));
+	    }
+
+	    BreadcrumbItem.prototype.render = function render() {
+	        var _a = this.props,
+	            prefixCls = _a.prefixCls,
+	            separator = _a.separator,
+	            children = _a.children,
+	            restProps = __rest(_a, ["prefixCls", "separator", "children"]);
+	        var link = void 0;
+	        if ('href' in this.props) {
+	            link = _react2["default"].createElement(
+	                'a',
+	                (0, _extends3["default"])({ className: prefixCls + '-link' }, restProps),
+	                children
+	            );
+	        } else {
+	            link = _react2["default"].createElement(
+	                'span',
+	                (0, _extends3["default"])({ className: prefixCls + '-link' }, restProps),
+	                children
+	            );
+	        }
+	        if (children) {
+	            return _react2["default"].createElement(
+	                'span',
+	                null,
+	                link,
+	                _react2["default"].createElement(
+	                    'span',
+	                    { className: prefixCls + '-separator' },
+	                    separator
+	                )
+	            );
+	        }
+	        return null;
+	    };
+
+	    return BreadcrumbItem;
+	}(_react2["default"].Component);
+
+	exports["default"] = BreadcrumbItem;
+
+	BreadcrumbItem.__ANT_BREADCRUMB_ITEM = true;
+	BreadcrumbItem.defaultProps = {
+	    prefixCls: 'ant-breadcrumb',
+	    separator: '/'
+	};
+	BreadcrumbItem.propTypes = {
+	    prefixCls: _react.PropTypes.string,
+	    separator: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.element]),
+	    href: _react.PropTypes.string
+	};
+	module.exports = exports['default'];
+
+/***/ },
+/* 323 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _row = __webpack_require__(282);
+
+	var _row2 = _interopRequireDefault(_row);
+
+	var _col = __webpack_require__(286);
+
+	var _col2 = _interopRequireDefault(_col);
+
+	var _DashboardSimpleInfo = __webpack_require__(324);
+
+	var _DashboardSimpleInfo2 = _interopRequireDefault(_DashboardSimpleInfo);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Dashboard = function Dashboard() {
+	  return _react2.default.createElement(
+	    'div',
+	    { className: 'dashboard' },
+	    _react2.default.createElement(
+	      _row2.default,
+	      { gutter: 20 },
+	      _react2.default.createElement(
+	        _col2.default,
+	        { span: 6 },
+	        _react2.default.createElement(_DashboardSimpleInfo2.default, null)
+	      ),
+	      _react2.default.createElement(
+	        _col2.default,
+	        { span: 6 },
+	        _react2.default.createElement(_DashboardSimpleInfo2.default, null)
+	      ),
+	      _react2.default.createElement(
+	        _col2.default,
+	        { span: 6 },
+	        _react2.default.createElement(_DashboardSimpleInfo2.default, null)
+	      ),
+	      _react2.default.createElement(
+	        _col2.default,
+	        { span: 6 },
+	        _react2.default.createElement(_DashboardSimpleInfo2.default, null)
+	      )
+	    )
+	  );
+	};
+
+	exports.default = Dashboard;
+
+/***/ },
+/* 324 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _card = __webpack_require__(180);
+
+	var _card2 = _interopRequireDefault(_card);
+
+	var _row = __webpack_require__(282);
+
+	var _row2 = _interopRequireDefault(_row);
+
+	var _col = __webpack_require__(286);
+
+	var _col2 = _interopRequireDefault(_col);
+
+	var _reactSparklines = __webpack_require__(325);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var DashboardSimpleInfo = function DashboardSimpleInfo() {
+	  return _react2.default.createElement(
+	    _card2.default,
+	    { className: 'dashboard-simple-info' },
+	    _react2.default.createElement(
+	      _row2.default,
+	      null,
+	      _react2.default.createElement(
+	        _col2.default,
+	        { span: 12 },
+	        _react2.default.createElement(
+	          _row2.default,
+	          null,
+	          _react2.default.createElement(
+	            'span',
+	            { className: 'description' },
+	            '350'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _row2.default,
+	          null,
+	          _react2.default.createElement(
+	            'span',
+	            { className: 'title' },
+	            'Lulus Ujian'
+	          )
+	        )
+	      ),
+	      _react2.default.createElement(
+	        _col2.default,
+	        { span: 12 },
+	        _react2.default.createElement(
+	          _reactSparklines.Sparklines,
+	          { data: [5, 10, 5, 20, 8, 15], limit: 5, width: 100, height: 40, margin: 5 },
+	          _react2.default.createElement(_reactSparklines.SparklinesLine, { color: 'blue' })
+	        )
+	      )
+	    )
+	  );
+	};
+
+	exports.default = DashboardSimpleInfo;
+
+/***/ },
+/* 325 */
+/***/ function(module, exports, __webpack_require__) {
+
+	(function webpackUniversalModuleDefinition(root, factory) {
+		if(true)
+			module.exports = factory(__webpack_require__(1));
+		else if(typeof define === 'function' && define.amd)
+			define(["react"], factory);
+		else if(typeof exports === 'object')
+			exports["ReactSparklines"] = factory(require("react"));
+		else
+			root["ReactSparklines"] = factory(root["React"]);
+	})(this, function(__WEBPACK_EXTERNAL_MODULE_0__) {
+	return /******/ (function(modules) { // webpackBootstrap
+	/******/ 	// The module cache
+	/******/ 	var installedModules = {};
+
+	/******/ 	// The require function
+	/******/ 	function __webpack_require__(moduleId) {
+
+	/******/ 		// Check if module is in cache
+	/******/ 		if(installedModules[moduleId])
+	/******/ 			return installedModules[moduleId].exports;
+
+	/******/ 		// Create a new module (and put it into the cache)
+	/******/ 		var module = installedModules[moduleId] = {
+	/******/ 			i: moduleId,
+	/******/ 			l: false,
+	/******/ 			exports: {}
+	/******/ 		};
+
+	/******/ 		// Execute the module function
+	/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+
+	/******/ 		// Flag the module as loaded
+	/******/ 		module.l = true;
+
+	/******/ 		// Return the exports of the module
+	/******/ 		return module.exports;
+	/******/ 	}
+
+
+	/******/ 	// expose the modules object (__webpack_modules__)
+	/******/ 	__webpack_require__.m = modules;
+
+	/******/ 	// expose the module cache
+	/******/ 	__webpack_require__.c = installedModules;
+
+	/******/ 	// __webpack_public_path__
+	/******/ 	__webpack_require__.p = "/";
+
+	/******/ 	// Load entry module and return exports
+	/******/ 	return __webpack_require__(__webpack_require__.s = 21);
+	/******/ })
+	/************************************************************************/
+	/******/ ([
+	/* 0 */
+	/***/ function(module, exports) {
+
+		module.exports = __WEBPACK_EXTERNAL_MODULE_0__;
+
+	/***/ },
+	/* 1 */
+	/***/ function(module, exports) {
+
+		"use strict";
+
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+
+		exports.default = function (data) {
+		    return data.reduce(function (a, b) {
+		        return a + b;
+		    }) / data.length;
+		};
+
+	/***/ },
+	/* 2 */
+	/***/ function(module, exports) {
+
+		"use strict";
+
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+
+		exports.default = function (data) {
+		    return Math.min.apply(Math, data);
+		};
+
+	/***/ },
+	/* 3 */
+	/***/ function(module, exports) {
+
+		"use strict";
+
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+
+		exports.default = function (data) {
+		    return Math.max.apply(Math, data);
+		};
+
+	/***/ },
+	/* 4 */
+	/***/ function(module, exports, __webpack_require__) {
+
+		'use strict';
+
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+
+		var _mean = __webpack_require__(1);
+
+		var _mean2 = _interopRequireDefault(_mean);
+
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+		exports.default = function (data) {
+		    var dataMean = (0, _mean2.default)(data);
+		    var sqDiff = data.map(function (n) {
+		        return Math.pow(n - dataMean, 2);
+		    });
+		    var avgSqDiff = (0, _mean2.default)(sqDiff);
+		    return Math.sqrt(avgSqDiff);
+		};
+
+	/***/ },
+	/* 5 */
+	/***/ function(module, exports, __webpack_require__) {
+
+		'use strict';
+
+		module.exports = __webpack_require__(6);
+
+	/***/ },
+	/* 6 */
+	/***/ function(module, exports, __webpack_require__) {
+
+		'use strict';
+
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		exports.SparklinesNormalBand = exports.SparklinesReferenceLine = exports.SparklinesSpots = exports.SparklinesBars = exports.SparklinesCurve = exports.SparklinesLine = exports.Sparklines = undefined;
+
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+		var _react = __webpack_require__(0);
+
+		var _react2 = _interopRequireDefault(_react);
+
+		var _SparklinesLine = __webpack_require__(9);
+
+		var _SparklinesLine2 = _interopRequireDefault(_SparklinesLine);
+
+		var _SparklinesCurve = __webpack_require__(8);
+
+		var _SparklinesCurve2 = _interopRequireDefault(_SparklinesCurve);
+
+		var _SparklinesBars = __webpack_require__(7);
+
+		var _SparklinesBars2 = _interopRequireDefault(_SparklinesBars);
+
+		var _SparklinesSpots = __webpack_require__(12);
+
+		var _SparklinesSpots2 = _interopRequireDefault(_SparklinesSpots);
+
+		var _SparklinesReferenceLine = __webpack_require__(11);
+
+		var _SparklinesReferenceLine2 = _interopRequireDefault(_SparklinesReferenceLine);
+
+		var _SparklinesNormalBand = __webpack_require__(10);
+
+		var _SparklinesNormalBand2 = _interopRequireDefault(_SparklinesNormalBand);
+
+		var _dataToPoints = __webpack_require__(13);
+
+		var _dataToPoints2 = _interopRequireDefault(_dataToPoints);
+
+		var _reactAddonsShallowCompare = __webpack_require__(19);
+
+		var _reactAddonsShallowCompare2 = _interopRequireDefault(_reactAddonsShallowCompare);
+
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+		var Sparklines = function (_React$Component) {
+		    _inherits(Sparklines, _React$Component);
+
+		    function Sparklines(props) {
+		        _classCallCheck(this, Sparklines);
+
+		        return _possibleConstructorReturn(this, Object.getPrototypeOf(Sparklines).call(this, props));
+		    }
+
+		    _createClass(Sparklines, [{
+		        key: 'shouldComponentUpdate',
+		        value: function shouldComponentUpdate(nextProps) {
+		            return (0, _reactAddonsShallowCompare2.default)(this, nextProps);
+		        }
+		    }, {
+		        key: 'render',
+		        value: function render() {
+		            var _props = this.props;
+		            var data = _props.data;
+		            var limit = _props.limit;
+		            var width = _props.width;
+		            var height = _props.height;
+		            var svgWidth = _props.svgWidth;
+		            var svgHeight = _props.svgHeight;
+		            var preserveAspectRatio = _props.preserveAspectRatio;
+		            var margin = _props.margin;
+		            var style = _props.style;
+		            var max = _props.max;
+		            var min = _props.min;
+
+
+		            if (data.length === 0) return null;
+
+		            var points = (0, _dataToPoints2.default)({ data: data, limit: limit, width: width, height: height, margin: margin, max: max, min: min });
+
+		            var svgOpts = { style: style, viewBox: '0 0 ' + width + ' ' + height, preserveAspectRatio: preserveAspectRatio };
+		            if (svgWidth > 0) svgOpts.width = svgWidth;
+		            if (svgHeight > 0) svgOpts.height = svgHeight;
+
+		            return _react2.default.createElement(
+		                'svg',
+		                svgOpts,
+		                _react2.default.Children.map(this.props.children, function (child) {
+		                    return _react2.default.cloneElement(child, { points: points, width: width, height: height, margin: margin });
+		                })
+		            );
+		        }
+		    }]);
+
+		    return Sparklines;
+		}(_react2.default.Component);
+
+		Sparklines.propTypes = {
+		    data: _react2.default.PropTypes.array,
+		    limit: _react2.default.PropTypes.number,
+		    width: _react2.default.PropTypes.number,
+		    height: _react2.default.PropTypes.number,
+		    svgWidth: _react2.default.PropTypes.number,
+		    svgHeight: _react2.default.PropTypes.number,
+		    preserveAspectRatio: _react2.default.PropTypes.string,
+		    margin: _react2.default.PropTypes.number,
+		    style: _react2.default.PropTypes.object,
+		    min: _react2.default.PropTypes.number,
+		    max: _react2.default.PropTypes.number
+		};
+		Sparklines.defaultProps = {
+		    data: [],
+		    width: 240,
+		    height: 60,
+		    //Scale the graphic content of the given element non-uniformly if necessary such that the element's bounding box exactly matches the viewport rectangle.
+		    preserveAspectRatio: 'none', //https://www.w3.org/TR/SVG/coords.html#PreserveAspectRatioAttribute
+		    margin: 2
+		};
+		exports.Sparklines = Sparklines;
+		exports.SparklinesLine = _SparklinesLine2.default;
+		exports.SparklinesCurve = _SparklinesCurve2.default;
+		exports.SparklinesBars = _SparklinesBars2.default;
+		exports.SparklinesSpots = _SparklinesSpots2.default;
+		exports.SparklinesReferenceLine = _SparklinesReferenceLine2.default;
+		exports.SparklinesNormalBand = _SparklinesNormalBand2.default;
+
+	/***/ },
+	/* 7 */
+	/***/ function(module, exports, __webpack_require__) {
+
+		'use strict';
+
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+		var _react = __webpack_require__(0);
+
+		var _react2 = _interopRequireDefault(_react);
+
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+		var SparklinesBars = function (_React$Component) {
+		    _inherits(SparklinesBars, _React$Component);
+
+		    function SparklinesBars() {
+		        _classCallCheck(this, SparklinesBars);
+
+		        return _possibleConstructorReturn(this, Object.getPrototypeOf(SparklinesBars).apply(this, arguments));
+		    }
+
+		    _createClass(SparklinesBars, [{
+		        key: 'render',
+		        value: function render() {
+		            var _props = this.props;
+		            var points = _props.points;
+		            var height = _props.height;
+		            var style = _props.style;
+		            var barWidth = _props.barWidth;
+
+		            var strokeWidth = 1 * (style && style.strokeWidth || 0);
+		            var width = barWidth || (points && points.length >= 2 ? Math.ceil(Math.max(0, points[1].x - points[0].x - strokeWidth)) : 0);
+
+		            return _react2.default.createElement(
+		                'g',
+		                null,
+		                points.map(function (p, i) {
+		                    return _react2.default.createElement('rect', {
+		                        key: i,
+		                        x: Math.ceil(p.x - strokeWidth * i),
+		                        y: Math.ceil(p.y),
+		                        width: Math.ceil(width),
+		                        height: Math.ceil(Math.max(0, height - p.y)),
+		                        style: style });
+		                })
+		            );
+		        }
+		    }]);
+
+		    return SparklinesBars;
+		}(_react2.default.Component);
+
+		SparklinesBars.propTypes = {
+		    points: _react2.default.PropTypes.arrayOf(_react2.default.PropTypes.object),
+		    height: _react2.default.PropTypes.number,
+		    style: _react2.default.PropTypes.object,
+		    barWidth: _react2.default.PropTypes.number
+		};
+		SparklinesBars.defaultProps = {
+		    style: { fill: 'slategray' }
+		};
+		exports.default = SparklinesBars;
+
+	/***/ },
+	/* 8 */
+	/***/ function(module, exports, __webpack_require__) {
+
+		"use strict";
+
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+		var _react = __webpack_require__(0);
+
+		var _react2 = _interopRequireDefault(_react);
+
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+		var SparklinesCurve = function (_React$Component) {
+		    _inherits(SparklinesCurve, _React$Component);
+
+		    function SparklinesCurve() {
+		        _classCallCheck(this, SparklinesCurve);
+
+		        return _possibleConstructorReturn(this, Object.getPrototypeOf(SparklinesCurve).apply(this, arguments));
+		    }
+
+		    _createClass(SparklinesCurve, [{
+		        key: "render",
+		        value: function render() {
+		            var _props = this.props;
+		            var points = _props.points;
+		            var width = _props.width;
+		            var height = _props.height;
+		            var margin = _props.margin;
+		            var color = _props.color;
+		            var style = _props.style;
+		            var _props$divisor = _props.divisor;
+		            var divisor = _props$divisor === undefined ? 0.25 : _props$divisor;
+
+		            var prev = void 0;
+		            var curve = function curve(p) {
+		                var res = void 0;
+		                if (!prev) {
+		                    res = [p.x, p.y];
+		                } else {
+		                    var len = (p.x - prev.x) * divisor;
+		                    res = ["C",
+		                    //x1
+		                    prev.x + len,
+		                    //y1
+		                    prev.y,
+		                    //x2,
+		                    p.x - len,
+		                    //y2,
+		                    p.y,
+		                    //x,
+		                    p.x,
+		                    //y
+		                    p.y];
+		                }
+		                prev = p;
+		                return res;
+		            };
+		            var linePoints = points.map(function (p) {
+		                return curve(p);
+		            }).reduce(function (a, b) {
+		                return a.concat(b);
+		            });
+		            var closePolyPoints = ["L" + points[points.length - 1].x, height - margin, margin, height - margin, margin, points[0].y];
+		            var fillPoints = linePoints.concat(closePolyPoints);
+
+		            var lineStyle = {
+		                stroke: color || style.stroke || 'slategray',
+		                strokeWidth: style.strokeWidth || '1',
+		                strokeLinejoin: style.strokeLinejoin || 'round',
+		                strokeLinecap: style.strokeLinecap || 'round',
+		                fill: 'none'
+		            };
+		            var fillStyle = {
+		                stroke: style.stroke || 'none',
+		                strokeWidth: '0',
+		                fillOpacity: style.fillOpacity || '.1',
+		                fill: style.fill || color || 'slategray'
+		            };
+
+		            return _react2.default.createElement(
+		                "g",
+		                null,
+		                _react2.default.createElement("path", { d: "M" + fillPoints.join(' '), style: fillStyle }),
+		                _react2.default.createElement("path", { d: "M" + linePoints.join(' '), style: lineStyle })
+		            );
+		        }
+		    }]);
+
+		    return SparklinesCurve;
+		}(_react2.default.Component);
+
+		SparklinesCurve.propTypes = {
+		    color: _react2.default.PropTypes.string,
+		    style: _react2.default.PropTypes.object
+		};
+		SparklinesCurve.defaultProps = {
+		    style: {}
+		};
+		exports.default = SparklinesCurve;
+
+	/***/ },
+	/* 9 */
+	/***/ function(module, exports, __webpack_require__) {
+
+		'use strict';
+
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+		var _react = __webpack_require__(0);
+
+		var _react2 = _interopRequireDefault(_react);
+
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+		var SparklinesLine = function (_React$Component) {
+		    _inherits(SparklinesLine, _React$Component);
+
+		    function SparklinesLine() {
+		        _classCallCheck(this, SparklinesLine);
+
+		        return _possibleConstructorReturn(this, Object.getPrototypeOf(SparklinesLine).apply(this, arguments));
+		    }
+
+		    _createClass(SparklinesLine, [{
+		        key: 'render',
+		        value: function render() {
+		            var _props = this.props;
+		            var points = _props.points;
+		            var width = _props.width;
+		            var height = _props.height;
+		            var margin = _props.margin;
+		            var color = _props.color;
+		            var style = _props.style;
+
+
+		            var linePoints = points.map(function (p) {
+		                return [p.x, p.y];
+		            }).reduce(function (a, b) {
+		                return a.concat(b);
+		            });
+		            var closePolyPoints = [points[points.length - 1].x, height - margin, margin, height - margin, margin, points[0].y];
+		            var fillPoints = linePoints.concat(closePolyPoints);
+
+		            var lineStyle = {
+		                stroke: color || style.stroke || 'slategray',
+		                strokeWidth: style.strokeWidth || '1',
+		                strokeLinejoin: style.strokeLinejoin || 'round',
+		                strokeLinecap: style.strokeLinecap || 'round',
+		                fill: 'none'
+		            };
+		            var fillStyle = {
+		                stroke: style.stroke || 'none',
+		                strokeWidth: '0',
+		                fillOpacity: style.fillOpacity || '.1',
+		                fill: style.fill || color || 'slategray'
+		            };
+
+		            return _react2.default.createElement(
+		                'g',
+		                null,
+		                _react2.default.createElement('polyline', { points: fillPoints.join(' '), style: fillStyle }),
+		                _react2.default.createElement('polyline', { points: linePoints.join(' '), style: lineStyle })
+		            );
+		        }
+		    }]);
+
+		    return SparklinesLine;
+		}(_react2.default.Component);
+
+		SparklinesLine.propTypes = {
+		    color: _react2.default.PropTypes.string,
+		    style: _react2.default.PropTypes.object
+		};
+		SparklinesLine.defaultProps = {
+		    style: {}
+		};
+		exports.default = SparklinesLine;
+
+	/***/ },
+	/* 10 */
+	/***/ function(module, exports, __webpack_require__) {
+
+		'use strict';
+
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+		var _react = __webpack_require__(0);
+
+		var _react2 = _interopRequireDefault(_react);
+
+		var _mean = __webpack_require__(1);
+
+		var _mean2 = _interopRequireDefault(_mean);
+
+		var _stdev = __webpack_require__(4);
+
+		var _stdev2 = _interopRequireDefault(_stdev);
+
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+		var SparklinesNormalBand = function (_React$Component) {
+		    _inherits(SparklinesNormalBand, _React$Component);
+
+		    function SparklinesNormalBand() {
+		        _classCallCheck(this, SparklinesNormalBand);
+
+		        return _possibleConstructorReturn(this, Object.getPrototypeOf(SparklinesNormalBand).apply(this, arguments));
+		    }
+
+		    _createClass(SparklinesNormalBand, [{
+		        key: 'render',
+		        value: function render() {
+		            var _props = this.props;
+		            var points = _props.points;
+		            var margin = _props.margin;
+		            var style = _props.style;
+
+
+		            var ypoints = points.map(function (p) {
+		                return p.y;
+		            });
+		            var dataMean = (0, _mean2.default)(ypoints);
+		            var dataStdev = (0, _stdev2.default)(ypoints);
+
+		            return _react2.default.createElement('rect', { x: points[0].x, y: dataMean - dataStdev + margin,
+		                width: points[points.length - 1].x - points[0].x, height: _stdev2.default * 2,
+		                style: style });
+		        }
+		    }]);
+
+		    return SparklinesNormalBand;
+		}(_react2.default.Component);
+
+		SparklinesNormalBand.propTypes = {
+		    style: _react2.default.PropTypes.object
+		};
+		SparklinesNormalBand.defaultProps = {
+		    style: { fill: 'red', fillOpacity: .1 }
+		};
+		exports.default = SparklinesNormalBand;
+
+	/***/ },
+	/* 11 */
+	/***/ function(module, exports, __webpack_require__) {
+
+		'use strict';
+
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+		var _react = __webpack_require__(0);
+
+		var _react2 = _interopRequireDefault(_react);
+
+		var _dataProcessing = __webpack_require__(14);
+
+		var dataProcessing = _interopRequireWildcard(_dataProcessing);
+
+		function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+		var SparklinesReferenceLine = function (_React$Component) {
+		    _inherits(SparklinesReferenceLine, _React$Component);
+
+		    function SparklinesReferenceLine() {
+		        _classCallCheck(this, SparklinesReferenceLine);
+
+		        return _possibleConstructorReturn(this, Object.getPrototypeOf(SparklinesReferenceLine).apply(this, arguments));
+		    }
+
+		    _createClass(SparklinesReferenceLine, [{
+		        key: 'render',
+		        value: function render() {
+		            var _props = this.props;
+		            var points = _props.points;
+		            var margin = _props.margin;
+		            var type = _props.type;
+		            var style = _props.style;
+		            var value = _props.value;
+
+
+		            var ypoints = points.map(function (p) {
+		                return p.y;
+		            });
+		            var y = type == 'custom' ? value : dataProcessing[type](ypoints);
+
+		            return _react2.default.createElement('line', {
+		                x1: points[0].x, y1: y + margin,
+		                x2: points[points.length - 1].x, y2: y + margin,
+		                style: style });
+		        }
+		    }]);
+
+		    return SparklinesReferenceLine;
+		}(_react2.default.Component);
+
+		SparklinesReferenceLine.propTypes = {
+		    type: _react2.default.PropTypes.oneOf(['max', 'min', 'mean', 'avg', 'median', 'custom']),
+		    value: _react2.default.PropTypes.number,
+		    style: _react2.default.PropTypes.object
+		};
+		SparklinesReferenceLine.defaultProps = {
+		    type: 'mean',
+		    style: { stroke: 'red', strokeOpacity: .75, strokeDasharray: '2, 2' }
+		};
+		exports.default = SparklinesReferenceLine;
+
+	/***/ },
+	/* 12 */
+	/***/ function(module, exports, __webpack_require__) {
+
+		'use strict';
+
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+		var _react = __webpack_require__(0);
+
+		var _react2 = _interopRequireDefault(_react);
+
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+		var SparklinesSpots = function (_React$Component) {
+		    _inherits(SparklinesSpots, _React$Component);
+
+		    function SparklinesSpots() {
+		        _classCallCheck(this, SparklinesSpots);
+
+		        return _possibleConstructorReturn(this, Object.getPrototypeOf(SparklinesSpots).apply(this, arguments));
+		    }
+
+		    _createClass(SparklinesSpots, [{
+		        key: 'lastDirection',
+		        value: function lastDirection(points) {
+
+		            Math.sign = Math.sign || function (x) {
+		                return x > 0 ? 1 : -1;
+		            };
+
+		            return points.length < 2 ? 0 : Math.sign(points[points.length - 2].y - points[points.length - 1].y);
+		        }
+		    }, {
+		        key: 'render',
+		        value: function render() {
+		            var _props = this.props;
+		            var points = _props.points;
+		            var width = _props.width;
+		            var height = _props.height;
+		            var size = _props.size;
+		            var style = _props.style;
+		            var spotColors = _props.spotColors;
+
+
+		            var startSpot = _react2.default.createElement('circle', {
+		                cx: points[0].x,
+		                cy: points[0].y,
+		                r: size,
+		                style: style });
+
+		            var endSpot = _react2.default.createElement('circle', {
+		                cx: points[points.length - 1].x,
+		                cy: points[points.length - 1].y,
+		                r: size,
+		                style: style || { fill: spotColors[this.lastDirection(points)] } });
+
+		            return _react2.default.createElement(
+		                'g',
+		                null,
+		                style && startSpot,
+		                endSpot
+		            );
+		        }
+		    }]);
+
+		    return SparklinesSpots;
+		}(_react2.default.Component);
+
+		SparklinesSpots.propTypes = {
+		    size: _react2.default.PropTypes.number,
+		    style: _react2.default.PropTypes.object,
+		    spotColors: _react2.default.PropTypes.object
+		};
+		SparklinesSpots.defaultProps = {
+		    size: 2,
+		    spotColors: {
+		        '-1': 'red',
+		        '0': 'black',
+		        '1': 'green'
+		    }
+		};
+		exports.default = SparklinesSpots;
+
+	/***/ },
+	/* 13 */
+	/***/ function(module, exports, __webpack_require__) {
+
+		'use strict';
+
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+
+		var _min = __webpack_require__(2);
+
+		var _min2 = _interopRequireDefault(_min);
+
+		var _max = __webpack_require__(3);
+
+		var _max2 = _interopRequireDefault(_max);
+
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+		exports.default = function (_ref) {
+		    var data = _ref.data;
+		    var limit = _ref.limit;
+		    var _ref$width = _ref.width;
+		    var width = _ref$width === undefined ? 1 : _ref$width;
+		    var _ref$height = _ref.height;
+		    var height = _ref$height === undefined ? 1 : _ref$height;
+		    var _ref$margin = _ref.margin;
+		    var margin = _ref$margin === undefined ? 0 : _ref$margin;
+		    var _ref$max = _ref.max;
+		    var max = _ref$max === undefined ? (0, _max2.default)(data) : _ref$max;
+		    var _ref$min = _ref.min;
+		    var min = _ref$min === undefined ? (0, _min2.default)(data) : _ref$min;
+
+
+		    var len = data.length;
+
+		    if (limit && limit < len) {
+		        data = data.slice(len - limit);
+		    }
+
+		    var vfactor = (height - margin * 2) / (max - min || 2);
+		    var hfactor = (width - margin * 2) / ((limit || len) - (len > 1 ? 1 : 0));
+
+		    return data.map(function (d, i) {
+		        return {
+		            x: i * hfactor + margin,
+		            y: (max === min ? 1 : max - d) * vfactor + margin
+		        };
+		    });
+		};
+
+	/***/ },
+	/* 14 */
+	/***/ function(module, exports, __webpack_require__) {
+
+		'use strict';
+
+		Object.defineProperty(exports, "__esModule", {
+		  value: true
+		});
+		exports.variance = exports.stdev = exports.median = exports.midRange = exports.avg = exports.mean = exports.max = exports.min = undefined;
+
+		var _min2 = __webpack_require__(2);
+
+		var _min3 = _interopRequireDefault(_min2);
+
+		var _mean2 = __webpack_require__(1);
+
+		var _mean3 = _interopRequireDefault(_mean2);
+
+		var _midRange2 = __webpack_require__(16);
+
+		var _midRange3 = _interopRequireDefault(_midRange2);
+
+		var _median2 = __webpack_require__(15);
+
+		var _median3 = _interopRequireDefault(_median2);
+
+		var _stdev2 = __webpack_require__(4);
+
+		var _stdev3 = _interopRequireDefault(_stdev2);
+
+		var _variance2 = __webpack_require__(17);
+
+		var _variance3 = _interopRequireDefault(_variance2);
+
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+		exports.min = _min3.default;
+		exports.max = _min3.default;
+		exports.mean = _mean3.default;
+		exports.avg = _mean3.default;
+		exports.midRange = _midRange3.default;
+		exports.median = _median3.default;
+		exports.stdev = _stdev3.default;
+		exports.variance = _variance3.default;
+
+	/***/ },
+	/* 15 */
+	/***/ function(module, exports) {
+
+		"use strict";
+
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+
+		exports.default = function (data) {
+		    return data.sort(function (a, b) {
+		        return a - b;
+		    })[Math.floor(data.length / 2)];
+		};
+
+	/***/ },
+	/* 16 */
+	/***/ function(module, exports, __webpack_require__) {
+
+		'use strict';
+
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+
+		var _min = __webpack_require__(2);
+
+		var _min2 = _interopRequireDefault(_min);
+
+		var _max = __webpack_require__(3);
+
+		var _max2 = _interopRequireDefault(_max);
+
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+		exports.default = function (data) {
+		    return (0, _max2.default)(data) - (0, _min2.default)(data) / 2;
+		};
+
+	/***/ },
+	/* 17 */
+	/***/ function(module, exports, __webpack_require__) {
+
+		'use strict';
+
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+
+		var _mean = __webpack_require__(1);
+
+		var _mean2 = _interopRequireDefault(_mean);
+
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+		exports.default = function (data) {
+		    var dataMean = (0, _mean2.default)(data);
+		    var sq = data.map(function (n) {
+		        return Math.pow(n - dataMean, 2);
+		    });
+		    return (0, _mean2.default)(sq);
+		};
+
+	/***/ },
+	/* 18 */
+	/***/ function(module, exports) {
+
+		/**
+		 * Copyright (c) 2013-present, Facebook, Inc.
+		 * All rights reserved.
+		 *
+		 * This source code is licensed under the BSD-style license found in the
+		 * LICENSE file in the root directory of this source tree. An additional grant
+		 * of patent rights can be found in the PATENTS file in the same directory.
+		 *
+		 * @typechecks
+		 * 
+		 */
+
+		/*eslint-disable no-self-compare */
+
+		'use strict';
+
+		var hasOwnProperty = Object.prototype.hasOwnProperty;
+
+		/**
+		 * inlined Object.is polyfill to avoid requiring consumers ship their own
+		 * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
+		 */
+		function is(x, y) {
+		  // SameValue algorithm
+		  if (x === y) {
+		    // Steps 1-5, 7-10
+		    // Steps 6.b-6.e: +0 != -0
+		    return x !== 0 || 1 / x === 1 / y;
+		  } else {
+		    // Step 6.a: NaN == NaN
+		    return x !== x && y !== y;
+		  }
+		}
+
+		/**
+		 * Performs equality by iterating through keys on an object and returning false
+		 * when any key has values which are not strictly equal between the arguments.
+		 * Returns true when the values of all keys are strictly equal.
+		 */
+		function shallowEqual(objA, objB) {
+		  if (is(objA, objB)) {
+		    return true;
+		  }
+
+		  if (typeof objA !== 'object' || objA === null || typeof objB !== 'object' || objB === null) {
+		    return false;
+		  }
+
+		  var keysA = Object.keys(objA);
+		  var keysB = Object.keys(objB);
+
+		  if (keysA.length !== keysB.length) {
+		    return false;
+		  }
+
+		  // Test for A's keys different from B.
+		  for (var i = 0; i < keysA.length; i++) {
+		    if (!hasOwnProperty.call(objB, keysA[i]) || !is(objA[keysA[i]], objB[keysA[i]])) {
+		      return false;
+		    }
+		  }
+
+		  return true;
+		}
+
+		module.exports = shallowEqual;
+
+	/***/ },
+	/* 19 */
+	/***/ function(module, exports, __webpack_require__) {
+
+		module.exports = __webpack_require__(20);
+
+	/***/ },
+	/* 20 */
+	/***/ function(module, exports, __webpack_require__) {
+
+		/**
+		 * Copyright 2013-present, Facebook, Inc.
+		 * All rights reserved.
+		 *
+		 * This source code is licensed under the BSD-style license found in the
+		 * LICENSE file in the root directory of this source tree. An additional grant
+		 * of patent rights can be found in the PATENTS file in the same directory.
+		 *
+		* @providesModule shallowCompare
+		*/
+
+		'use strict';
+
+		var shallowEqual = __webpack_require__(18);
+
+		/**
+		 * Does a shallow comparison for props and state.
+		 * See ReactComponentWithPureRenderMixin
+		 */
+		function shallowCompare(instance, nextProps, nextState) {
+		  return !shallowEqual(instance.props, nextProps) || !shallowEqual(instance.state, nextState);
+		}
+
+		module.exports = shallowCompare;
+
+	/***/ },
+	/* 21 */
+	/***/ function(module, exports, __webpack_require__) {
+
+		module.exports = __webpack_require__(5);
+
+
+	/***/ }
+	/******/ ])
+	});
+	;
 
 /***/ }
 /******/ ]);
