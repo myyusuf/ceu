@@ -2,6 +2,7 @@
 
 const Pages = require('./handlers/pages');
 const Assets = require('./handlers/assets');
+const Student = require('./handlers/student');
 
 module.exports = [
   {
@@ -18,5 +19,10 @@ module.exports = [
     method: 'GET',
     path: '/test_component',
     handler: Pages.testComponent
+  },
+  {
+      method: 'GET',
+      path: '/students',
+      handler: Student.find,
   }
 ];
