@@ -37,9 +37,6 @@
   color: #fff;
 }
 
-.student-card {
-}
-
 .img-circle {
     border-radius: 50%;
 }
@@ -88,4 +85,8 @@
   color: gray;
   font-family: "Helvetica Neue";
   /*font-weight: bold;*/
+}
+
+.field-caption {
+  font-weight: bold;
 }

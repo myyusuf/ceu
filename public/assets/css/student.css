@@ -1,0 +1,7 @@
+.student-card label {
+  font-size: 1.1em;
+}
+
+.student-card .ant-row {
+  margin-top: 7px;
+}
