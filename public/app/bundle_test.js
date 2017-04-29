@@ -82,7 +82,7 @@
 
 	var _TakenDivisionDetail2 = _interopRequireDefault(_TakenDivisionDetail);
 
-	var _Workspace = __webpack_require__(691);
+	var _Workspace = __webpack_require__(692);
 
 	var _Workspace2 = _interopRequireDefault(_Workspace);
 
@@ -39260,7 +39260,7 @@
 	        _react2.default.createElement(
 	          'span',
 	          { className: 'field-caption' },
-	          'Nam'
+	          'Nama'
 	        )
 	      ),
 	      _react2.default.createElement(
@@ -76645,6 +76645,10 @@
 
 	var _DivisionProblemForm2 = _interopRequireDefault(_DivisionProblemForm);
 
+	var _DivisionLetterForm = __webpack_require__(691);
+
+	var _DivisionLetterForm2 = _interopRequireDefault(_DivisionLetterForm);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -76703,6 +76707,11 @@
 	          TabPane,
 	          { tab: 'Masalah', key: '4' },
 	          _react2.default.createElement(_DivisionProblemForm2.default, null)
+	        ),
+	        _react2.default.createElement(
+	          TabPane,
+	          { tab: 'Surat Keterangan', key: '5' },
+	          _react2.default.createElement(_DivisionLetterForm2.default, null)
 	        )
 	      );
 	    }
@@ -78603,6 +78612,26 @@
 
 	var _table2 = _interopRequireDefault(_table);
 
+	var _row = __webpack_require__(407);
+
+	var _row2 = _interopRequireDefault(_row);
+
+	var _col = __webpack_require__(411);
+
+	var _col2 = _interopRequireDefault(_col);
+
+	var _inputNumber = __webpack_require__(685);
+
+	var _inputNumber2 = _interopRequireDefault(_inputNumber);
+
+	var _input = __webpack_require__(618);
+
+	var _input2 = _interopRequireDefault(_input);
+
+	var _button = __webpack_require__(412);
+
+	var _button2 = _interopRequireDefault(_button);
+
 	var _axios = __webpack_require__(416);
 
 	var _axios2 = _interopRequireDefault(_axios);
@@ -78624,12 +78653,13 @@
 	    var _this = _possibleConstructorReturn(this, (DivisionProblemForm.__proto__ || Object.getPrototypeOf(DivisionProblemForm)).call(this, props));
 
 	    _this.state = {
+	      selectedRowKeys: ['MB1'],
 	      columns: [{
 	        title: 'Kode',
 	        dataIndex: 'kode',
 	        key: 'kode'
 	      }, {
-	        title: 'Name',
+	        title: 'Keterangan',
 	        dataIndex: 'name',
 	        key: 'name'
 	      }],
@@ -78659,10 +78689,15 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this3 = this;
+
+	      var selectedRowKeys = this.state.selectedRowKeys;
+
 	      var rowSelection = {
-	        selectedRowKeys: ['MB1'],
-	        onChange: function onChange(selectedRowKeys, selectedRows) {
-	          console.log('selectedRowKeys: ' + selectedRowKeys, 'selectedRows: ', selectedRows);
+	        selectedRowKeys: selectedRowKeys,
+	        onChange: function onChange(newSelectedRowKeys, selectedRows) {
+	          console.log('selectedRowKeys: ' + newSelectedRowKeys, 'selectedRows: ', selectedRows);
+	          _this3.setState({ selectedRowKeys: newSelectedRowKeys });
 	        },
 	        onSelect: function onSelect(record, selected, selectedRows) {
 	          console.log(record, selected, selectedRows);
@@ -78672,17 +78707,72 @@
 	        },
 	        getCheckboxProps: function getCheckboxProps(record) {
 	          return {
-	            value: 'checked'
+	            // disabled: record.name === 'Disabled User',    // Column configuration not to be checked
 	          };
 	        }
 	      };
 
-	      return _react2.default.createElement(_table2.default, {
-	        rowKey: 'kode',
-	        rowSelection: rowSelection,
-	        columns: this.state.columns,
-	        dataSource: this.state.problems
-	      });
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          _row2.default,
+	          null,
+	          _react2.default.createElement(
+	            _col2.default,
+	            { span: 24 },
+	            _react2.default.createElement(_table2.default, {
+	              pagination: false,
+	              rowKey: 'kode',
+	              rowSelection: rowSelection,
+	              columns: this.state.columns,
+	              dataSource: this.state.problems
+	            })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _row2.default,
+	          { style: { margin: 10 } },
+	          _react2.default.createElement(
+	            _col2.default,
+	            { span: 12 },
+	            'Jumlah mengulang Post-Test'
+	          ),
+	          _react2.default.createElement(
+	            _col2.default,
+	            { span: 12 },
+	            _react2.default.createElement(_inputNumber2.default, null)
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _row2.default,
+	          { style: { margin: 10 } },
+	          _react2.default.createElement(
+	            _col2.default,
+	            { span: 12 },
+	            'Deskripsi Masalah'
+	          ),
+	          _react2.default.createElement(
+	            _col2.default,
+	            { span: 12 },
+	            _react2.default.createElement(_input2.default, { type: 'textarea' })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _row2.default,
+	          null,
+	          _react2.default.createElement(_col2.default, { span: 12 }),
+	          _react2.default.createElement(
+	            _col2.default,
+	            { span: 12 },
+	            _react2.default.createElement(
+	              _button2.default,
+	              { type: 'primary' },
+	              'Save'
+	            )
+	          )
+	        )
+	      );
 	    }
 	  }]);
 
@@ -78701,27 +78791,163 @@
 	  value: true
 	});
 
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _layout = __webpack_require__(692);
+	var _table = __webpack_require__(446);
+
+	var _table2 = _interopRequireDefault(_table);
+
+	var _row = __webpack_require__(407);
+
+	var _row2 = _interopRequireDefault(_row);
+
+	var _col = __webpack_require__(411);
+
+	var _col2 = _interopRequireDefault(_col);
+
+	var _inputNumber = __webpack_require__(685);
+
+	var _inputNumber2 = _interopRequireDefault(_inputNumber);
+
+	var _input = __webpack_require__(618);
+
+	var _input2 = _interopRequireDefault(_input);
+
+	var _button = __webpack_require__(412);
+
+	var _button2 = _interopRequireDefault(_button);
+
+	var _axios = __webpack_require__(416);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var DivisionLetterForm = function (_Component) {
+	  _inherits(DivisionLetterForm, _Component);
+
+	  function DivisionLetterForm(props) {
+	    _classCallCheck(this, DivisionLetterForm);
+
+	    var _this = _possibleConstructorReturn(this, (DivisionLetterForm.__proto__ || Object.getPrototypeOf(DivisionLetterForm)).call(this, props));
+
+	    _this.state = {
+	      columns: [{
+	        title: 'Kode',
+	        dataIndex: 'kode',
+	        key: 'kode'
+	      }, {
+	        title: 'Judul',
+	        dataIndex: 'judul',
+	        key: 'judul'
+	      }],
+	      problems: []
+	    };
+	    return _this;
+	  }
+
+	  _createClass(DivisionLetterForm, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.getTakenDivisionProblems();
+	    }
+	  }, {
+	    key: 'getTakenDivisionProblems',
+	    value: function getTakenDivisionProblems() {
+	      var _this2 = this;
+
+	      _axios2.default.get('/takendivisionproblems', {}).then(function (response) {
+	        _this2.setState({
+	          problems: response.data
+	        });
+	      }).catch(function (error) {
+	        console.log(error);
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          _row2.default,
+	          null,
+	          _react2.default.createElement(
+	            _col2.default,
+	            { span: 24 },
+	            _react2.default.createElement(_table2.default, {
+	              pagination: false,
+	              rowKey: 'kode',
+	              columns: this.state.columns,
+	              dataSource: this.state.problems
+	            })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _row2.default,
+	          { style: { margin: 10 } },
+	          _react2.default.createElement(_col2.default, { span: 12 }),
+	          _react2.default.createElement(
+	            _col2.default,
+	            { span: 12 },
+	            _react2.default.createElement(
+	              _button2.default,
+	              { type: 'primary' },
+	              'Save'
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return DivisionLetterForm;
+	}(_react.Component);
+
+	exports.default = DivisionLetterForm;
+
+/***/ },
+/* 692 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _layout = __webpack_require__(693);
 
 	var _layout2 = _interopRequireDefault(_layout);
 
-	var _LoginInfo = __webpack_require__(695);
+	var _LoginInfo = __webpack_require__(696);
 
 	var _LoginInfo2 = _interopRequireDefault(_LoginInfo);
 
-	var _SideMenu = __webpack_require__(696);
+	var _SideMenu = __webpack_require__(697);
 
 	var _SideMenu2 = _interopRequireDefault(_SideMenu);
 
-	var _WorkspaceTitle = __webpack_require__(697);
+	var _WorkspaceTitle = __webpack_require__(698);
 
 	var _WorkspaceTitle2 = _interopRequireDefault(_WorkspaceTitle);
 
-	var _Dashboard = __webpack_require__(701);
+	var _Dashboard = __webpack_require__(702);
 
 	var _Dashboard2 = _interopRequireDefault(_Dashboard);
 
@@ -78773,7 +78999,7 @@
 	exports.default = Workspace;
 
 /***/ },
-/* 692 */
+/* 693 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -78782,11 +79008,11 @@
 	  value: true
 	});
 
-	var _layout = __webpack_require__(693);
+	var _layout = __webpack_require__(694);
 
 	var _layout2 = _interopRequireDefault(_layout);
 
-	var _Sider = __webpack_require__(694);
+	var _Sider = __webpack_require__(695);
 
 	var _Sider2 = _interopRequireDefault(_Sider);
 
@@ -78797,7 +79023,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 693 */
+/* 694 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -78916,7 +79142,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 694 */
+/* 695 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -79128,7 +79354,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 695 */
+/* 696 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -79203,7 +79429,7 @@
 	exports.default = LoginInfo;
 
 /***/ },
-/* 696 */
+/* 697 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -79380,7 +79606,7 @@
 	exports.default = SideMenu;
 
 /***/ },
-/* 697 */
+/* 698 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -79405,7 +79631,7 @@
 
 	var _icon2 = _interopRequireDefault(_icon);
 
-	var _breadcrumb = __webpack_require__(698);
+	var _breadcrumb = __webpack_require__(699);
 
 	var _breadcrumb2 = _interopRequireDefault(_breadcrumb);
 
@@ -79456,7 +79682,7 @@
 	exports.default = WorkspaceTitle;
 
 /***/ },
-/* 698 */
+/* 699 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -79465,11 +79691,11 @@
 	  value: true
 	});
 
-	var _Breadcrumb = __webpack_require__(699);
+	var _Breadcrumb = __webpack_require__(700);
 
 	var _Breadcrumb2 = _interopRequireDefault(_Breadcrumb);
 
-	var _BreadcrumbItem = __webpack_require__(700);
+	var _BreadcrumbItem = __webpack_require__(701);
 
 	var _BreadcrumbItem2 = _interopRequireDefault(_BreadcrumbItem);
 
@@ -79480,7 +79706,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 699 */
+/* 700 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -79510,7 +79736,7 @@
 
 	var _warning2 = _interopRequireDefault(_warning);
 
-	var _BreadcrumbItem = __webpack_require__(700);
+	var _BreadcrumbItem = __webpack_require__(701);
 
 	var _BreadcrumbItem2 = _interopRequireDefault(_BreadcrumbItem);
 
@@ -79628,7 +79854,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 700 */
+/* 701 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -79730,7 +79956,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 701 */
+/* 702 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -79751,7 +79977,7 @@
 
 	var _col2 = _interopRequireDefault(_col);
 
-	var _DashboardSimpleInfo = __webpack_require__(702);
+	var _DashboardSimpleInfo = __webpack_require__(703);
 
 	var _DashboardSimpleInfo2 = _interopRequireDefault(_DashboardSimpleInfo);
 
@@ -79791,7 +80017,7 @@
 	exports.default = Dashboard;
 
 /***/ },
-/* 702 */
+/* 703 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -79816,7 +80042,7 @@
 
 	var _col2 = _interopRequireDefault(_col);
 
-	var _reactSparklines = __webpack_require__(703);
+	var _reactSparklines = __webpack_require__(704);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -79865,7 +80091,7 @@
 	exports.default = DashboardSimpleInfo;
 
 /***/ },
-/* 703 */
+/* 704 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function webpackUniversalModuleDefinition(root, factory) {

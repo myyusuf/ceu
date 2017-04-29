@@ -1,0 +1,26 @@
+.workspace-header {
+  position: fixed;
+  background-color: #1976D2;
+  border-bottom: 1px solid silver;
+  width: 100%;
+  height: 65px;
+  left: 0;
+  top: 0;
+  z-index: 100;
+}
+
+.workspace-header .logo {
+  float: left;
+  margin: 17px;
+}
+
+.workspace-header nav {
+  float: right;
+  top: 0;
+}
+
+.workspace-header nav li {
+  margin: 0 10px;
+  display: inline;
+  color: #fff;
+}

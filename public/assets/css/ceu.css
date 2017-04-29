@@ -1,4 +1,7 @@
-.layout {
+
+
+
+/*.layout {
   width: 100%;
   height: 100%;
 }
@@ -78,15 +81,13 @@
 .dashboard-simple-info .description {
   font-size: 30px;
   font-family: "Helvetica Neue";
-  /*font-weight: bold;*/
 }
 
 .dashboard-simple-info .title {
   color: gray;
   font-family: "Helvetica Neue";
-  /*font-weight: bold;*/
 }
 
 .field-caption {
   font-weight: bold;
-}
+}*/
