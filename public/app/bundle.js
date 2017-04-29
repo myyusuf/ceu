@@ -39208,31 +39208,9 @@
 	        "ul",
 	        null,
 	        _react2.default.createElement(
-	          "a",
-	          { href: "#" },
-	          _react2.default.createElement(
-	            "li",
-	            null,
-	            "Home"
-	          )
-	        ),
-	        _react2.default.createElement(
-	          "a",
-	          { href: "#" },
-	          _react2.default.createElement(
-	            "li",
-	            null,
-	            "About"
-	          )
-	        ),
-	        _react2.default.createElement(
-	          "a",
-	          { href: "#" },
-	          _react2.default.createElement(
-	            "li",
-	            null,
-	            "Contact"
-	          )
+	          "li",
+	          null,
+	          _react2.default.createElement("img", { src: "assets/images/icons/settings.png", alt: "menu" })
 	        )
 	      )
 	    )

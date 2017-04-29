@@ -21,13 +21,14 @@
   left: 46px;
   color: #FFF;
   font-weight: bold;
-  font-size: 1.9em;
+  font-size: 2.0em;
   font-family: "Helvetica Neue";
 }
 
 .workspace-header nav {
-  float: right;
-  top: 0;
+  position: absolute;
+  top: 19px;
+  right: 15px;
 }
 
 .workspace-header nav li {
