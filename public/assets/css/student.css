@@ -1,7 +1,61 @@
+.student-card-list {
+}
+
+.student-card .card-name {
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.student-card .card-stambuk {
+  font-size: 13px;
+  color: silver;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
 .student-card label {
   font-size: 1.1em;
 }
 
 .student-card .ant-row {
-  margin-top: 7px;
+  margin-top: 5px;
+}
+
+.card-list-header {
+  position: absolute;
+  width: 100%;
+  height: 70px;
+  border-bottom: 1px solid #EAECEE;
+}
+
+.card-list-header .add-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.card-list-header .pagination {
+  position: absolute;
+  top: 20px;
+  right: 180px;
+}
+
+.card-list-header .search {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+.card-list-header .search li {
+  margin: 0 5px;
+  display: inline;
+}
+
+.card-list-content {
+  position: absolute;
+  top: 70px;
+  bottom: 0;
+  width: 100%;
+  padding: 20px;
+  background-color: #F1F2F3;
 }
