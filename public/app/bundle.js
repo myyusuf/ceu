@@ -39197,6 +39197,11 @@
 	    { className: "workspace-header" },
 	    _react2.default.createElement("img", { className: "logo", src: "assets/images/small_logo.png", alt: "Logo" }),
 	    _react2.default.createElement(
+	      "span",
+	      { className: "app-name" },
+	      "CEU"
+	    ),
+	    _react2.default.createElement(
 	      "nav",
 	      null,
 	      _react2.default.createElement(

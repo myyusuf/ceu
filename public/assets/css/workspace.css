@@ -10,8 +10,19 @@
 }
 
 .workspace-header .logo {
-  float: left;
-  margin: 17px;
+  position: absolute;
+  top: 18px;
+  left: 25px;
+}
+
+.workspace-header .app-name {
+  position: absolute;
+  top: 19px;
+  left: 46px;
+  color: #FFF;
+  font-weight: bold;
+  font-size: 1.9em;
+  font-family: "Helvetica Neue";
 }
 
 .workspace-header nav {
@@ -22,5 +33,5 @@
 .workspace-header nav li {
   margin: 0 10px;
   display: inline;
-  color: #fff;
+  color: #FFF;
 }
