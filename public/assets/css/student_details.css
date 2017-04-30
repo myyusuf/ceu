@@ -51,8 +51,3 @@
   bottom: 0;
   overflow-y: auto;
 }
-
-.tab-container {
-  height: 430px;
-  overflow-y: auto;
-}

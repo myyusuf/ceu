@@ -1,0 +1,33 @@
+.tab-container {
+  height: 430px;
+  padding-left: 20px;
+  padding-right: 20px;
+  overflow-y: auto;
+}
+
+.taken-department .header {
+  position: absolute;
+  width: 100%;
+  height: 70px;
+  border-bottom: 1px solid #EAECEE;
+}
+
+.taken-department .header .add-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.taken-department .header .search {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+.taken-department .content {
+  position: absolute;
+  top: 70px;
+  bottom: 0;
+  width: 100%;
+  padding: 20px;
+}
