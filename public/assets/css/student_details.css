@@ -1,0 +1,35 @@
+.student-detail-header {
+  position: absolute;
+  width: 100%;
+  height: 140px;
+  border-bottom: 1px solid #EAECEE;
+}
+
+.student-detail-header .avatar-container {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  min-width: 300px;
+  height: 100px;
+}
+
+.student-detail-header .avatar-container .avatar {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.student-detail-header .avatar-container .student-name {
+  position: absolute;
+  top: 0;
+  left: 90px;
+  font-size: 22px;
+}
+
+.student-detail-header .avatar-container .stambuk {
+  position: absolute;
+  top: 30px;
+  left: 90px;
+  font-size: 18px;
+  color: gray;
+}

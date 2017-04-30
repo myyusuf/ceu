@@ -53,3 +53,21 @@ exports.find = function findStudents(request, reply) {
     }
   });
 };
+
+exports.findOne = function findStudent(request, reply) {
+  const db = this.db;
+
+  const studentId = request.params.studentId;
+
+  const query = 'SELECT * FROM tb_siswa WHERE id = ? ';
+
+  db.query(
+    query, [studentId],
+     (err, rows) => {
+       if (err) reply('Error while doing operation.').code(500);
+       if (rows.length > 0) {
+         reply(rows[0]);
+       }
+     }
+  );
+};

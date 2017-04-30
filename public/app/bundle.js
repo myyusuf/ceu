@@ -66,13 +66,17 @@
 
 	var _StudentCardList2 = _interopRequireDefault(_StudentCardList);
 
-	var _Dashboard = __webpack_require__(532);
+	var _StudentDetail = __webpack_require__(590);
+
+	var _StudentDetail2 = _interopRequireDefault(_StudentDetail);
+
+	var _Dashboard = __webpack_require__(538);
 
 	var _Dashboard2 = _interopRequireDefault(_Dashboard);
 
-	var _reactRouterDom = __webpack_require__(535);
+	var _reactRouterDom = __webpack_require__(541);
 
-	var _Workspace = __webpack_require__(577);
+	var _Workspace = __webpack_require__(583);
 
 	var _Workspace2 = _interopRequireDefault(_Workspace);
 
@@ -90,7 +94,8 @@
 	    _Workspace2.default,
 	    null,
 	    _react2.default.createElement(_reactRouterDom.Route, { path: '/dashboard', component: _Dashboard2.default }),
-	    _react2.default.createElement(_reactRouterDom.Route, { path: '/student', component: _StudentCardList2.default })
+	    _react2.default.createElement(_reactRouterDom.Route, { path: '/student', component: _StudentCardList2.default }),
+	    _react2.default.createElement(_reactRouterDom.Route, { path: '/studentdetail/:studentId', component: _StudentDetail2.default })
 	  )
 	), document.getElementById('app'));
 
@@ -39300,9 +39305,11 @@
 	  }, {
 	    key: 'showDetails',
 	    value: function showDetails(student) {
-	      if (this.props.onShowDetails) {
-	        this.onShowDetails(student);
-	      }
+	      // if (this.props.onShowDetails) {
+	      //   this.onShowDetails(student);
+	      // }
+
+	      window.location.href = '#/studentdetail/' + student.id;
 	    }
 	  }, {
 	    key: 'handleSizeChange',
@@ -56455,7 +56462,7 @@
 
 	var _button2 = _interopRequireDefault(_button);
 
-	var _progress = __webpack_require__(584);
+	var _progress = __webpack_require__(532);
 
 	var _progress2 = _interopRequireDefault(_progress);
 
@@ -56976,6 +56983,509 @@
 	  value: true
 	});
 
+	var _progress = __webpack_require__(533);
+
+	var _progress2 = _interopRequireDefault(_progress);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+	exports["default"] = _progress2["default"];
+	module.exports = exports['default'];
+
+/***/ },
+/* 533 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports["default"] = undefined;
+
+	var _extends2 = __webpack_require__(179);
+
+	var _extends3 = _interopRequireDefault(_extends2);
+
+	var _defineProperty2 = __webpack_require__(391);
+
+	var _defineProperty3 = _interopRequireDefault(_defineProperty2);
+
+	var _classCallCheck2 = __webpack_require__(217);
+
+	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+	var _possibleConstructorReturn2 = __webpack_require__(218);
+
+	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+	var _inherits2 = __webpack_require__(254);
+
+	var _inherits3 = _interopRequireDefault(_inherits2);
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _icon = __webpack_require__(400);
+
+	var _icon2 = _interopRequireDefault(_icon);
+
+	var _rcProgress = __webpack_require__(534);
+
+	var _classnames = __webpack_require__(395);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+	var __rest = undefined && undefined.__rest || function (s, e) {
+	    var t = {};
+	    for (var p in s) {
+	        if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
+	    }if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+	        if (e.indexOf(p[i]) < 0) t[p[i]] = s[p[i]];
+	    }return t;
+	};
+
+	var statusColorMap = {
+	    normal: '#108ee9',
+	    exception: '#ff5500',
+	    success: '#87d068'
+	};
+
+	var Progress = function (_React$Component) {
+	    (0, _inherits3["default"])(Progress, _React$Component);
+
+	    function Progress() {
+	        (0, _classCallCheck3["default"])(this, Progress);
+	        return (0, _possibleConstructorReturn3["default"])(this, _React$Component.apply(this, arguments));
+	    }
+
+	    Progress.prototype.render = function render() {
+	        var _classNames;
+
+	        var props = this.props;
+
+	        var prefixCls = props.prefixCls,
+	            className = props.className,
+	            _props$percent = props.percent,
+	            percent = _props$percent === undefined ? 0 : _props$percent,
+	            status = props.status,
+	            format = props.format,
+	            trailColor = props.trailColor,
+	            type = props.type,
+	            strokeWidth = props.strokeWidth,
+	            width = props.width,
+	            showInfo = props.showInfo,
+	            _props$gapDegree = props.gapDegree,
+	            gapDegree = _props$gapDegree === undefined ? 0 : _props$gapDegree,
+	            gapPosition = props.gapPosition,
+	            restProps = __rest(props, ["prefixCls", "className", "percent", "status", "format", "trailColor", "type", "strokeWidth", "width", "showInfo", "gapDegree", "gapPosition"]);
+
+	        var progressStatus = parseInt(percent.toString(), 10) >= 100 && !('status' in props) ? 'success' : status || 'normal';
+	        var progressInfo = void 0;
+	        var progress = void 0;
+	        var textFormatter = format || function (percentNumber) {
+	            return percentNumber + '%';
+	        };
+	        if (showInfo) {
+	            var text = void 0;
+	            var iconType = type === 'circle' || type === 'dashboard' ? '' : '-circle';
+	            if (progressStatus === 'exception') {
+	                text = format ? textFormatter(percent) : _react2["default"].createElement(_icon2["default"], { type: 'cross' + iconType });
+	            } else if (progressStatus === 'success') {
+	                text = format ? textFormatter(percent) : _react2["default"].createElement(_icon2["default"], { type: 'check' + iconType });
+	            } else {
+	                text = textFormatter(percent);
+	            }
+	            progressInfo = _react2["default"].createElement(
+	                'span',
+	                { className: prefixCls + '-text' },
+	                text
+	            );
+	        }
+	        if (type === 'line') {
+	            var percentStyle = {
+	                width: percent + '%',
+	                height: strokeWidth || 10
+	            };
+	            progress = _react2["default"].createElement(
+	                'div',
+	                null,
+	                _react2["default"].createElement(
+	                    'div',
+	                    { className: prefixCls + '-outer' },
+	                    _react2["default"].createElement(
+	                        'div',
+	                        { className: prefixCls + '-inner' },
+	                        _react2["default"].createElement('div', { className: prefixCls + '-bg', style: percentStyle })
+	                    )
+	                ),
+	                progressInfo
+	            );
+	        } else if (type === 'circle' || type === 'dashboard') {
+	            var circleSize = width || 132;
+	            var circleStyle = {
+	                width: circleSize,
+	                height: circleSize,
+	                fontSize: circleSize * 0.16 + 6
+	            };
+	            var circleWidth = strokeWidth || 6;
+	            var gapPos = gapPosition || type === 'dashboard' && 'bottom' || 'top';
+	            var gapDeg = gapDegree || type === 'dashboard' && 75;
+	            progress = _react2["default"].createElement(
+	                'div',
+	                { className: prefixCls + '-inner', style: circleStyle },
+	                _react2["default"].createElement(_rcProgress.Circle, { percent: percent, strokeWidth: circleWidth, trailWidth: circleWidth, strokeColor: statusColorMap[progressStatus], trailColor: trailColor, prefixCls: prefixCls, gapDegree: gapDeg, gapPosition: gapPos }),
+	                progressInfo
+	            );
+	        }
+	        var classString = (0, _classnames2["default"])(prefixCls, (_classNames = {}, (0, _defineProperty3["default"])(_classNames, prefixCls + '-' + (type === 'dashboard' && 'circle' || type), true), (0, _defineProperty3["default"])(_classNames, prefixCls + '-status-' + progressStatus, true), (0, _defineProperty3["default"])(_classNames, prefixCls + '-show-info', showInfo), _classNames), className);
+	        return _react2["default"].createElement(
+	            'div',
+	            (0, _extends3["default"])({}, restProps, { className: classString }),
+	            progress
+	        );
+	    };
+
+	    return Progress;
+	}(_react2["default"].Component);
+
+	exports["default"] = Progress;
+
+	Progress.defaultProps = {
+	    type: 'line',
+	    percent: 0,
+	    showInfo: true,
+	    trailColor: '#f3f3f3',
+	    prefixCls: 'ant-progress'
+	};
+	Progress.propTypes = {
+	    status: _react.PropTypes.oneOf(['normal', 'exception', 'active', 'success']),
+	    type: _react.PropTypes.oneOf(['line', 'circle', 'dashboard']),
+	    showInfo: _react.PropTypes.bool,
+	    percent: _react.PropTypes.number,
+	    width: _react.PropTypes.number,
+	    strokeWidth: _react.PropTypes.number,
+	    trailColor: _react.PropTypes.string,
+	    format: _react.PropTypes.func,
+	    gapDegree: _react.PropTypes.number
+	};
+	module.exports = exports['default'];
+
+/***/ },
+/* 534 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _Line = __webpack_require__(535);
+
+	var _Line2 = _interopRequireDefault(_Line);
+
+	var _Circle = __webpack_require__(537);
+
+	var _Circle2 = _interopRequireDefault(_Circle);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+	exports["default"] = {
+	  Line: _Line2["default"],
+	  Circle: _Circle2["default"]
+	};
+	module.exports = exports['default'];
+
+/***/ },
+/* 535 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _mixin = __webpack_require__(536);
+
+	var _mixin2 = _interopRequireDefault(_mixin);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; } /* eslint-disable react/prop-types */
+
+
+	exports["default"] = _react2["default"].createClass({
+	  displayName: 'Line',
+
+	  mixins: [_mixin2["default"]],
+	  render: function render() {
+	    var _this = this;
+
+	    var _props = this.props;
+	    var prefixCls = _props.prefixCls;
+	    var strokeWidth = _props.strokeWidth;
+	    var trailWidth = _props.trailWidth;
+	    var strokeColor = _props.strokeColor;
+	    var trailColor = _props.trailColor;
+	    var strokeLinecap = _props.strokeLinecap;
+	    var percent = _props.percent;
+	    var style = _props.style;
+	    var className = _props.className;
+
+	    var restProps = _objectWithoutProperties(_props, ['prefixCls', 'strokeWidth', 'trailWidth', 'strokeColor', 'trailColor', 'strokeLinecap', 'percent', 'style', 'className']);
+
+	    var pathStyle = {
+	      strokeDasharray: '100px, 100px',
+	      strokeDashoffset: 100 - percent + 'px',
+	      transition: 'stroke-dashoffset 0.3s ease 0s, stroke 0.3s linear'
+	    };
+
+	    var center = strokeWidth / 2;
+	    var right = 100 - strokeWidth / 2;
+	    var pathString = 'M ' + center + ',' + center + ' L ' + right + ',' + center;
+	    var viewBoxString = '0 0 100 ' + strokeWidth;
+
+	    return _react2["default"].createElement(
+	      'svg',
+	      _extends({
+	        className: prefixCls + '-line ' + className,
+	        viewBox: viewBoxString,
+	        preserveAspectRatio: 'none',
+	        style: style
+	      }, restProps),
+	      _react2["default"].createElement('path', {
+	        className: prefixCls + '-line-trail',
+	        d: pathString,
+	        strokeLinecap: strokeLinecap,
+	        stroke: trailColor,
+	        strokeWidth: trailWidth || strokeWidth,
+	        fillOpacity: '0'
+	      }),
+	      _react2["default"].createElement('path', {
+	        className: prefixCls + '-line-path',
+	        d: pathString,
+	        strokeLinecap: strokeLinecap,
+	        stroke: strokeColor,
+	        strokeWidth: strokeWidth,
+	        fillOpacity: '0',
+	        ref: function ref(path) {
+	          _this.path = path;
+	        },
+	        style: pathStyle
+	      })
+	    );
+	  }
+	});
+	module.exports = exports['default'];
+
+/***/ },
+/* 536 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	exports["default"] = {
+	  propTypes: {
+	    prefixCls: _react.PropTypes.string,
+	    strokeWidth: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.string]),
+	    strokeColor: _react.PropTypes.string,
+	    trailWidth: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.string]),
+	    trailColor: _react.PropTypes.string,
+	    strokeLinecap: _react.PropTypes.oneOf(['round', 'square']),
+	    style: _react.PropTypes.object,
+	    className: _react.PropTypes.string
+	  },
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      prefixCls: 'rc-progress',
+	      strokeWidth: 1,
+	      strokeColor: '#2db7f5',
+	      trailWidth: 1,
+	      trailColor: '#D9D9D9',
+	      strokeLinecap: 'round',
+	      className: ''
+	    };
+	  },
+	  componentDidUpdate: function componentDidUpdate() {
+	    var now = Date.now();
+	    this.path.style.transitionDuration = '0.3s, 0.3s';
+	    if (this.prevTimeStamp && now - this.prevTimeStamp < 100) {
+	      this.path.style.transitionDuration = '0s, 0s';
+	    }
+	    this.prevTimeStamp = Date.now();
+	  }
+	};
+	module.exports = exports['default'];
+
+/***/ },
+/* 537 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _mixin = __webpack_require__(536);
+
+	var _mixin2 = _interopRequireDefault(_mixin);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; } /* eslint-disable react/prop-types */
+
+
+	exports["default"] = _react2["default"].createClass({
+	  displayName: 'Circle',
+
+	  propTypes: {
+	    percent: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.string]),
+	    strokeWidth: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.string]),
+	    trailWidth: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.string]),
+	    className: _react.PropTypes.string,
+	    style: _react.PropTypes.object,
+	    trailColor: _react.PropTypes.string,
+	    strokeColor: _react.PropTypes.string,
+	    gapPosition: _react.PropTypes.oneOf(['top', 'bottom', 'left', 'right']),
+	    strokeLinecap: _react.PropTypes.string
+	  },
+	  mixins: [_mixin2["default"]],
+	  getPathStyles: function getPathStyles() {
+	    var _props = this.props;
+	    var percent = _props.percent;
+	    var strokeWidth = _props.strokeWidth;
+	    var _props$gapDegree = _props.gapDegree;
+	    var gapDegree = _props$gapDegree === undefined ? 0 : _props$gapDegree;
+	    var gapPosition = _props.gapPosition;
+
+	    var radius = 50 - strokeWidth / 2;
+	    var beginPositionX = 0;
+	    var beginPositionY = -radius;
+	    var endPositionX = 0;
+	    var endPositionY = -2 * radius;
+	    switch (gapPosition) {
+	      case 'left':
+	        beginPositionX = -radius;
+	        beginPositionY = 0;
+	        endPositionX = 2 * radius;
+	        endPositionY = 0;
+	        break;
+	      case 'right':
+	        beginPositionX = radius;
+	        beginPositionY = 0;
+	        endPositionX = -2 * radius;
+	        endPositionY = 0;
+	        break;
+	      case 'bottom':
+	        beginPositionY = radius;
+	        endPositionY = 2 * radius;
+	        break;
+	      default:
+	    }
+	    var pathString = 'M 50,50 m ' + beginPositionX + ',' + beginPositionY + '\n     a ' + radius + ',' + radius + ' 0 1 1 ' + endPositionX + ',' + -endPositionY + '\n     a ' + radius + ',' + radius + ' 0 1 1 ' + -endPositionX + ',' + endPositionY;
+	    var len = Math.PI * 2 * radius;
+	    var trailPathStyle = {
+	      strokeDasharray: len - gapDegree + 'px ' + len + 'px',
+	      strokeDashoffset: '-' + gapDegree / 2 + 'px',
+	      transition: 'stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s'
+	    };
+	    var strokePathStyle = {
+	      strokeDasharray: percent / 100 * (len - gapDegree) + 'px ' + len + 'px',
+	      strokeDashoffset: '-' + gapDegree / 2 + 'px',
+	      transition: 'stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s'
+	    };
+	    return { pathString: pathString, trailPathStyle: trailPathStyle, strokePathStyle: strokePathStyle };
+	  },
+	  render: function render() {
+	    var _this = this;
+
+	    var _props2 = this.props;
+	    var prefixCls = _props2.prefixCls;
+	    var strokeWidth = _props2.strokeWidth;
+	    var trailWidth = _props2.trailWidth;
+	    var strokeColor = _props2.strokeColor;
+	    var trailColor = _props2.trailColor;
+	    var strokeLinecap = _props2.strokeLinecap;
+	    var style = _props2.style;
+	    var className = _props2.className;
+
+	    var restProps = _objectWithoutProperties(_props2, ['prefixCls', 'strokeWidth', 'trailWidth', 'strokeColor', 'trailColor', 'strokeLinecap', 'style', 'className']);
+
+	    var _getPathStyles = this.getPathStyles();
+
+	    var pathString = _getPathStyles.pathString;
+	    var trailPathStyle = _getPathStyles.trailPathStyle;
+	    var strokePathStyle = _getPathStyles.strokePathStyle;
+
+	    delete restProps.percent;
+	    delete restProps.gapDegree;
+	    delete restProps.gapPosition;
+	    return _react2["default"].createElement(
+	      'svg',
+	      _extends({
+	        className: prefixCls + '-circle ' + className,
+	        viewBox: '0 0 100 100',
+	        style: style
+	      }, restProps),
+	      _react2["default"].createElement('path', {
+	        className: prefixCls + '-circle-trail',
+	        d: pathString,
+	        stroke: trailColor,
+	        strokeWidth: trailWidth || strokeWidth,
+	        fillOpacity: '0',
+	        style: trailPathStyle
+	      }),
+	      _react2["default"].createElement('path', {
+	        className: prefixCls + '-circle-path',
+	        d: pathString,
+	        strokeLinecap: strokeLinecap,
+	        stroke: strokeColor,
+	        strokeWidth: strokeWidth,
+	        fillOpacity: '0',
+	        ref: function ref(path) {
+	          _this.path = path;
+	        },
+	        style: strokePathStyle
+	      })
+	    );
+	  }
+	});
+	module.exports = exports['default'];
+
+/***/ },
+/* 538 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
@@ -56988,7 +57498,7 @@
 
 	var _col2 = _interopRequireDefault(_col);
 
-	var _DashboardSimpleInfo = __webpack_require__(533);
+	var _DashboardSimpleInfo = __webpack_require__(539);
 
 	var _DashboardSimpleInfo2 = _interopRequireDefault(_DashboardSimpleInfo);
 
@@ -57028,7 +57538,7 @@
 	exports.default = Dashboard;
 
 /***/ },
-/* 533 */
+/* 539 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57053,7 +57563,7 @@
 
 	var _col2 = _interopRequireDefault(_col);
 
-	var _reactSparklines = __webpack_require__(534);
+	var _reactSparklines = __webpack_require__(540);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -57102,7 +57612,7 @@
 	exports.default = DashboardSimpleInfo;
 
 /***/ },
-/* 534 */
+/* 540 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function webpackUniversalModuleDefinition(root, factory) {
@@ -58178,7 +58688,7 @@
 	;
 
 /***/ },
-/* 535 */
+/* 541 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -58186,55 +58696,55 @@
 	exports.__esModule = true;
 	exports.withRouter = exports.matchPath = exports.Switch = exports.StaticRouter = exports.Router = exports.Route = exports.Redirect = exports.Prompt = exports.NavLink = exports.MemoryRouter = exports.Link = exports.HashRouter = exports.BrowserRouter = undefined;
 
-	var _BrowserRouter2 = __webpack_require__(536);
+	var _BrowserRouter2 = __webpack_require__(542);
 
 	var _BrowserRouter3 = _interopRequireDefault(_BrowserRouter2);
 
-	var _HashRouter2 = __webpack_require__(564);
+	var _HashRouter2 = __webpack_require__(570);
 
 	var _HashRouter3 = _interopRequireDefault(_HashRouter2);
 
-	var _Link2 = __webpack_require__(566);
+	var _Link2 = __webpack_require__(572);
 
 	var _Link3 = _interopRequireDefault(_Link2);
 
-	var _MemoryRouter2 = __webpack_require__(567);
+	var _MemoryRouter2 = __webpack_require__(573);
 
 	var _MemoryRouter3 = _interopRequireDefault(_MemoryRouter2);
 
-	var _NavLink2 = __webpack_require__(568);
+	var _NavLink2 = __webpack_require__(574);
 
 	var _NavLink3 = _interopRequireDefault(_NavLink2);
 
-	var _Prompt2 = __webpack_require__(569);
+	var _Prompt2 = __webpack_require__(575);
 
 	var _Prompt3 = _interopRequireDefault(_Prompt2);
 
-	var _Redirect2 = __webpack_require__(570);
+	var _Redirect2 = __webpack_require__(576);
 
 	var _Redirect3 = _interopRequireDefault(_Redirect2);
 
-	var _Route2 = __webpack_require__(571);
+	var _Route2 = __webpack_require__(577);
 
 	var _Route3 = _interopRequireDefault(_Route2);
 
-	var _Router2 = __webpack_require__(572);
+	var _Router2 = __webpack_require__(578);
 
 	var _Router3 = _interopRequireDefault(_Router2);
 
-	var _StaticRouter2 = __webpack_require__(573);
+	var _StaticRouter2 = __webpack_require__(579);
 
 	var _StaticRouter3 = _interopRequireDefault(_StaticRouter2);
 
-	var _Switch2 = __webpack_require__(574);
+	var _Switch2 = __webpack_require__(580);
 
 	var _Switch3 = _interopRequireDefault(_Switch2);
 
-	var _matchPath2 = __webpack_require__(575);
+	var _matchPath2 = __webpack_require__(581);
 
 	var _matchPath3 = _interopRequireDefault(_matchPath2);
 
-	var _withRouter2 = __webpack_require__(576);
+	var _withRouter2 = __webpack_require__(582);
 
 	var _withRouter3 = _interopRequireDefault(_withRouter2);
 
@@ -58255,7 +58765,7 @@
 	exports.withRouter = _withRouter3.default;
 
 /***/ },
-/* 536 */
+/* 542 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -58266,15 +58776,15 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _propTypes = __webpack_require__(537);
+	var _propTypes = __webpack_require__(543);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _createBrowserHistory = __webpack_require__(542);
+	var _createBrowserHistory = __webpack_require__(548);
 
 	var _createBrowserHistory2 = _interopRequireDefault(_createBrowserHistory);
 
-	var _reactRouter = __webpack_require__(550);
+	var _reactRouter = __webpack_require__(556);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -58319,7 +58829,7 @@
 	exports.default = BrowserRouter;
 
 /***/ },
-/* 537 */
+/* 543 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -58346,17 +58856,17 @@
 	  // By explicitly using `prop-types` you are opting into new development behavior.
 	  // http://fb.me/prop-types-in-prod
 	  var throwOnDirectAccess = true;
-	  module.exports = __webpack_require__(538)(isValidElement, throwOnDirectAccess);
+	  module.exports = __webpack_require__(544)(isValidElement, throwOnDirectAccess);
 	} else {
 	  // By explicitly using `prop-types` you are opting into new production behavior.
 	  // http://fb.me/prop-types-in-prod
-	  module.exports = __webpack_require__(541)();
+	  module.exports = __webpack_require__(547)();
 	}
 
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 538 */
+/* 544 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -58374,8 +58884,8 @@
 	var invariant = __webpack_require__(8);
 	var warning = __webpack_require__(11);
 
-	var ReactPropTypesSecret = __webpack_require__(539);
-	var checkPropTypes = __webpack_require__(540);
+	var ReactPropTypesSecret = __webpack_require__(545);
+	var checkPropTypes = __webpack_require__(546);
 
 	module.exports = function(isValidElement, throwOnDirectAccess) {
 	  /* global Symbol */
@@ -58841,7 +59351,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 539 */
+/* 545 */
 /***/ function(module, exports) {
 
 	/**
@@ -58861,7 +59371,7 @@
 
 
 /***/ },
-/* 540 */
+/* 546 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -58878,7 +59388,7 @@
 	if (process.env.NODE_ENV !== 'production') {
 	  var invariant = __webpack_require__(8);
 	  var warning = __webpack_require__(11);
-	  var ReactPropTypesSecret = __webpack_require__(539);
+	  var ReactPropTypesSecret = __webpack_require__(545);
 	  var loggedTypeFailures = {};
 	}
 
@@ -58929,7 +59439,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 541 */
+/* 547 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -58989,7 +59499,7 @@
 
 
 /***/ },
-/* 542 */
+/* 548 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -59004,19 +59514,19 @@
 
 	var _warning2 = _interopRequireDefault(_warning);
 
-	var _invariant = __webpack_require__(543);
+	var _invariant = __webpack_require__(549);
 
 	var _invariant2 = _interopRequireDefault(_invariant);
 
-	var _LocationUtils = __webpack_require__(544);
+	var _LocationUtils = __webpack_require__(550);
 
-	var _PathUtils = __webpack_require__(547);
+	var _PathUtils = __webpack_require__(553);
 
-	var _createTransitionManager = __webpack_require__(548);
+	var _createTransitionManager = __webpack_require__(554);
 
 	var _createTransitionManager2 = _interopRequireDefault(_createTransitionManager);
 
-	var _DOMUtils = __webpack_require__(549);
+	var _DOMUtils = __webpack_require__(555);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -59302,7 +59812,7 @@
 	exports.default = createBrowserHistory;
 
 /***/ },
-/* 543 */
+/* 549 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -59360,7 +59870,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 544 */
+/* 550 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -59370,15 +59880,15 @@
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	var _resolvePathname = __webpack_require__(545);
+	var _resolvePathname = __webpack_require__(551);
 
 	var _resolvePathname2 = _interopRequireDefault(_resolvePathname);
 
-	var _valueEqual = __webpack_require__(546);
+	var _valueEqual = __webpack_require__(552);
 
 	var _valueEqual2 = _interopRequireDefault(_valueEqual);
 
-	var _PathUtils = __webpack_require__(547);
+	var _PathUtils = __webpack_require__(553);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -59428,7 +59938,7 @@
 	};
 
 /***/ },
-/* 545 */
+/* 551 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -59503,7 +60013,7 @@
 	module.exports = resolvePathname;
 
 /***/ },
-/* 546 */
+/* 552 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -59548,7 +60058,7 @@
 	exports.default = valueEqual;
 
 /***/ },
-/* 547 */
+/* 553 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -59612,7 +60122,7 @@
 	};
 
 /***/ },
-/* 548 */
+/* 554 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -59702,7 +60212,7 @@
 	exports.default = createTransitionManager;
 
 /***/ },
-/* 549 */
+/* 555 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -59762,7 +60272,7 @@
 	};
 
 /***/ },
-/* 550 */
+/* 556 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -59770,39 +60280,39 @@
 	exports.__esModule = true;
 	exports.withRouter = exports.matchPath = exports.Switch = exports.StaticRouter = exports.Router = exports.Route = exports.Redirect = exports.Prompt = exports.MemoryRouter = undefined;
 
-	var _MemoryRouter2 = __webpack_require__(551);
+	var _MemoryRouter2 = __webpack_require__(557);
 
 	var _MemoryRouter3 = _interopRequireDefault(_MemoryRouter2);
 
-	var _Prompt2 = __webpack_require__(554);
+	var _Prompt2 = __webpack_require__(560);
 
 	var _Prompt3 = _interopRequireDefault(_Prompt2);
 
-	var _Redirect2 = __webpack_require__(555);
+	var _Redirect2 = __webpack_require__(561);
 
 	var _Redirect3 = _interopRequireDefault(_Redirect2);
 
-	var _Route2 = __webpack_require__(556);
+	var _Route2 = __webpack_require__(562);
 
 	var _Route3 = _interopRequireDefault(_Route2);
 
-	var _Router2 = __webpack_require__(553);
+	var _Router2 = __webpack_require__(559);
 
 	var _Router3 = _interopRequireDefault(_Router2);
 
-	var _StaticRouter2 = __webpack_require__(560);
+	var _StaticRouter2 = __webpack_require__(566);
 
 	var _StaticRouter3 = _interopRequireDefault(_StaticRouter2);
 
-	var _Switch2 = __webpack_require__(561);
+	var _Switch2 = __webpack_require__(567);
 
 	var _Switch3 = _interopRequireDefault(_Switch2);
 
-	var _matchPath2 = __webpack_require__(557);
+	var _matchPath2 = __webpack_require__(563);
 
 	var _matchPath3 = _interopRequireDefault(_matchPath2);
 
-	var _withRouter2 = __webpack_require__(562);
+	var _withRouter2 = __webpack_require__(568);
 
 	var _withRouter3 = _interopRequireDefault(_withRouter2);
 
@@ -59819,7 +60329,7 @@
 	exports.withRouter = _withRouter3.default;
 
 /***/ },
-/* 551 */
+/* 557 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -59830,15 +60340,15 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _propTypes = __webpack_require__(537);
+	var _propTypes = __webpack_require__(543);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _createMemoryHistory = __webpack_require__(552);
+	var _createMemoryHistory = __webpack_require__(558);
 
 	var _createMemoryHistory2 = _interopRequireDefault(_createMemoryHistory);
 
-	var _Router = __webpack_require__(553);
+	var _Router = __webpack_require__(559);
 
 	var _Router2 = _interopRequireDefault(_Router);
 
@@ -59885,7 +60395,7 @@
 	exports.default = MemoryRouter;
 
 /***/ },
-/* 552 */
+/* 558 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -59900,11 +60410,11 @@
 
 	var _warning2 = _interopRequireDefault(_warning);
 
-	var _PathUtils = __webpack_require__(547);
+	var _PathUtils = __webpack_require__(553);
 
-	var _LocationUtils = __webpack_require__(544);
+	var _LocationUtils = __webpack_require__(550);
 
-	var _createTransitionManager = __webpack_require__(548);
+	var _createTransitionManager = __webpack_require__(554);
 
 	var _createTransitionManager2 = _interopRequireDefault(_createTransitionManager);
 
@@ -60060,7 +60570,7 @@
 	exports.default = createMemoryHistory;
 
 /***/ },
-/* 553 */
+/* 559 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60073,7 +60583,7 @@
 
 	var _warning2 = _interopRequireDefault(_warning);
 
-	var _invariant = __webpack_require__(543);
+	var _invariant = __webpack_require__(549);
 
 	var _invariant2 = _interopRequireDefault(_invariant);
 
@@ -60081,7 +60591,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _propTypes = __webpack_require__(537);
+	var _propTypes = __webpack_require__(543);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -60184,7 +60694,7 @@
 	exports.default = Router;
 
 /***/ },
-/* 554 */
+/* 560 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60195,7 +60705,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _propTypes = __webpack_require__(537);
+	var _propTypes = __webpack_require__(543);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -60273,7 +60783,7 @@
 	exports.default = Prompt;
 
 /***/ },
-/* 555 */
+/* 561 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60284,7 +60794,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _propTypes = __webpack_require__(537);
+	var _propTypes = __webpack_require__(543);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -60362,7 +60872,7 @@
 	exports.default = Redirect;
 
 /***/ },
-/* 556 */
+/* 562 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60379,11 +60889,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _propTypes = __webpack_require__(537);
+	var _propTypes = __webpack_require__(543);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _matchPath = __webpack_require__(557);
+	var _matchPath = __webpack_require__(563);
 
 	var _matchPath2 = _interopRequireDefault(_matchPath);
 
@@ -60512,14 +61022,14 @@
 	exports.default = Route;
 
 /***/ },
-/* 557 */
+/* 563 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	exports.__esModule = true;
 
-	var _pathToRegexp = __webpack_require__(558);
+	var _pathToRegexp = __webpack_require__(564);
 
 	var _pathToRegexp2 = _interopRequireDefault(_pathToRegexp);
 
@@ -60592,10 +61102,10 @@
 	exports.default = matchPath;
 
 /***/ },
-/* 558 */
+/* 564 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isarray = __webpack_require__(559)
+	var isarray = __webpack_require__(565)
 
 	/**
 	 * Expose `pathToRegexp`.
@@ -61024,7 +61534,7 @@
 
 
 /***/ },
-/* 559 */
+/* 565 */
 /***/ function(module, exports) {
 
 	module.exports = Array.isArray || function (arr) {
@@ -61033,7 +61543,7 @@
 
 
 /***/ },
-/* 560 */
+/* 566 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61042,7 +61552,7 @@
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	var _invariant = __webpack_require__(543);
+	var _invariant = __webpack_require__(549);
 
 	var _invariant2 = _interopRequireDefault(_invariant);
 
@@ -61050,13 +61560,13 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _propTypes = __webpack_require__(537);
+	var _propTypes = __webpack_require__(543);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _PathUtils = __webpack_require__(547);
+	var _PathUtils = __webpack_require__(553);
 
-	var _Router = __webpack_require__(553);
+	var _Router = __webpack_require__(559);
 
 	var _Router2 = _interopRequireDefault(_Router);
 
@@ -61215,7 +61725,7 @@
 	exports.default = StaticRouter;
 
 /***/ },
-/* 561 */
+/* 567 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61226,7 +61736,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _propTypes = __webpack_require__(537);
+	var _propTypes = __webpack_require__(543);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -61234,7 +61744,7 @@
 
 	var _warning2 = _interopRequireDefault(_warning);
 
-	var _matchPath = __webpack_require__(557);
+	var _matchPath = __webpack_require__(563);
 
 	var _matchPath2 = _interopRequireDefault(_matchPath);
 
@@ -61307,7 +61817,7 @@
 	exports.default = Switch;
 
 /***/ },
-/* 562 */
+/* 568 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61320,15 +61830,15 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _propTypes = __webpack_require__(537);
+	var _propTypes = __webpack_require__(543);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _hoistNonReactStatics = __webpack_require__(563);
+	var _hoistNonReactStatics = __webpack_require__(569);
 
 	var _hoistNonReactStatics2 = _interopRequireDefault(_hoistNonReactStatics);
 
-	var _Route = __webpack_require__(556);
+	var _Route = __webpack_require__(562);
 
 	var _Route2 = _interopRequireDefault(_Route);
 
@@ -61361,7 +61871,7 @@
 	exports.default = withRouter;
 
 /***/ },
-/* 563 */
+/* 569 */
 /***/ function(module, exports) {
 
 	/**
@@ -61417,7 +61927,7 @@
 
 
 /***/ },
-/* 564 */
+/* 570 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61428,15 +61938,15 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _propTypes = __webpack_require__(537);
+	var _propTypes = __webpack_require__(543);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _createHashHistory = __webpack_require__(565);
+	var _createHashHistory = __webpack_require__(571);
 
 	var _createHashHistory2 = _interopRequireDefault(_createHashHistory);
 
-	var _reactRouter = __webpack_require__(550);
+	var _reactRouter = __webpack_require__(556);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -61480,7 +61990,7 @@
 	exports.default = HashRouter;
 
 /***/ },
-/* 565 */
+/* 571 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61493,19 +62003,19 @@
 
 	var _warning2 = _interopRequireDefault(_warning);
 
-	var _invariant = __webpack_require__(543);
+	var _invariant = __webpack_require__(549);
 
 	var _invariant2 = _interopRequireDefault(_invariant);
 
-	var _LocationUtils = __webpack_require__(544);
+	var _LocationUtils = __webpack_require__(550);
 
-	var _PathUtils = __webpack_require__(547);
+	var _PathUtils = __webpack_require__(553);
 
-	var _createTransitionManager = __webpack_require__(548);
+	var _createTransitionManager = __webpack_require__(554);
 
 	var _createTransitionManager2 = _interopRequireDefault(_createTransitionManager);
 
-	var _DOMUtils = __webpack_require__(549);
+	var _DOMUtils = __webpack_require__(555);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -61807,7 +62317,7 @@
 	exports.default = createHashHistory;
 
 /***/ },
-/* 566 */
+/* 572 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61820,7 +62330,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _propTypes = __webpack_require__(537);
+	var _propTypes = __webpack_require__(543);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -61914,14 +62424,14 @@
 	exports.default = Link;
 
 /***/ },
-/* 567 */
+/* 573 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	exports.__esModule = true;
 
-	var _reactRouter = __webpack_require__(550);
+	var _reactRouter = __webpack_require__(556);
 
 	Object.defineProperty(exports, 'default', {
 	  enumerable: true,
@@ -61931,7 +62441,7 @@
 	});
 
 /***/ },
-/* 568 */
+/* 574 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61946,13 +62456,13 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _propTypes = __webpack_require__(537);
+	var _propTypes = __webpack_require__(543);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _reactRouter = __webpack_require__(550);
+	var _reactRouter = __webpack_require__(556);
 
-	var _Link = __webpack_require__(566);
+	var _Link = __webpack_require__(572);
 
 	var _Link2 = _interopRequireDefault(_Link);
 
@@ -62016,108 +62526,6 @@
 	exports.default = NavLink;
 
 /***/ },
-/* 569 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	exports.__esModule = true;
-
-	var _reactRouter = __webpack_require__(550);
-
-	Object.defineProperty(exports, 'default', {
-	  enumerable: true,
-	  get: function get() {
-	    return _reactRouter.Prompt;
-	  }
-	});
-
-/***/ },
-/* 570 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	exports.__esModule = true;
-
-	var _reactRouter = __webpack_require__(550);
-
-	Object.defineProperty(exports, 'default', {
-	  enumerable: true,
-	  get: function get() {
-	    return _reactRouter.Redirect;
-	  }
-	});
-
-/***/ },
-/* 571 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	exports.__esModule = true;
-
-	var _reactRouter = __webpack_require__(550);
-
-	Object.defineProperty(exports, 'default', {
-	  enumerable: true,
-	  get: function get() {
-	    return _reactRouter.Route;
-	  }
-	});
-
-/***/ },
-/* 572 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	exports.__esModule = true;
-
-	var _reactRouter = __webpack_require__(550);
-
-	Object.defineProperty(exports, 'default', {
-	  enumerable: true,
-	  get: function get() {
-	    return _reactRouter.Router;
-	  }
-	});
-
-/***/ },
-/* 573 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	exports.__esModule = true;
-
-	var _reactRouter = __webpack_require__(550);
-
-	Object.defineProperty(exports, 'default', {
-	  enumerable: true,
-	  get: function get() {
-	    return _reactRouter.StaticRouter;
-	  }
-	});
-
-/***/ },
-/* 574 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	exports.__esModule = true;
-
-	var _reactRouter = __webpack_require__(550);
-
-	Object.defineProperty(exports, 'default', {
-	  enumerable: true,
-	  get: function get() {
-	    return _reactRouter.Switch;
-	  }
-	});
-
-/***/ },
 /* 575 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -62125,12 +62533,12 @@
 
 	exports.__esModule = true;
 
-	var _reactRouter = __webpack_require__(550);
+	var _reactRouter = __webpack_require__(556);
 
 	Object.defineProperty(exports, 'default', {
 	  enumerable: true,
 	  get: function get() {
-	    return _reactRouter.matchPath;
+	    return _reactRouter.Prompt;
 	  }
 	});
 
@@ -62142,7 +62550,109 @@
 
 	exports.__esModule = true;
 
-	var _reactRouter = __webpack_require__(550);
+	var _reactRouter = __webpack_require__(556);
+
+	Object.defineProperty(exports, 'default', {
+	  enumerable: true,
+	  get: function get() {
+	    return _reactRouter.Redirect;
+	  }
+	});
+
+/***/ },
+/* 577 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+
+	var _reactRouter = __webpack_require__(556);
+
+	Object.defineProperty(exports, 'default', {
+	  enumerable: true,
+	  get: function get() {
+	    return _reactRouter.Route;
+	  }
+	});
+
+/***/ },
+/* 578 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+
+	var _reactRouter = __webpack_require__(556);
+
+	Object.defineProperty(exports, 'default', {
+	  enumerable: true,
+	  get: function get() {
+	    return _reactRouter.Router;
+	  }
+	});
+
+/***/ },
+/* 579 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+
+	var _reactRouter = __webpack_require__(556);
+
+	Object.defineProperty(exports, 'default', {
+	  enumerable: true,
+	  get: function get() {
+	    return _reactRouter.StaticRouter;
+	  }
+	});
+
+/***/ },
+/* 580 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+
+	var _reactRouter = __webpack_require__(556);
+
+	Object.defineProperty(exports, 'default', {
+	  enumerable: true,
+	  get: function get() {
+	    return _reactRouter.Switch;
+	  }
+	});
+
+/***/ },
+/* 581 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+
+	var _reactRouter = __webpack_require__(556);
+
+	Object.defineProperty(exports, 'default', {
+	  enumerable: true,
+	  get: function get() {
+	    return _reactRouter.matchPath;
+	  }
+	});
+
+/***/ },
+/* 582 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+
+	var _reactRouter = __webpack_require__(556);
 
 	Object.defineProperty(exports, 'default', {
 	  enumerable: true,
@@ -62152,7 +62662,7 @@
 	});
 
 /***/ },
-/* 577 */
+/* 583 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62165,15 +62675,15 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Header = __webpack_require__(578);
+	var _Header = __webpack_require__(584);
 
 	var _Header2 = _interopRequireDefault(_Header);
 
-	var _SideMenu = __webpack_require__(579);
+	var _SideMenu = __webpack_require__(585);
 
 	var _SideMenu2 = _interopRequireDefault(_SideMenu);
 
-	var _LoginInfo = __webpack_require__(583);
+	var _LoginInfo = __webpack_require__(589);
 
 	var _LoginInfo2 = _interopRequireDefault(_LoginInfo);
 
@@ -62182,10 +62692,19 @@
 	var Workspace = function Workspace(_ref) {
 	  var children = _ref.children;
 
+
+	  var location = window.location.href;
+	  var pageTitle = '';
+
+	  if (location.indexOf('dashboard') > 0) {
+	    pageTitle = 'Dashboard';
+	  } else if (location.indexOf('student') > 0) {
+	    pageTitle = 'Student';
+	  }
 	  return _react2.default.createElement(
 	    'div',
 	    null,
-	    _react2.default.createElement(_Header2.default, { pageTitle: 'Dashboard' }),
+	    _react2.default.createElement(_Header2.default, { pageTitle: pageTitle }),
 	    _react2.default.createElement(
 	      'div',
 	      { className: 'workspace-left-menu' },
@@ -62203,7 +62722,7 @@
 	exports.default = Workspace;
 
 /***/ },
-/* 578 */
+/* 584 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -62267,7 +62786,7 @@
 	exports.default = Header;
 
 /***/ },
-/* 579 */
+/* 585 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62280,7 +62799,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _menu = __webpack_require__(580);
+	var _menu = __webpack_require__(586);
 
 	var _menu2 = _interopRequireDefault(_menu);
 
@@ -62434,7 +62953,7 @@
 	exports.default = SideMenu;
 
 /***/ },
-/* 580 */
+/* 586 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62468,7 +62987,7 @@
 
 	var _rcMenu2 = _interopRequireDefault(_rcMenu);
 
-	var _openAnimation = __webpack_require__(581);
+	var _openAnimation = __webpack_require__(587);
 
 	var _openAnimation2 = _interopRequireDefault(_openAnimation);
 
@@ -62591,7 +63110,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 581 */
+/* 587 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62604,7 +63123,7 @@
 
 	var _cssAnimation2 = _interopRequireDefault(_cssAnimation);
 
-	var _getRequestAnimationFrame = __webpack_require__(582);
+	var _getRequestAnimationFrame = __webpack_require__(588);
 
 	var _getRequestAnimationFrame2 = _interopRequireDefault(_getRequestAnimationFrame);
 
@@ -62659,7 +63178,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 582 */
+/* 588 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -62708,7 +63227,7 @@
 	}
 
 /***/ },
-/* 583 */
+/* 589 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62783,7 +63302,7 @@
 	exports.default = LoginInfo;
 
 /***/ },
-/* 584 */
+/* 590 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62792,498 +63311,133 @@
 	  value: true
 	});
 
-	var _progress = __webpack_require__(585);
-
-	var _progress2 = _interopRequireDefault(_progress);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-	exports["default"] = _progress2["default"];
-	module.exports = exports['default'];
-
-/***/ },
-/* 585 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports["default"] = undefined;
-
-	var _extends2 = __webpack_require__(179);
-
-	var _extends3 = _interopRequireDefault(_extends2);
-
-	var _defineProperty2 = __webpack_require__(391);
-
-	var _defineProperty3 = _interopRequireDefault(_defineProperty2);
-
-	var _classCallCheck2 = __webpack_require__(217);
-
-	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-
-	var _possibleConstructorReturn2 = __webpack_require__(218);
-
-	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
-
-	var _inherits2 = __webpack_require__(254);
-
-	var _inherits3 = _interopRequireDefault(_inherits2);
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _icon = __webpack_require__(400);
+	var _row = __webpack_require__(388);
 
-	var _icon2 = _interopRequireDefault(_icon);
+	var _row2 = _interopRequireDefault(_row);
 
-	var _rcProgress = __webpack_require__(586);
+	var _col = __webpack_require__(397);
 
-	var _classnames = __webpack_require__(395);
+	var _col2 = _interopRequireDefault(_col);
 
-	var _classnames2 = _interopRequireDefault(_classnames);
+	var _button = __webpack_require__(398);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	var _button2 = _interopRequireDefault(_button);
 
-	var __rest = undefined && undefined.__rest || function (s, e) {
-	    var t = {};
-	    for (var p in s) {
-	        if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
-	    }if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-	        if (e.indexOf(p[i]) < 0) t[p[i]] = s[p[i]];
-	    }return t;
-	};
+	var _radio = __webpack_require__(403);
 
-	var statusColorMap = {
-	    normal: '#108ee9',
-	    exception: '#ff5500',
-	    success: '#87d068'
-	};
+	var _radio2 = _interopRequireDefault(_radio);
 
-	var Progress = function (_React$Component) {
-	    (0, _inherits3["default"])(Progress, _React$Component);
+	var _select = __webpack_require__(417);
 
-	    function Progress() {
-	        (0, _classCallCheck3["default"])(this, Progress);
-	        return (0, _possibleConstructorReturn3["default"])(this, _React$Component.apply(this, arguments));
+	var _select2 = _interopRequireDefault(_select);
+
+	var _input = __webpack_require__(484);
+
+	var _input2 = _interopRequireDefault(_input);
+
+	var _pagination = __webpack_require__(489);
+
+	var _pagination2 = _interopRequireDefault(_pagination);
+
+	var _axios = __webpack_require__(499);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	var _StudentCard = __webpack_require__(528);
+
+	var _StudentCard2 = _interopRequireDefault(_StudentCard);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Option = _select2.default.Option;
+
+	var StudentDetail = function (_Component) {
+	  _inherits(StudentDetail, _Component);
+
+	  function StudentDetail(props) {
+	    _classCallCheck(this, StudentDetail);
+
+	    var _this = _possibleConstructorReturn(this, (StudentDetail.__proto__ || Object.getPrototypeOf(StudentDetail)).call(this, props));
+
+	    _this.state = {
+	      student: {},
+	      studentId: _this.props.match.params.studentId
+	    };
+	    return _this;
+	  }
+
+	  _createClass(StudentDetail, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.getStudent();
 	    }
+	  }, {
+	    key: 'getStudent',
+	    value: function getStudent() {
+	      var _this2 = this;
 
-	    Progress.prototype.render = function render() {
-	        var _classNames;
-
-	        var props = this.props;
-
-	        var prefixCls = props.prefixCls,
-	            className = props.className,
-	            _props$percent = props.percent,
-	            percent = _props$percent === undefined ? 0 : _props$percent,
-	            status = props.status,
-	            format = props.format,
-	            trailColor = props.trailColor,
-	            type = props.type,
-	            strokeWidth = props.strokeWidth,
-	            width = props.width,
-	            showInfo = props.showInfo,
-	            _props$gapDegree = props.gapDegree,
-	            gapDegree = _props$gapDegree === undefined ? 0 : _props$gapDegree,
-	            gapPosition = props.gapPosition,
-	            restProps = __rest(props, ["prefixCls", "className", "percent", "status", "format", "trailColor", "type", "strokeWidth", "width", "showInfo", "gapDegree", "gapPosition"]);
-
-	        var progressStatus = parseInt(percent.toString(), 10) >= 100 && !('status' in props) ? 'success' : status || 'normal';
-	        var progressInfo = void 0;
-	        var progress = void 0;
-	        var textFormatter = format || function (percentNumber) {
-	            return percentNumber + '%';
-	        };
-	        if (showInfo) {
-	            var text = void 0;
-	            var iconType = type === 'circle' || type === 'dashboard' ? '' : '-circle';
-	            if (progressStatus === 'exception') {
-	                text = format ? textFormatter(percent) : _react2["default"].createElement(_icon2["default"], { type: 'cross' + iconType });
-	            } else if (progressStatus === 'success') {
-	                text = format ? textFormatter(percent) : _react2["default"].createElement(_icon2["default"], { type: 'check' + iconType });
-	            } else {
-	                text = textFormatter(percent);
-	            }
-	            progressInfo = _react2["default"].createElement(
-	                'span',
-	                { className: prefixCls + '-text' },
-	                text
-	            );
-	        }
-	        if (type === 'line') {
-	            var percentStyle = {
-	                width: percent + '%',
-	                height: strokeWidth || 10
-	            };
-	            progress = _react2["default"].createElement(
-	                'div',
-	                null,
-	                _react2["default"].createElement(
-	                    'div',
-	                    { className: prefixCls + '-outer' },
-	                    _react2["default"].createElement(
-	                        'div',
-	                        { className: prefixCls + '-inner' },
-	                        _react2["default"].createElement('div', { className: prefixCls + '-bg', style: percentStyle })
-	                    )
-	                ),
-	                progressInfo
-	            );
-	        } else if (type === 'circle' || type === 'dashboard') {
-	            var circleSize = width || 132;
-	            var circleStyle = {
-	                width: circleSize,
-	                height: circleSize,
-	                fontSize: circleSize * 0.16 + 6
-	            };
-	            var circleWidth = strokeWidth || 6;
-	            var gapPos = gapPosition || type === 'dashboard' && 'bottom' || 'top';
-	            var gapDeg = gapDegree || type === 'dashboard' && 75;
-	            progress = _react2["default"].createElement(
-	                'div',
-	                { className: prefixCls + '-inner', style: circleStyle },
-	                _react2["default"].createElement(_rcProgress.Circle, { percent: percent, strokeWidth: circleWidth, trailWidth: circleWidth, strokeColor: statusColorMap[progressStatus], trailColor: trailColor, prefixCls: prefixCls, gapDegree: gapDeg, gapPosition: gapPos }),
-	                progressInfo
-	            );
-	        }
-	        var classString = (0, _classnames2["default"])(prefixCls, (_classNames = {}, (0, _defineProperty3["default"])(_classNames, prefixCls + '-' + (type === 'dashboard' && 'circle' || type), true), (0, _defineProperty3["default"])(_classNames, prefixCls + '-status-' + progressStatus, true), (0, _defineProperty3["default"])(_classNames, prefixCls + '-show-info', showInfo), _classNames), className);
-	        return _react2["default"].createElement(
+	      var url = '/students/' + this.state.studentId;
+	      _axios2.default.get(url, {
+	        params: {}
+	      }).then(function (response) {
+	        _this2.setState({
+	          student: response.data
+	        });
+	      }).catch(function (error) {
+	        console.log(error);
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      console.dir(this.props);
+	      var student = this.state.student;
+	      var stambuk = '';
+	      if (student.stambuk_lama && student.stambuk_baru) {
+	        stambuk = student.stambuk_lama + ' - ' + student.stambuk_baru;
+	      }
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'student-detail' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'student-detail-header' },
+	          _react2.default.createElement(
 	            'div',
-	            (0, _extends3["default"])({}, restProps, { className: classString }),
-	            progress
-	        );
-	    };
-
-	    return Progress;
-	}(_react2["default"].Component);
-
-	exports["default"] = Progress;
-
-	Progress.defaultProps = {
-	    type: 'line',
-	    percent: 0,
-	    showInfo: true,
-	    trailColor: '#f3f3f3',
-	    prefixCls: 'ant-progress'
-	};
-	Progress.propTypes = {
-	    status: _react.PropTypes.oneOf(['normal', 'exception', 'active', 'success']),
-	    type: _react.PropTypes.oneOf(['line', 'circle', 'dashboard']),
-	    showInfo: _react.PropTypes.bool,
-	    percent: _react.PropTypes.number,
-	    width: _react.PropTypes.number,
-	    strokeWidth: _react.PropTypes.number,
-	    trailColor: _react.PropTypes.string,
-	    format: _react.PropTypes.func,
-	    gapDegree: _react.PropTypes.number
-	};
-	module.exports = exports['default'];
-
-/***/ },
-/* 586 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _Line = __webpack_require__(587);
-
-	var _Line2 = _interopRequireDefault(_Line);
-
-	var _Circle = __webpack_require__(589);
-
-	var _Circle2 = _interopRequireDefault(_Circle);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-	exports["default"] = {
-	  Line: _Line2["default"],
-	  Circle: _Circle2["default"]
-	};
-	module.exports = exports['default'];
-
-/***/ },
-/* 587 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _mixin = __webpack_require__(588);
-
-	var _mixin2 = _interopRequireDefault(_mixin);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; } /* eslint-disable react/prop-types */
-
-
-	exports["default"] = _react2["default"].createClass({
-	  displayName: 'Line',
-
-	  mixins: [_mixin2["default"]],
-	  render: function render() {
-	    var _this = this;
-
-	    var _props = this.props;
-	    var prefixCls = _props.prefixCls;
-	    var strokeWidth = _props.strokeWidth;
-	    var trailWidth = _props.trailWidth;
-	    var strokeColor = _props.strokeColor;
-	    var trailColor = _props.trailColor;
-	    var strokeLinecap = _props.strokeLinecap;
-	    var percent = _props.percent;
-	    var style = _props.style;
-	    var className = _props.className;
-
-	    var restProps = _objectWithoutProperties(_props, ['prefixCls', 'strokeWidth', 'trailWidth', 'strokeColor', 'trailColor', 'strokeLinecap', 'percent', 'style', 'className']);
-
-	    var pathStyle = {
-	      strokeDasharray: '100px, 100px',
-	      strokeDashoffset: 100 - percent + 'px',
-	      transition: 'stroke-dashoffset 0.3s ease 0s, stroke 0.3s linear'
-	    };
-
-	    var center = strokeWidth / 2;
-	    var right = 100 - strokeWidth / 2;
-	    var pathString = 'M ' + center + ',' + center + ' L ' + right + ',' + center;
-	    var viewBoxString = '0 0 100 ' + strokeWidth;
-
-	    return _react2["default"].createElement(
-	      'svg',
-	      _extends({
-	        className: prefixCls + '-line ' + className,
-	        viewBox: viewBoxString,
-	        preserveAspectRatio: 'none',
-	        style: style
-	      }, restProps),
-	      _react2["default"].createElement('path', {
-	        className: prefixCls + '-line-trail',
-	        d: pathString,
-	        strokeLinecap: strokeLinecap,
-	        stroke: trailColor,
-	        strokeWidth: trailWidth || strokeWidth,
-	        fillOpacity: '0'
-	      }),
-	      _react2["default"].createElement('path', {
-	        className: prefixCls + '-line-path',
-	        d: pathString,
-	        strokeLinecap: strokeLinecap,
-	        stroke: strokeColor,
-	        strokeWidth: strokeWidth,
-	        fillOpacity: '0',
-	        ref: function ref(path) {
-	          _this.path = path;
-	        },
-	        style: pathStyle
-	      })
-	    );
-	  }
-	});
-	module.exports = exports['default'];
-
-/***/ },
-/* 588 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	exports["default"] = {
-	  propTypes: {
-	    prefixCls: _react.PropTypes.string,
-	    strokeWidth: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.string]),
-	    strokeColor: _react.PropTypes.string,
-	    trailWidth: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.string]),
-	    trailColor: _react.PropTypes.string,
-	    strokeLinecap: _react.PropTypes.oneOf(['round', 'square']),
-	    style: _react.PropTypes.object,
-	    className: _react.PropTypes.string
-	  },
-	  getDefaultProps: function getDefaultProps() {
-	    return {
-	      prefixCls: 'rc-progress',
-	      strokeWidth: 1,
-	      strokeColor: '#2db7f5',
-	      trailWidth: 1,
-	      trailColor: '#D9D9D9',
-	      strokeLinecap: 'round',
-	      className: ''
-	    };
-	  },
-	  componentDidUpdate: function componentDidUpdate() {
-	    var now = Date.now();
-	    this.path.style.transitionDuration = '0.3s, 0.3s';
-	    if (this.prevTimeStamp && now - this.prevTimeStamp < 100) {
-	      this.path.style.transitionDuration = '0s, 0s';
+	            { className: 'avatar-container' },
+	            _react2.default.createElement('img', { className: 'avatar', src: 'assets/images/avatar.png', alt: 'Avatar' }),
+	            _react2.default.createElement(
+	              'span',
+	              { className: 'student-name' },
+	              student.nama
+	            ),
+	            _react2.default.createElement(
+	              'span',
+	              { className: 'stambuk' },
+	              stambuk
+	            )
+	          )
+	        )
+	      );
 	    }
-	    this.prevTimeStamp = Date.now();
-	  }
-	};
-	module.exports = exports['default'];
+	  }]);
 
-/***/ },
-/* 589 */
-/***/ function(module, exports, __webpack_require__) {
+	  return StudentDetail;
+	}(_react.Component);
 
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _mixin = __webpack_require__(588);
-
-	var _mixin2 = _interopRequireDefault(_mixin);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; } /* eslint-disable react/prop-types */
-
-
-	exports["default"] = _react2["default"].createClass({
-	  displayName: 'Circle',
-
-	  propTypes: {
-	    percent: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.string]),
-	    strokeWidth: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.string]),
-	    trailWidth: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.string]),
-	    className: _react.PropTypes.string,
-	    style: _react.PropTypes.object,
-	    trailColor: _react.PropTypes.string,
-	    strokeColor: _react.PropTypes.string,
-	    gapPosition: _react.PropTypes.oneOf(['top', 'bottom', 'left', 'right']),
-	    strokeLinecap: _react.PropTypes.string
-	  },
-	  mixins: [_mixin2["default"]],
-	  getPathStyles: function getPathStyles() {
-	    var _props = this.props;
-	    var percent = _props.percent;
-	    var strokeWidth = _props.strokeWidth;
-	    var _props$gapDegree = _props.gapDegree;
-	    var gapDegree = _props$gapDegree === undefined ? 0 : _props$gapDegree;
-	    var gapPosition = _props.gapPosition;
-
-	    var radius = 50 - strokeWidth / 2;
-	    var beginPositionX = 0;
-	    var beginPositionY = -radius;
-	    var endPositionX = 0;
-	    var endPositionY = -2 * radius;
-	    switch (gapPosition) {
-	      case 'left':
-	        beginPositionX = -radius;
-	        beginPositionY = 0;
-	        endPositionX = 2 * radius;
-	        endPositionY = 0;
-	        break;
-	      case 'right':
-	        beginPositionX = radius;
-	        beginPositionY = 0;
-	        endPositionX = -2 * radius;
-	        endPositionY = 0;
-	        break;
-	      case 'bottom':
-	        beginPositionY = radius;
-	        endPositionY = 2 * radius;
-	        break;
-	      default:
-	    }
-	    var pathString = 'M 50,50 m ' + beginPositionX + ',' + beginPositionY + '\n     a ' + radius + ',' + radius + ' 0 1 1 ' + endPositionX + ',' + -endPositionY + '\n     a ' + radius + ',' + radius + ' 0 1 1 ' + -endPositionX + ',' + endPositionY;
-	    var len = Math.PI * 2 * radius;
-	    var trailPathStyle = {
-	      strokeDasharray: len - gapDegree + 'px ' + len + 'px',
-	      strokeDashoffset: '-' + gapDegree / 2 + 'px',
-	      transition: 'stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s'
-	    };
-	    var strokePathStyle = {
-	      strokeDasharray: percent / 100 * (len - gapDegree) + 'px ' + len + 'px',
-	      strokeDashoffset: '-' + gapDegree / 2 + 'px',
-	      transition: 'stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s'
-	    };
-	    return { pathString: pathString, trailPathStyle: trailPathStyle, strokePathStyle: strokePathStyle };
-	  },
-	  render: function render() {
-	    var _this = this;
-
-	    var _props2 = this.props;
-	    var prefixCls = _props2.prefixCls;
-	    var strokeWidth = _props2.strokeWidth;
-	    var trailWidth = _props2.trailWidth;
-	    var strokeColor = _props2.strokeColor;
-	    var trailColor = _props2.trailColor;
-	    var strokeLinecap = _props2.strokeLinecap;
-	    var style = _props2.style;
-	    var className = _props2.className;
-
-	    var restProps = _objectWithoutProperties(_props2, ['prefixCls', 'strokeWidth', 'trailWidth', 'strokeColor', 'trailColor', 'strokeLinecap', 'style', 'className']);
-
-	    var _getPathStyles = this.getPathStyles();
-
-	    var pathString = _getPathStyles.pathString;
-	    var trailPathStyle = _getPathStyles.trailPathStyle;
-	    var strokePathStyle = _getPathStyles.strokePathStyle;
-
-	    delete restProps.percent;
-	    delete restProps.gapDegree;
-	    delete restProps.gapPosition;
-	    return _react2["default"].createElement(
-	      'svg',
-	      _extends({
-	        className: prefixCls + '-circle ' + className,
-	        viewBox: '0 0 100 100',
-	        style: style
-	      }, restProps),
-	      _react2["default"].createElement('path', {
-	        className: prefixCls + '-circle-trail',
-	        d: pathString,
-	        stroke: trailColor,
-	        strokeWidth: trailWidth || strokeWidth,
-	        fillOpacity: '0',
-	        style: trailPathStyle
-	      }),
-	      _react2["default"].createElement('path', {
-	        className: prefixCls + '-circle-path',
-	        d: pathString,
-	        strokeLinecap: strokeLinecap,
-	        stroke: strokeColor,
-	        strokeWidth: strokeWidth,
-	        fillOpacity: '0',
-	        ref: function ref(path) {
-	          _this.path = path;
-	        },
-	        style: strokePathStyle
-	      })
-	    );
-	  }
-	});
-	module.exports = exports['default'];
+	exports.default = StudentDetail;
 
 /***/ }
 /******/ ]);

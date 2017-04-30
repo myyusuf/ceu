@@ -1,4 +1,4 @@
-exports.find = function findTakenDivisionProblem(request, reply) {
+exports.find = function findTakenDepartmentProblem(request, reply) {
   const db = this.db;
 
   const query = 'SELECT * FROM tb_jenis_masalah_bagian ';

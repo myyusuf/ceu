@@ -1,7 +1,7 @@
 const Pages = require('./handlers/pages');
 const Assets = require('./handlers/assets');
 const Student = require('./handlers/student');
-const TakenDivisionProblem = require('./handlers/takendivisionproblem');
+const TakenDepartmentProblem = require('./handlers/takendepartmentproblem');
 
 module.exports = [
   {
@@ -26,7 +26,12 @@ module.exports = [
   },
   {
     method: 'GET',
-    path: '/takendivisionproblems',
-    handler: TakenDivisionProblem.find,
+    path: '/students/{studentId}',
+    handler: Student.findOne,
+  },
+  {
+    method: 'GET',
+    path: '/takendepartmentproblems',
+    handler: TakenDepartmentProblem.find,
   },
 ];
