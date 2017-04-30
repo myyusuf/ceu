@@ -33,3 +33,21 @@
   font-size: 18px;
   color: gray;
 }
+
+.student-detail-header .detail-select {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  width: 300px;
+}
+
+.student-detail .content {
+  position: absolute;
+  width: 100%;
+  top: 140px;
+  bottom: 0;
+  background-color: gray;
+}
