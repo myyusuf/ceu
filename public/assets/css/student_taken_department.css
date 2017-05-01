@@ -40,6 +40,16 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 50%;
+  left: 0;
+  width: 35%;
+  padding: 20px;
+}
+
+.taken-department .content .right {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 65%;
   padding: 20px;
 }
