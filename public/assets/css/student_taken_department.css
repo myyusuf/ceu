@@ -24,10 +24,22 @@
   left: 20px;
 }
 
+.taken-department .header .search  li {
+  margin: 0 5px;
+  display: inline;
+}
+
 .taken-department .content {
   position: absolute;
   top: 70px;
   bottom: 0;
   width: 100%;
+}
+
+.taken-department .content .left {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
   padding: 20px;
 }
