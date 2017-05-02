@@ -53,3 +53,7 @@
   width: 65%;
   padding: 20px;
 }
+
+.taken-department-form .ant-form-item {
+  margin-bottom: 20px;
+}

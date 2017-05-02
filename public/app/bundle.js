@@ -74870,6 +74870,15 @@
 	                'li',
 	                null,
 	                _react2.default.createElement(_button2.default, { shape: 'circle', type: 'primary', icon: 'download' })
+	              ),
+	              _react2.default.createElement(
+	                'li',
+	                null,
+	                _react2.default.createElement(
+	                  _button2.default,
+	                  { style: { marginLeft: 20 }, icon: 'menu-unfold' },
+	                  'Chart'
+	                )
 	              )
 	            )
 	          ),
@@ -81298,7 +81307,7 @@
 
 	      return _react2.default.createElement(
 	        _form2.default,
-	        { onSubmit: this.handleSubmit, className: 'login-form' },
+	        { onSubmit: this.handleSubmit, className: 'taken-department-form' },
 	        _react2.default.createElement(
 	          FormItem,
 	          _extends({}, formItemLayout, {
