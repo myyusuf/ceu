@@ -56568,6 +56568,50 @@
 	      null,
 	      _react2.default.createElement(
 	        _col2.default,
+	        { span: 12 },
+	        _react2.default.createElement(
+	          'span',
+	          { className: 'field-caption' },
+	          'Bagian'
+	        )
+	      ),
+	      _react2.default.createElement(
+	        _col2.default,
+	        { span: 12 },
+	        _react2.default.createElement(
+	          _tag2.default,
+	          { color: '#2db7f5' },
+	          'Interna'
+	        )
+	      )
+	    ),
+	    _react2.default.createElement(
+	      _row2.default,
+	      null,
+	      _react2.default.createElement(
+	        _col2.default,
+	        { span: 12 },
+	        _react2.default.createElement(
+	          'span',
+	          { className: 'field-caption' },
+	          'Status Bagian'
+	        )
+	      ),
+	      _react2.default.createElement(
+	        _col2.default,
+	        { span: 12 },
+	        _react2.default.createElement(
+	          _tag2.default,
+	          { color: '#FFB300' },
+	          'Approval'
+	        )
+	      )
+	    ),
+	    _react2.default.createElement(
+	      _row2.default,
+	      null,
+	      _react2.default.createElement(
+	        _col2.default,
 	        { span: 24 },
 	        _react2.default.createElement('div', { className: 'row-delimiter' })
 	      )
@@ -57506,9 +57550,9 @@
 
 	var _reactRouterDom = __webpack_require__(539);
 
-	var _StudentInfo = __webpack_require__(581);
+	var _StudentInfoForm = __webpack_require__(748);
 
-	var _StudentInfo2 = _interopRequireDefault(_StudentInfo);
+	var _StudentInfoForm2 = _interopRequireDefault(_StudentInfoForm);
 
 	var _TakenDepartment = __webpack_require__(582);
 
@@ -57603,7 +57647,7 @@
 	          _react2.default.createElement(
 	            _reactRouterDom.Route,
 	            { path: this.props.match.url + '/info' },
-	            _react2.default.createElement(_StudentInfo2.default, { student: this.state.student })
+	            _react2.default.createElement(_StudentInfoForm2.default, { student: this.state.student })
 	          ),
 	          _react2.default.createElement(
 	            _reactRouterDom.Route,
@@ -61652,59 +61696,7 @@
 	});
 
 /***/ },
-/* 581 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _card = __webpack_require__(529);
-
-	var _card2 = _interopRequireDefault(_card);
-
-	var _tag = __webpack_require__(530);
-
-	var _tag2 = _interopRequireDefault(_tag);
-
-	var _row = __webpack_require__(388);
-
-	var _row2 = _interopRequireDefault(_row);
-
-	var _col = __webpack_require__(397);
-
-	var _col2 = _interopRequireDefault(_col);
-
-	var _button = __webpack_require__(398);
-
-	var _button2 = _interopRequireDefault(_button);
-
-	var _progress = __webpack_require__(532);
-
-	var _progress2 = _interopRequireDefault(_progress);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var StudentInfo = function StudentInfo(_ref) {
-	  var student = _ref.student;
-
-	  return _react2.default.createElement(
-	    'div',
-	    { className: 'student-info' },
-	    'Info ',
-	    student.nama
-	  );
-	};
-
-	exports.default = StudentInfo;
-
-/***/ },
+/* 581 */,
 /* 582 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -85322,6 +85314,272 @@
 	};
 
 	exports.default = LoginInfo;
+
+/***/ },
+/* 748 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _form = __webpack_require__(644);
+
+	var _form2 = _interopRequireDefault(_form);
+
+	var _row = __webpack_require__(388);
+
+	var _row2 = _interopRequireDefault(_row);
+
+	var _col = __webpack_require__(397);
+
+	var _col2 = _interopRequireDefault(_col);
+
+	var _input = __webpack_require__(484);
+
+	var _input2 = _interopRequireDefault(_input);
+
+	var _checkbox = __webpack_require__(608);
+
+	var _checkbox2 = _interopRequireDefault(_checkbox);
+
+	var _button = __webpack_require__(398);
+
+	var _button2 = _interopRequireDefault(_button);
+
+	var _axios = __webpack_require__(499);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	var _datePicker = __webpack_require__(680);
+
+	var _datePicker2 = _interopRequireDefault(_datePicker);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var RangePicker = _datePicker2.default.RangePicker;
+
+
+	var FormItem = _form2.default.Item;
+
+	var StudentInfoForm = function (_Component) {
+	  _inherits(StudentInfoForm, _Component);
+
+	  function StudentInfoForm(props) {
+	    _classCallCheck(this, StudentInfoForm);
+
+	    var _this = _possibleConstructorReturn(this, (StudentInfoForm.__proto__ || Object.getPrototypeOf(StudentInfoForm)).call(this, props));
+
+	    _this.state = {};
+
+	    _this.handleSubmit = _this.handleSubmit.bind(_this);
+	    return _this;
+	  }
+
+	  _createClass(StudentInfoForm, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      // this.props.form.setFieldsValue({
+	      //   bagian: this.props.takenDepartment.nama,
+	      //   judul: this.props.takenDepartment.judul,
+	      // });
+	    }
+	  }, {
+	    key: 'handleSubmit',
+	    value: function handleSubmit(e) {
+	      e.preventDefault();
+	      // this.props.form.validateFields((err, fieldsValue) => {
+	      //   if (!err) {
+	      //     const planRangeDate = fieldsValue.planRangeDate;
+	      //     const hospitalPlanRangeDate1 = fieldsValue.hospitalPlanRangeDate1;
+	      //     const values = {
+	      //       planRangeDate: [planRangeDate[0].format('YYYY-MM-DD'), planRangeDate[1].format('YYYY-MM-DD')],
+	      //       hospitalPlanRangeDate1: [hospitalPlanRangeDate1[0].format('YYYY-MM-DD'), hospitalPlanRangeDate1[1].format('YYYY-MM-DD')],
+	      //     };
+	      //     console.log('Received values of form: ', values);
+	      //   }
+	      // });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      function onChange(date, dateString) {
+	        console.log(date, dateString);
+	      }
+
+	      var student = this.props.student;
+
+	      var formItemLayoutHorizontal = {
+	        labelCol: {
+	          xs: { span: 24 },
+	          sm: { span: 8 }
+	        },
+	        wrapperCol: {
+	          xs: { span: 24 },
+	          sm: { span: 16 }
+	        }
+	      };
+
+	      var formItemLayout = {
+	        labelCol: {
+	          xs: { span: 24 },
+	          sm: { span: 4 }
+	        },
+	        wrapperCol: {
+	          xs: { span: 24 },
+	          sm: { span: 20 }
+	        }
+	      };
+
+	      var formItemLayout2 = {
+	        labelCol: {
+	          xs: { span: 24 },
+	          sm: { span: 0 }
+	        },
+	        wrapperCol: {
+	          xs: { span: 24 },
+	          sm: { span: 24 }
+	        }
+	      };
+
+	      var tailFormItemLayout = {
+	        wrapperCol: {
+	          xs: {
+	            span: 24,
+	            offset: 0
+	          },
+	          sm: {
+	            span: 14,
+	            offset: 6
+	          }
+	        }
+	      };
+
+	      return _react2.default.createElement(
+	        _form2.default,
+	        { onSubmit: this.handleSubmit, className: 'student-info-form', layout: 'vertical' },
+	        _react2.default.createElement(
+	          _row2.default,
+	          { gutter: 20 },
+	          _react2.default.createElement(
+	            _col2.default,
+	            { span: 12 },
+	            _react2.default.createElement(
+	              FormItem,
+	              _extends({}, formItemLayoutHorizontal, {
+	                label: _react2.default.createElement(
+	                  'span',
+	                  null,
+	                  'Stambuk Lama'
+	                )
+	              }),
+	              _react2.default.createElement(_input2.default, { value: student.stambuk_lama })
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _col2.default,
+	            { span: 12 },
+	            _react2.default.createElement(
+	              FormItem,
+	              _extends({}, formItemLayoutHorizontal, {
+	                label: _react2.default.createElement(
+	                  'span',
+	                  null,
+	                  'Stambuk Baru'
+	                )
+	              }),
+	              _react2.default.createElement(_input2.default, { value: student.stambuk_baru })
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _row2.default,
+	          null,
+	          _react2.default.createElement(
+	            _col2.default,
+	            { span: 24 },
+	            _react2.default.createElement(
+	              FormItem,
+	              _extends({}, formItemLayout, {
+	                label: _react2.default.createElement(
+	                  'span',
+	                  null,
+	                  'Nama'
+	                )
+	              }),
+	              _react2.default.createElement(_input2.default, { value: student.nama })
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _row2.default,
+	          { gutter: 20 },
+	          _react2.default.createElement(
+	            _col2.default,
+	            { span: 12 },
+	            _react2.default.createElement(
+	              FormItem,
+	              _extends({}, formItemLayoutHorizontal, {
+	                label: _react2.default.createElement(
+	                  'span',
+	                  null,
+	                  'Tempat Tanggal Lahir'
+	                )
+	              }),
+	              _react2.default.createElement(_input2.default, null)
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _col2.default,
+	            { span: 12 },
+	            _react2.default.createElement(
+	              FormItem,
+	              formItemLayout2,
+	              _react2.default.createElement(_input2.default, null)
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _row2.default,
+	          null,
+	          _react2.default.createElement(
+	            _col2.default,
+	            { span: 24 },
+	            _react2.default.createElement(
+	              FormItem,
+	              tailFormItemLayout,
+	              _react2.default.createElement(
+	                _button2.default,
+	                { type: 'primary', htmlType: 'submit', size: 'large' },
+	                'Save'
+	              )
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return StudentInfoForm;
+	}(_react.Component);
+
+	exports.default = StudentInfoForm;
 
 /***/ }
 /******/ ]);
