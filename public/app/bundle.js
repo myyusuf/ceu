@@ -70,17 +70,17 @@
 
 	var _StudentDetail2 = _interopRequireDefault(_StudentDetail);
 
-	var _Dashboard = __webpack_require__(741);
+	var _Dashboard = __webpack_require__(742);
 
 	var _Dashboard2 = _interopRequireDefault(_Dashboard);
 
-	var _Hospital = __webpack_require__(744);
+	var _Hospital = __webpack_require__(745);
 
 	var _Hospital2 = _interopRequireDefault(_Hospital);
 
 	var _reactRouterDom = __webpack_require__(539);
 
-	var _Workspace = __webpack_require__(745);
+	var _Workspace = __webpack_require__(746);
 
 	var _Workspace2 = _interopRequireDefault(_Workspace);
 
@@ -57563,7 +57563,7 @@
 
 	var _TakenDepartment2 = _interopRequireDefault(_TakenDepartment);
 
-	var _Mppd = __webpack_require__(749);
+	var _Mppd = __webpack_require__(741);
 
 	var _Mppd2 = _interopRequireDefault(_Mppd);
 
@@ -84194,6 +84194,99 @@
 	  value: true
 	});
 
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _tabs = __webpack_require__(714);
+
+	var _tabs2 = _interopRequireDefault(_tabs);
+
+	var _PreKompre = __webpack_require__(750);
+
+	var _PreKompre2 = _interopRequireDefault(_PreKompre);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var TabPane = _tabs2.default.TabPane;
+
+	var Mppd = function (_Component) {
+	  _inherits(Mppd, _Component);
+
+	  function Mppd(props) {
+	    _classCallCheck(this, Mppd);
+
+	    var _this = _possibleConstructorReturn(this, (Mppd.__proto__ || Object.getPrototypeOf(Mppd)).call(this, props));
+
+	    _this.state = {
+	      students: []
+	    };
+	    return _this;
+	  }
+
+	  _createClass(Mppd, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      // this.getStudents();
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        _tabs2.default,
+	        { defaultActiveKey: '1' },
+	        _react2.default.createElement(
+	          TabPane,
+	          { tab: 'Pre Kompre', key: '1' },
+	          _react2.default.createElement(_PreKompre2.default, null)
+	        ),
+	        _react2.default.createElement(
+	          TabPane,
+	          { tab: 'Mid Kompre', key: '2' },
+	          _react2.default.createElement('div', { className: 'tab-container' })
+	        ),
+	        _react2.default.createElement(
+	          TabPane,
+	          { tab: 'Final Kompre', key: '3' },
+	          _react2.default.createElement('div', { className: 'tab-container' })
+	        ),
+	        _react2.default.createElement(
+	          TabPane,
+	          { tab: 'Try Out', key: '4' },
+	          _react2.default.createElement('div', { className: 'tab-container' })
+	        ),
+	        _react2.default.createElement(
+	          TabPane,
+	          { tab: 'MPPD', key: '5' },
+	          _react2.default.createElement('div', { className: 'tab-container' })
+	        )
+	      );
+	    }
+	  }]);
+
+	  return Mppd;
+	}(_react.Component);
+
+	exports.default = Mppd;
+
+/***/ },
+/* 742 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
@@ -84206,7 +84299,7 @@
 
 	var _col2 = _interopRequireDefault(_col);
 
-	var _DashboardSimpleInfo = __webpack_require__(742);
+	var _DashboardSimpleInfo = __webpack_require__(743);
 
 	var _DashboardSimpleInfo2 = _interopRequireDefault(_DashboardSimpleInfo);
 
@@ -84246,7 +84339,7 @@
 	exports.default = Dashboard;
 
 /***/ },
-/* 742 */
+/* 743 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -84271,7 +84364,7 @@
 
 	var _col2 = _interopRequireDefault(_col);
 
-	var _reactSparklines = __webpack_require__(743);
+	var _reactSparklines = __webpack_require__(744);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -84320,7 +84413,7 @@
 	exports.default = DashboardSimpleInfo;
 
 /***/ },
-/* 743 */
+/* 744 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function webpackUniversalModuleDefinition(root, factory) {
@@ -85396,7 +85489,7 @@
 	;
 
 /***/ },
-/* 744 */
+/* 745 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -85673,7 +85766,7 @@
 	};
 
 /***/ },
-/* 745 */
+/* 746 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -85686,15 +85779,15 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Header = __webpack_require__(746);
+	var _Header = __webpack_require__(747);
 
 	var _Header2 = _interopRequireDefault(_Header);
 
-	var _SideMenu = __webpack_require__(747);
+	var _SideMenu = __webpack_require__(748);
 
 	var _SideMenu2 = _interopRequireDefault(_SideMenu);
 
-	var _LoginInfo = __webpack_require__(748);
+	var _LoginInfo = __webpack_require__(749);
 
 	var _LoginInfo2 = _interopRequireDefault(_LoginInfo);
 
@@ -85735,7 +85828,7 @@
 	exports.default = Workspace;
 
 /***/ },
-/* 746 */
+/* 747 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -85799,7 +85892,7 @@
 	exports.default = Header;
 
 /***/ },
-/* 747 */
+/* 748 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -85973,7 +86066,7 @@
 	exports.default = SideMenu;
 
 /***/ },
-/* 748 */
+/* 749 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -86048,7 +86141,7 @@
 	exports.default = LoginInfo;
 
 /***/ },
-/* 749 */
+/* 750 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -86063,9 +86156,21 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _tabs = __webpack_require__(714);
+	var _table = __webpack_require__(679);
 
-	var _tabs2 = _interopRequireDefault(_tabs);
+	var _table2 = _interopRequireDefault(_table);
+
+	var _radio = __webpack_require__(403);
+
+	var _radio2 = _interopRequireDefault(_radio);
+
+	var _button = __webpack_require__(398);
+
+	var _button2 = _interopRequireDefault(_button);
+
+	var _axios = __webpack_require__(499);
+
+	var _axios2 = _interopRequireDefault(_axios);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -86075,66 +86180,144 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var TabPane = _tabs2.default.TabPane;
+	var PreKompre = function (_Component) {
+	  _inherits(PreKompre, _Component);
 
-	var Mppd = function (_Component) {
-	  _inherits(Mppd, _Component);
+	  function PreKompre(props) {
+	    _classCallCheck(this, PreKompre);
 
-	  function Mppd(props) {
-	    _classCallCheck(this, Mppd);
-
-	    var _this = _possibleConstructorReturn(this, (Mppd.__proto__ || Object.getPrototypeOf(Mppd)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (PreKompre.__proto__ || Object.getPrototypeOf(PreKompre)).call(this, props));
 
 	    _this.state = {
-	      students: []
+	      selectedRowKeys: ['MB1'],
+	      columns: [{
+	        title: 'Tanggal',
+	        dataIndex: 'tanggal',
+	        key: 'tanggal'
+	      }, {
+	        title: 'Nilai',
+	        dataIndex: 'nilai',
+	        key: 'nilai'
+	      }],
+	      problems: []
 	    };
 	    return _this;
 	  }
 
-	  _createClass(Mppd, [{
+	  _createClass(PreKompre, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      // this.getStudents();
+	      this.getTakenDepartmentProblems();
+	    }
+	  }, {
+	    key: 'onSelectLevelChange',
+	    value: function onSelectLevelChange(e) {
+	      this.setState({ selectedLevel: e.target.value });
+	    }
+	  }, {
+	    key: 'getTakenDepartmentProblems',
+	    value: function getTakenDepartmentProblems() {
+	      var _this2 = this;
+
+	      _axios2.default.get('/takendepartmentproblems', {}).then(function (response) {
+	        _this2.setState({
+	          problems: response.data
+	        });
+	      }).catch(function (error) {
+	        console.log(error);
+	      });
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this3 = this;
+
+	      var selectedRowKeys = this.state.selectedRowKeys;
+
+	      var rowSelection = {
+	        selectedRowKeys: selectedRowKeys,
+	        onChange: function onChange(newSelectedRowKeys, selectedRows) {
+	          console.log('selectedRowKeys: ' + newSelectedRowKeys, 'selectedRows: ', selectedRows);
+	          _this3.setState({ selectedRowKeys: newSelectedRowKeys });
+	        },
+	        onSelect: function onSelect(record, selected, selectedRows) {
+	          console.log(record, selected, selectedRows);
+	        },
+	        onSelectAll: function onSelectAll(selected, selectedRows, changeRows) {
+	          console.log(selected, selectedRows, changeRows);
+	        },
+	        getCheckboxProps: function getCheckboxProps(record) {
+	          return {
+	            // disabled: record.name === 'Disabled User',    // Column configuration not to be checked
+	          };
+	        }
+	      };
+
+	      var selectedLevel = this.state.selectedLevel;
+
 	      return _react2.default.createElement(
-	        _tabs2.default,
-	        { defaultActiveKey: '1' },
+	        'div',
+	        { className: 'pre-kompre' },
 	        _react2.default.createElement(
-	          TabPane,
-	          { tab: 'Pre Kompre', key: '1' },
-	          _react2.default.createElement('div', { className: 'tab-container' })
+	          'div',
+	          { className: 'header' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'search' },
+	            _react2.default.createElement(
+	              'ul',
+	              null,
+	              _react2.default.createElement(
+	                'li',
+	                null,
+	                _react2.default.createElement(
+	                  _radio2.default.Group,
+	                  { value: selectedLevel, onChange: this.onSelectLevelChange },
+	                  _react2.default.createElement(
+	                    _radio2.default.Button,
+	                    { value: '1' },
+	                    ' 1 '
+	                  ),
+	                  _react2.default.createElement(
+	                    _radio2.default.Button,
+	                    { value: '2' },
+	                    ' 2 '
+	                  )
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'li',
+	                null,
+	                _react2.default.createElement(_button2.default, { shape: 'circle', icon: 'reload' })
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _button2.default,
+	            { type: 'primary', icon: 'plus', className: 'add-button' },
+	            'Simpan'
+	          )
 	        ),
 	        _react2.default.createElement(
-	          TabPane,
-	          { tab: 'Mid Kompre', key: '2' },
-	          _react2.default.createElement('div', { className: 'tab-container' })
-	        ),
-	        _react2.default.createElement(
-	          TabPane,
-	          { tab: 'Final Kompre', key: '3' },
-	          _react2.default.createElement('div', { className: 'tab-container' })
-	        ),
-	        _react2.default.createElement(
-	          TabPane,
-	          { tab: 'Try Out', key: '4' },
-	          _react2.default.createElement('div', { className: 'tab-container' })
-	        ),
-	        _react2.default.createElement(
-	          TabPane,
-	          { tab: 'MPPD', key: '5' },
-	          _react2.default.createElement('div', { className: 'tab-container' })
+	          'div',
+	          { className: 'content' },
+	          _react2.default.createElement(_table2.default, {
+	            size: 'medium',
+	            pagination: false,
+	            rowKey: 'kode',
+	            rowSelection: rowSelection,
+	            columns: this.state.columns,
+	            dataSource: this.state.problems
+	          })
 	        )
 	      );
 	    }
 	  }]);
 
-	  return Mppd;
+	  return PreKompre;
 	}(_react.Component);
 
-	exports.default = Mppd;
+	exports.default = PreKompre;
 
 /***/ }
 /******/ ]);
