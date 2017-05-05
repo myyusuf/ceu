@@ -1,37 +1,36 @@
-.pre-kompre {
+.kompre {
   height: 430px;
-  padding-left: 20px;
-  padding-right: 20px;
   overflow-y: auto;
 }
 
-.pre-kompre .header {
+.kompre .header {
   position: absolute;
   width: 100%;
   height: 50px;
   border-bottom: 1px solid #EAECEE;
 }
 
-.pre-kompre .header .add-button {
+.kompre .header .add-button {
   position: absolute;
   top: 3px;
-  right: 40px;
+  right: 20px;
 }
 
-.pre-kompre .header .search {
+.kompre .header .search {
   position: absolute;
   top: 0;
   left: 20px;
 }
 
-.pre-kompre .header .search  li {
+.kompre .header .search  li {
   margin: 0 5px;
   display: inline;
 }
 
-.pre-kompre .content {
+.kompre .content {
   position: absolute;
-  top: 130px;
+  padding: 20px;
+  top: 100px;
   bottom: 0;
   width: 100%;
 }
