@@ -74,9 +74,13 @@
 
 	var _Dashboard2 = _interopRequireDefault(_Dashboard);
 
+	var _Hospital = __webpack_require__(744);
+
+	var _Hospital2 = _interopRequireDefault(_Hospital);
+
 	var _reactRouterDom = __webpack_require__(539);
 
-	var _Workspace = __webpack_require__(744);
+	var _Workspace = __webpack_require__(745);
 
 	var _Workspace2 = _interopRequireDefault(_Workspace);
 
@@ -98,7 +102,8 @@
 	      null,
 	      _react2.default.createElement(_reactRouterDom.Route, { path: '/dashboard', component: _Dashboard2.default }),
 	      _react2.default.createElement(_reactRouterDom.Route, { path: '/student', component: _StudentCardList2.default }),
-	      _react2.default.createElement(_reactRouterDom.Route, { path: '/studentdetail/:studentId', component: _StudentDetail2.default })
+	      _react2.default.createElement(_reactRouterDom.Route, { path: '/studentdetail/:studentId', component: _StudentDetail2.default }),
+	      _react2.default.createElement(_reactRouterDom.Route, { path: '/hospital', component: _Hospital2.default })
 	    )
 	  )
 	), document.getElementById('app'));
@@ -57558,6 +57563,10 @@
 
 	var _TakenDepartment2 = _interopRequireDefault(_TakenDepartment);
 
+	var _Mppd = __webpack_require__(749);
+
+	var _Mppd2 = _interopRequireDefault(_Mppd);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -57582,8 +57591,10 @@
 	      selectedDetail = '1';
 	    } else if (location.indexOf('departments') > 0) {
 	      selectedDetail = '2';
-	    } else {
+	    } else if (location.indexOf('mppd') > 0) {
 	      selectedDetail = '3';
+	    } else {
+	      selectedDetail = '4';
 	    }
 
 	    _this.state = {
@@ -57608,8 +57619,10 @@
 	        window.location.href = '#' + this.props.match.url + '/info';
 	      } else if (e.target.value === '2') {
 	        window.location.href = '#' + this.props.match.url + '/departments';
-	      } else {
+	      } else if (e.target.value === '3') {
 	        window.location.href = '#' + this.props.match.url + '/mppd';
+	      } else {
+	        window.location.href = '#' + this.props.match.url + '/problem';
 	      }
 	      this.setState({ selectedDetail: e.target.value });
 	    }
@@ -57653,6 +57666,11 @@
 	            _reactRouterDom.Route,
 	            { path: this.props.match.url + '/departments' },
 	            _react2.default.createElement(_TakenDepartment2.default, { student: this.state.student })
+	          ),
+	          _react2.default.createElement(
+	            _reactRouterDom.Route,
+	            { path: this.props.match.url + '/mppd' },
+	            _react2.default.createElement(_Mppd2.default, { student: this.state.student })
 	          )
 	        );
 	      }
@@ -85387,19 +85405,296 @@
 	  value: true
 	});
 
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Header = __webpack_require__(745);
+	var _row = __webpack_require__(388);
+
+	var _row2 = _interopRequireDefault(_row);
+
+	var _col = __webpack_require__(397);
+
+	var _col2 = _interopRequireDefault(_col);
+
+	var _button = __webpack_require__(398);
+
+	var _button2 = _interopRequireDefault(_button);
+
+	var _radio = __webpack_require__(403);
+
+	var _radio2 = _interopRequireDefault(_radio);
+
+	var _select = __webpack_require__(417);
+
+	var _select2 = _interopRequireDefault(_select);
+
+	var _input = __webpack_require__(484);
+
+	var _input2 = _interopRequireDefault(_input);
+
+	var _pagination = __webpack_require__(489);
+
+	var _pagination2 = _interopRequireDefault(_pagination);
+
+	var _axios = __webpack_require__(499);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	var _StudentCard = __webpack_require__(528);
+
+	var _StudentCard2 = _interopRequireDefault(_StudentCard);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Option = _select2.default.Option;
+
+	var Hospital = function (_Component) {
+	  _inherits(Hospital, _Component);
+
+	  function Hospital(props) {
+	    _classCallCheck(this, Hospital);
+
+	    var _this = _possibleConstructorReturn(this, (Hospital.__proto__ || Object.getPrototypeOf(Hospital)).call(this, props));
+
+	    _this.state = {
+	      students: [],
+	      searchFilter: '1'
+	    };
+
+	    _this.showDetails = _this.showDetails.bind(_this);
+	    _this.handleSizeChange = _this.handleSizeChange.bind(_this);
+	    return _this;
+	  }
+
+	  _createClass(Hospital, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.getStudents();
+	    }
+	  }, {
+	    key: 'getStudents',
+	    value: function getStudents() {
+	      var _this2 = this;
+
+	      _axios2.default.get('/students', {
+	        params: {
+	          pagesize: 10,
+	          pagenum: 0,
+	          level: 1
+	        }
+	      }).then(function (response) {
+	        _this2.setState({
+	          students: response.data.data
+	        });
+	      }).catch(function (error) {
+	        console.log(error);
+	      });
+	    }
+	  }, {
+	    key: 'showDetails',
+	    value: function showDetails(student) {
+	      // if (this.props.onShowDetails) {
+	      //   this.onShowDetails(student);
+	      // }
+
+	      window.location.href = '#/studentdetail/' + student.id + '/info';
+	    }
+	  }, {
+	    key: 'handleSizeChange',
+	    value: function handleSizeChange(e) {
+	      this.setState({ searchFilter: e.target.value });
+	    }
+	  }, {
+	    key: 'handleChange',
+	    value: function handleChange(value) {
+	      console.log(value);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var cardList = [];
+	      var colsPerRow = 3;
+	      var colList = [];
+	      var students = this.state.students;
+
+	      for (var i = 0; i < this.state.students.length; i += 1) {
+	        var student = students[i];
+
+	        colList.push(_react2.default.createElement(
+	          _col2.default,
+	          { key: i, span: 8 },
+	          _react2.default.createElement(_StudentCard2.default, { key: i, student: student, onDetailsClick: this.showDetails })
+	        ));
+
+	        if ((i + 1) % colsPerRow === 0) {
+	          cardList.push(_react2.default.createElement(
+	            _row2.default,
+	            { key: i, gutter: 20 },
+	            colList
+	          ));
+	          colList = [];
+	        }
+	      }
+
+	      if (colList.length > 0) {
+	        cardList.push(_react2.default.createElement(
+	          _row2.default,
+	          { key: 'lastRow', gutter: 20 },
+	          colList
+	        ));
+	      }
+
+	      var searchFilter = this.state.searchFilter;
+
+	      var statusArray = [];
+	      statusArray.push(_react2.default.createElement(
+	        Option,
+	        { key: '1' },
+	        'Aktif'
+	      ));
+	      statusArray.push(_react2.default.createElement(
+	        Option,
+	        { key: '2' },
+	        'Bermasalah'
+	      ));
+	      statusArray.push(_react2.default.createElement(
+	        Option,
+	        { key: '3' },
+	        'Lulus'
+	      ));
+
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'student-card-list' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'card-list-header' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'search' },
+	            _react2.default.createElement(
+	              'ul',
+	              null,
+	              _react2.default.createElement(
+	                'li',
+	                null,
+	                _react2.default.createElement(_input2.default, {
+	                  style: { width: 200 },
+	                  className: 'search-text',
+	                  placeholder: 'Nama atau Stambuk'
+	                })
+	              ),
+	              _react2.default.createElement(
+	                'li',
+	                null,
+	                _react2.default.createElement(
+	                  _select2.default,
+	                  {
+	                    mode: 'multiple',
+	                    style: { minWidth: 100 },
+	                    placeholder: 'Status',
+	                    defaultValue: ['1'],
+	                    onChange: this.handleChange
+	                  },
+	                  statusArray
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'li',
+	                null,
+	                _react2.default.createElement(
+	                  _radio2.default.Group,
+	                  { value: searchFilter, onChange: this.handleSizeChange },
+	                  _react2.default.createElement(
+	                    _radio2.default.Button,
+	                    { value: '1', icon: 'plus' },
+	                    ' 1 '
+	                  ),
+	                  _react2.default.createElement(
+	                    _radio2.default.Button,
+	                    { value: '2' },
+	                    ' 2 '
+	                  )
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'li',
+	                null,
+	                _react2.default.createElement(_button2.default, { shape: 'circle', icon: 'search', className: 'search-button' })
+	              ),
+	              _react2.default.createElement(
+	                'li',
+	                null,
+	                _react2.default.createElement(_button2.default, { shape: 'circle', type: 'primary', icon: 'download' })
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'pagination' },
+	            _react2.default.createElement(_pagination2.default, { simple: true, defaultCurrent: 1, total: 50 })
+	          ),
+	          _react2.default.createElement(
+	            _button2.default,
+	            { type: 'primary', icon: 'plus', className: 'add-button' },
+	            'Tambah Siswa'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'card-list-content' },
+	          _react2.default.createElement(
+	            _row2.default,
+	            { gutter: 20 },
+	            cardList
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return Hospital;
+	}(_react.Component);
+
+	exports.default = Hospital;
+
+
+	Hospital.propTypes = {
+	  onShowDetails: _react2.default.PropTypes.any
+	};
+
+/***/ },
+/* 745 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Header = __webpack_require__(746);
 
 	var _Header2 = _interopRequireDefault(_Header);
 
-	var _SideMenu = __webpack_require__(746);
+	var _SideMenu = __webpack_require__(747);
 
 	var _SideMenu2 = _interopRequireDefault(_SideMenu);
 
-	var _LoginInfo = __webpack_require__(747);
+	var _LoginInfo = __webpack_require__(748);
 
 	var _LoginInfo2 = _interopRequireDefault(_LoginInfo);
 
@@ -85416,6 +85711,8 @@
 	    pageTitle = 'Dashboard';
 	  } else if (location.indexOf('student') > 0) {
 	    pageTitle = 'Student';
+	  } else if (location.indexOf('hospital') > 0) {
+	    pageTitle = 'Hospital';
 	  }
 	  return _react2.default.createElement(
 	    'div',
@@ -85438,7 +85735,7 @@
 	exports.default = Workspace;
 
 /***/ },
-/* 745 */
+/* 746 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -85502,7 +85799,7 @@
 	exports.default = Header;
 
 /***/ },
-/* 746 */
+/* 747 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -85557,6 +85854,12 @@
 	      { key: 'student' },
 	      _react2.default.createElement(_icon2.default, { type: 'user' }),
 	      'Mahasiswa'
+	    ),
+	    _react2.default.createElement(
+	      _menu2.default.Item,
+	      { key: 'hospital' },
+	      _react2.default.createElement(_icon2.default, { type: 'user' }),
+	      'Rumah Sakit'
 	    ),
 	    _react2.default.createElement(
 	      SubMenu,
@@ -85670,7 +85973,7 @@
 	exports.default = SideMenu;
 
 /***/ },
-/* 747 */
+/* 748 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -85743,6 +86046,95 @@
 	};
 
 	exports.default = LoginInfo;
+
+/***/ },
+/* 749 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _tabs = __webpack_require__(714);
+
+	var _tabs2 = _interopRequireDefault(_tabs);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var TabPane = _tabs2.default.TabPane;
+
+	var Mppd = function (_Component) {
+	  _inherits(Mppd, _Component);
+
+	  function Mppd(props) {
+	    _classCallCheck(this, Mppd);
+
+	    var _this = _possibleConstructorReturn(this, (Mppd.__proto__ || Object.getPrototypeOf(Mppd)).call(this, props));
+
+	    _this.state = {
+	      students: []
+	    };
+	    return _this;
+	  }
+
+	  _createClass(Mppd, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      // this.getStudents();
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        _tabs2.default,
+	        { defaultActiveKey: '1' },
+	        _react2.default.createElement(
+	          TabPane,
+	          { tab: 'Pre Kompre', key: '1' },
+	          _react2.default.createElement('div', { className: 'tab-container' })
+	        ),
+	        _react2.default.createElement(
+	          TabPane,
+	          { tab: 'Mid Kompre', key: '2' },
+	          _react2.default.createElement('div', { className: 'tab-container' })
+	        ),
+	        _react2.default.createElement(
+	          TabPane,
+	          { tab: 'Final Kompre', key: '3' },
+	          _react2.default.createElement('div', { className: 'tab-container' })
+	        ),
+	        _react2.default.createElement(
+	          TabPane,
+	          { tab: 'Try Out', key: '4' },
+	          _react2.default.createElement('div', { className: 'tab-container' })
+	        ),
+	        _react2.default.createElement(
+	          TabPane,
+	          { tab: 'MPPD', key: '5' },
+	          _react2.default.createElement('div', { className: 'tab-container' })
+	        )
+	      );
+	    }
+	  }]);
+
+	  return Mppd;
+	}(_react.Component);
+
+	exports.default = Mppd;
 
 /***/ }
 /******/ ]);
