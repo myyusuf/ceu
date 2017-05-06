@@ -78,6 +78,10 @@
 
 	var _Hospital2 = _interopRequireDefault(_Hospital);
 
+	var _ScorePreTest = __webpack_require__(758);
+
+	var _ScorePreTest2 = _interopRequireDefault(_ScorePreTest);
+
 	var _reactRouterDom = __webpack_require__(539);
 
 	var _Workspace = __webpack_require__(754);
@@ -103,7 +107,8 @@
 	      _react2.default.createElement(_reactRouterDom.Route, { path: '/dashboard', component: _Dashboard2.default }),
 	      _react2.default.createElement(_reactRouterDom.Route, { path: '/student', component: _StudentCardList2.default }),
 	      _react2.default.createElement(_reactRouterDom.Route, { path: '/studentdetail/:studentId', component: _StudentDetail2.default }),
-	      _react2.default.createElement(_reactRouterDom.Route, { path: '/hospital', component: _Hospital2.default })
+	      _react2.default.createElement(_reactRouterDom.Route, { path: '/hospital', component: _Hospital2.default }),
+	      _react2.default.createElement(_reactRouterDom.Route, { path: '/score/pretest', component: _ScorePreTest2.default })
 	    )
 	  )
 	), document.getElementById('app'));
@@ -83988,7 +83993,7 @@
 	            _col2.default,
 	            { span: 24 },
 	            _react2.default.createElement(_table2.default, {
-	              size: 'medium',
+	              size: 'middle',
 	              pagination: false,
 	              rowKey: 'kode',
 	              rowSelection: rowSelection,
@@ -86576,7 +86581,7 @@
 	      hospitalTypes.push(_react2.default.createElement(
 	        Option,
 	        { key: '2' },
-	        'Klinik'
+	        'Puskesmas'
 	      ));
 
 	      return _react2.default.createElement(
@@ -86608,7 +86613,7 @@
 	                  {
 	                    mode: 'multiple',
 	                    style: { minWidth: 100 },
-	                    placeholder: 'Tipe RUmah Sakit',
+	                    placeholder: 'Tipe Rumah Sakit',
 	                    defaultValue: ['1'],
 	                    onChange: this.handleChange
 	                  },
@@ -87175,6 +87180,8 @@
 	    pageTitle = 'Student';
 	  } else if (location.indexOf('hospital') > 0) {
 	    pageTitle = 'Hospital';
+	  } else if (location.indexOf('pretest') > 0) {
+	    pageTitle = 'Pre-Test';
 	  }
 	  return _react2.default.createElement(
 	    'div',
@@ -87291,7 +87298,11 @@
 	var SideMenu = function SideMenu() {
 	  var handleClick = function handleClick(e) {
 	    // console.log(`click : ${e.key}`);
-	    window.location.href = '#' + e.key;
+	    if (e.key === 'pretest') {
+	      window.location.href = '#score/' + e.key;
+	    } else {
+	      window.location.href = '#' + e.key;
+	    }
 	  };
 
 	  return _react2.default.createElement(
@@ -87322,6 +87333,29 @@
 	      { key: 'hospital' },
 	      _react2.default.createElement(_icon2.default, { type: 'home' }),
 	      'Rumah Sakit'
+	    ),
+	    _react2.default.createElement(
+	      SubMenu,
+	      { key: 'nilai', title: _react2.default.createElement(
+	          'span',
+	          null,
+	          _react2.default.createElement(_icon2.default, { type: 'file-text' }),
+	          _react2.default.createElement(
+	            'span',
+	            null,
+	            'Nilai'
+	          )
+	        ) },
+	      _react2.default.createElement(
+	        _menu2.default.Item,
+	        { key: 'pretest' },
+	        'Pre Test'
+	      ),
+	      _react2.default.createElement(
+	        _menu2.default.Item,
+	        { key: 'posttest' },
+	        'Post Test'
+	      )
 	    ),
 	    _react2.default.createElement(
 	      SubMenu,
@@ -87508,6 +87542,244 @@
 	};
 
 	exports.default = LoginInfo;
+
+/***/ },
+/* 758 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _button = __webpack_require__(398);
+
+	var _button2 = _interopRequireDefault(_button);
+
+	var _select = __webpack_require__(417);
+
+	var _select2 = _interopRequireDefault(_select);
+
+	var _input = __webpack_require__(484);
+
+	var _input2 = _interopRequireDefault(_input);
+
+	var _pagination = __webpack_require__(489);
+
+	var _pagination2 = _interopRequireDefault(_pagination);
+
+	var _axios = __webpack_require__(499);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Option = _select2.default.Option;
+
+	var ScorePreTest = function (_Component) {
+	  _inherits(ScorePreTest, _Component);
+
+	  function ScorePreTest(props) {
+	    _classCallCheck(this, ScorePreTest);
+
+	    var _this = _possibleConstructorReturn(this, (ScorePreTest.__proto__ || Object.getPrototypeOf(ScorePreTest)).call(this, props));
+
+	    _this.state = {
+	      students: [],
+	      searchFilter: '1'
+	    };
+
+	    _this.showDetails = _this.showDetails.bind(_this);
+	    _this.handleSizeChange = _this.handleSizeChange.bind(_this);
+	    return _this;
+	  }
+
+	  _createClass(ScorePreTest, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.getStudents();
+	    }
+	  }, {
+	    key: 'getStudents',
+	    value: function getStudents() {
+	      var _this2 = this;
+
+	      _axios2.default.get('/score/pretest', {
+	        params: {
+	          pagesize: 10,
+	          pagenum: 0,
+	          level: 1
+	        }
+	      }).then(function (response) {
+	        _this2.setState({
+	          students: response.data.data
+	        });
+	      }).catch(function (error) {
+	        console.log(error);
+	      });
+	    }
+	  }, {
+	    key: 'showDetails',
+	    value: function showDetails(student) {
+	      // if (this.props.onShowDetails) {
+	      //   this.onShowDetails(student);
+	      // }
+
+	      window.location.href = '#/studentdetail/' + student.id + '/info';
+	    }
+	  }, {
+	    key: 'handleSizeChange',
+	    value: function handleSizeChange(e) {
+	      this.setState({ searchFilter: e.target.value });
+	    }
+	  }, {
+	    key: 'handleChange',
+	    value: function handleChange(value) {
+	      console.log(value);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var departments = [];
+	      departments.push(_react2.default.createElement(
+	        Option,
+	        { key: '1' },
+	        'Anak'
+	      ));
+	      departments.push(_react2.default.createElement(
+	        Option,
+	        { key: '2' },
+	        'Interna'
+	      ));
+	      departments.push(_react2.default.createElement(
+	        Option,
+	        { key: '3' },
+	        'Radiologi'
+	      ));
+	      departments.push(_react2.default.createElement(
+	        Option,
+	        { key: '4' },
+	        'Neurologi'
+	      ));
+	      departments.push(_react2.default.createElement(
+	        Option,
+	        { key: '5' },
+	        'Kulit dan Kelamin'
+	      ));
+	      departments.push(_react2.default.createElement(
+	        Option,
+	        { key: '6' },
+	        'Kardiologi TK 1'
+	      ));
+
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'score' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'header' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'left' },
+	            _react2.default.createElement(
+	              'ul',
+	              null,
+	              _react2.default.createElement(
+	                'li',
+	                { className: 'the-li' },
+	                _react2.default.createElement(_input2.default, {
+	                  style: { width: 200 },
+	                  className: 'search-text',
+	                  placeholder: 'Kode atau Nama'
+	                })
+	              ),
+	              _react2.default.createElement(
+	                'li',
+	                { className: 'the-li' },
+	                _react2.default.createElement(
+	                  _select2.default,
+	                  {
+	                    mode: 'single',
+	                    style: { minWidth: 100 },
+	                    placeholder: 'Bagian',
+	                    defaultValue: ['1'],
+	                    onChange: this.handleChange
+	                  },
+	                  departments
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'li',
+	                { className: 'the-li' },
+	                _react2.default.createElement(_button2.default, { shape: 'circle', icon: 'search', className: 'search-button' })
+	              ),
+	              _react2.default.createElement(
+	                'li',
+	                { className: 'the-li' },
+	                _react2.default.createElement(_button2.default, { shape: 'circle', type: 'primary', icon: 'download' })
+	              ),
+	              _react2.default.createElement(
+	                'li',
+	                { className: 'the-li' },
+	                _react2.default.createElement(_button2.default, { shape: 'circle', type: 'primary', icon: 'upload' })
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'right' },
+	            _react2.default.createElement(
+	              'ul',
+	              null,
+	              _react2.default.createElement(
+	                'li',
+	                { className: 'the-li' },
+	                _react2.default.createElement(_pagination2.default, { simple: true, defaultCurrent: 1, total: 50 })
+	              ),
+	              _react2.default.createElement(
+	                'li',
+	                { className: 'the-li' },
+	                _react2.default.createElement(
+	                  _button2.default,
+	                  { type: 'primary', icon: 'plus', className: 'add-button' },
+	                  'Nilai Pre Test'
+	                )
+	              )
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'content' },
+	          _react2.default.createElement('div', { className: 'left' }),
+	          _react2.default.createElement('div', { className: 'right' })
+	        )
+	      );
+	    }
+	  }]);
+
+	  return ScorePreTest;
+	}(_react.Component);
+
+	exports.default = ScorePreTest;
+
+
+	ScorePreTest.propTypes = {
+	  onShowDetails: _react2.default.PropTypes.any
+	};
 
 /***/ }
 /******/ ]);
