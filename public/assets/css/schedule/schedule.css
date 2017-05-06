@@ -1,0 +1,60 @@
+.schedule-mppd .header {
+  position: absolute;
+  width: 100%;
+  min-height: 70px;
+  border-bottom: 1px solid #EAECEE;
+}
+
+.schedule-mppd .header .left {
+  /*position: relative;*/
+  margin: 20px;
+  left: 10px;
+}
+
+.schedule-mppd .header .left .the-li {
+  /*margin: 0 5px;*/
+  margin-left: 10px;
+  display: inline;
+}
+
+.schedule-mppd .header > .right {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.schedule-mppd .header > .right .the-li {
+  /*margin: 0 5px;*/
+  margin-left: 10px;
+  display: inline-flex;
+}
+
+.schedule-mppd .content {
+  position: absolute;
+  top: 70px;
+  bottom: 0;
+  width: 100%;
+  padding: 20px;
+}
+
+.schedule-mppd .content > .left {
+  position: absolute;
+  top: 0px;
+  bottom: 0;
+  left: 0;
+  width: 50%;
+  padding: 20px;
+  border-right: 1px solid #F1F2F3;
+  /*background-color: silver;*/
+}
+
+.schedule-mppd .content > .right {
+  position: absolute;
+  top: 0px;
+  bottom: 0;
+  right: 0;
+  width: 50%;
+  padding: 20px;
+  border-right: 1px solid #F1F2F3;
+  /*background-color: silver;*/
+}
