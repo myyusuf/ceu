@@ -118,7 +118,7 @@
   position: absolute;
   top: 20px;
   left: 10px;
-  width: 70%;
+  width: 90%;
 }
 
 .hospital-student .header .left li {
@@ -131,7 +131,7 @@
   position: absolute;
   top: 20px;
   right: 20px;
-  width: 30%;
+  width: 10%;
 }
 
 .hospital-student .content {
