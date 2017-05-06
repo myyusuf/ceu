@@ -70,17 +70,17 @@
 
 	var _StudentDetail2 = _interopRequireDefault(_StudentDetail);
 
-	var _Dashboard = __webpack_require__(743);
+	var _Dashboard = __webpack_require__(747);
 
 	var _Dashboard2 = _interopRequireDefault(_Dashboard);
 
-	var _Hospital = __webpack_require__(746);
+	var _Hospital = __webpack_require__(750);
 
 	var _Hospital2 = _interopRequireDefault(_Hospital);
 
 	var _reactRouterDom = __webpack_require__(539);
 
-	var _Workspace = __webpack_require__(747);
+	var _Workspace = __webpack_require__(751);
 
 	var _Workspace2 = _interopRequireDefault(_Workspace);
 
@@ -84208,19 +84208,19 @@
 
 	var _PreKompre2 = _interopRequireDefault(_PreKompre);
 
-	var _MidKompre = __webpack_require__(751);
+	var _MidKompre = __webpack_require__(743);
 
 	var _MidKompre2 = _interopRequireDefault(_MidKompre);
 
-	var _FinalKompre = __webpack_require__(752);
+	var _FinalKompre = __webpack_require__(744);
 
 	var _FinalKompre2 = _interopRequireDefault(_FinalKompre);
 
-	var _TryOut = __webpack_require__(753);
+	var _TryOut = __webpack_require__(745);
 
 	var _TryOut2 = _interopRequireDefault(_TryOut);
 
-	var _FinalMppd = __webpack_require__(754);
+	var _FinalMppd = __webpack_require__(746);
 
 	var _FinalMppd2 = _interopRequireDefault(_FinalMppd);
 
@@ -84482,6 +84482,726 @@
 	  value: true
 	});
 
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _table = __webpack_require__(679);
+
+	var _table2 = _interopRequireDefault(_table);
+
+	var _radio = __webpack_require__(403);
+
+	var _radio2 = _interopRequireDefault(_radio);
+
+	var _button = __webpack_require__(398);
+
+	var _button2 = _interopRequireDefault(_button);
+
+	var _axios = __webpack_require__(499);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var MidKompre = function (_Component) {
+	  _inherits(MidKompre, _Component);
+
+	  function MidKompre(props) {
+	    _classCallCheck(this, MidKompre);
+
+	    var _this = _possibleConstructorReturn(this, (MidKompre.__proto__ || Object.getPrototypeOf(MidKompre)).call(this, props));
+
+	    _this.state = {
+	      selectedRowKeys: ['MB1'],
+	      columns: [{
+	        title: 'Tanggal',
+	        dataIndex: 'tanggal',
+	        key: 'tanggal'
+	      }, {
+	        title: 'Nilai',
+	        dataIndex: 'nilai',
+	        key: 'nilai'
+	      }],
+	      problems: []
+	    };
+	    return _this;
+	  }
+
+	  _createClass(MidKompre, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.getTakenDepartmentProblems();
+	    }
+	  }, {
+	    key: 'onSelectLevelChange',
+	    value: function onSelectLevelChange(e) {
+	      this.setState({ selectedLevel: e.target.value });
+	    }
+	  }, {
+	    key: 'getTakenDepartmentProblems',
+	    value: function getTakenDepartmentProblems() {
+	      var _this2 = this;
+
+	      _axios2.default.get('/student/mppd/midkompre', {}).then(function (response) {
+	        _this2.setState({
+	          problems: response.data
+	        });
+	      }).catch(function (error) {
+	        console.log(error);
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this3 = this;
+
+	      var selectedRowKeys = this.state.selectedRowKeys;
+
+	      var rowSelection = {
+	        selectedRowKeys: selectedRowKeys,
+	        onChange: function onChange(newSelectedRowKeys, selectedRows) {
+	          console.log('selectedRowKeys: ' + newSelectedRowKeys, 'selectedRows: ', selectedRows);
+	          _this3.setState({ selectedRowKeys: newSelectedRowKeys });
+	        },
+	        onSelect: function onSelect(record, selected, selectedRows) {
+	          console.log(record, selected, selectedRows);
+	        },
+	        onSelectAll: function onSelectAll(selected, selectedRows, changeRows) {
+	          console.log(selected, selectedRows, changeRows);
+	        },
+	        getCheckboxProps: function getCheckboxProps(record) {
+	          return {
+	            // disabled: record.name === 'Disabled User',    // Column configuration not to be checked
+	          };
+	        }
+	      };
+
+	      var selectedLevel = this.state.selectedLevel;
+
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'kompre' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'header' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'search' },
+	            _react2.default.createElement(
+	              'ul',
+	              null,
+	              _react2.default.createElement(
+	                'li',
+	                null,
+	                _react2.default.createElement(
+	                  _radio2.default.Group,
+	                  { value: selectedLevel, onChange: this.onSelectLevelChange },
+	                  _react2.default.createElement(
+	                    _radio2.default.Button,
+	                    { value: '1' },
+	                    ' 1 '
+	                  ),
+	                  _react2.default.createElement(
+	                    _radio2.default.Button,
+	                    { value: '2' },
+	                    ' 2 '
+	                  )
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'li',
+	                null,
+	                _react2.default.createElement(_button2.default, { shape: 'circle', icon: 'reload' })
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _button2.default,
+	            { type: 'primary', icon: 'plus', className: 'add-button' },
+	            'Simpan'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'content' },
+	          _react2.default.createElement(_table2.default, {
+	            size: 'medium',
+	            pagination: false,
+	            rowKey: 'kode',
+	            rowSelection: rowSelection,
+	            columns: this.state.columns,
+	            dataSource: this.state.problems
+	          })
+	        )
+	      );
+	    }
+	  }]);
+
+	  return MidKompre;
+	}(_react.Component);
+
+	exports.default = MidKompre;
+
+/***/ },
+/* 744 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _table = __webpack_require__(679);
+
+	var _table2 = _interopRequireDefault(_table);
+
+	var _radio = __webpack_require__(403);
+
+	var _radio2 = _interopRequireDefault(_radio);
+
+	var _button = __webpack_require__(398);
+
+	var _button2 = _interopRequireDefault(_button);
+
+	var _axios = __webpack_require__(499);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var FinalKompre = function (_Component) {
+	  _inherits(FinalKompre, _Component);
+
+	  function FinalKompre(props) {
+	    _classCallCheck(this, FinalKompre);
+
+	    var _this = _possibleConstructorReturn(this, (FinalKompre.__proto__ || Object.getPrototypeOf(FinalKompre)).call(this, props));
+
+	    _this.state = {
+	      selectedRowKeys: ['MB1'],
+	      columns: [{
+	        title: 'Tanggal',
+	        dataIndex: 'tanggal',
+	        key: 'tanggal'
+	      }, {
+	        title: 'Nilai',
+	        dataIndex: 'nilai',
+	        key: 'nilai'
+	      }],
+	      problems: []
+	    };
+	    return _this;
+	  }
+
+	  _createClass(FinalKompre, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.getTakenDepartmentProblems();
+	    }
+	  }, {
+	    key: 'onSelectLevelChange',
+	    value: function onSelectLevelChange(e) {
+	      this.setState({ selectedLevel: e.target.value });
+	    }
+	  }, {
+	    key: 'getTakenDepartmentProblems',
+	    value: function getTakenDepartmentProblems() {
+	      var _this2 = this;
+
+	      _axios2.default.get('/student/mppd/finalkompre', {}).then(function (response) {
+	        _this2.setState({
+	          problems: response.data
+	        });
+	      }).catch(function (error) {
+	        console.log(error);
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this3 = this;
+
+	      var selectedRowKeys = this.state.selectedRowKeys;
+
+	      var rowSelection = {
+	        selectedRowKeys: selectedRowKeys,
+	        onChange: function onChange(newSelectedRowKeys, selectedRows) {
+	          console.log('selectedRowKeys: ' + newSelectedRowKeys, 'selectedRows: ', selectedRows);
+	          _this3.setState({ selectedRowKeys: newSelectedRowKeys });
+	        },
+	        onSelect: function onSelect(record, selected, selectedRows) {
+	          console.log(record, selected, selectedRows);
+	        },
+	        onSelectAll: function onSelectAll(selected, selectedRows, changeRows) {
+	          console.log(selected, selectedRows, changeRows);
+	        },
+	        getCheckboxProps: function getCheckboxProps(record) {
+	          return {
+	            // disabled: record.name === 'Disabled User',    // Column configuration not to be checked
+	          };
+	        }
+	      };
+
+	      var selectedLevel = this.state.selectedLevel;
+
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'kompre' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'header' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'search' },
+	            _react2.default.createElement(
+	              'ul',
+	              null,
+	              _react2.default.createElement(
+	                'li',
+	                null,
+	                _react2.default.createElement(
+	                  _radio2.default.Group,
+	                  { value: selectedLevel, onChange: this.onSelectLevelChange },
+	                  _react2.default.createElement(
+	                    _radio2.default.Button,
+	                    { value: '1' },
+	                    ' 1 '
+	                  ),
+	                  _react2.default.createElement(
+	                    _radio2.default.Button,
+	                    { value: '2' },
+	                    ' 2 '
+	                  )
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'li',
+	                null,
+	                _react2.default.createElement(_button2.default, { shape: 'circle', icon: 'reload' })
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _button2.default,
+	            { type: 'primary', icon: 'plus', className: 'add-button' },
+	            'Simpan'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'content' },
+	          _react2.default.createElement(_table2.default, {
+	            size: 'medium',
+	            pagination: false,
+	            rowKey: 'kode',
+	            rowSelection: rowSelection,
+	            columns: this.state.columns,
+	            dataSource: this.state.problems
+	          })
+	        )
+	      );
+	    }
+	  }]);
+
+	  return FinalKompre;
+	}(_react.Component);
+
+	exports.default = FinalKompre;
+
+/***/ },
+/* 745 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _table = __webpack_require__(679);
+
+	var _table2 = _interopRequireDefault(_table);
+
+	var _radio = __webpack_require__(403);
+
+	var _radio2 = _interopRequireDefault(_radio);
+
+	var _button = __webpack_require__(398);
+
+	var _button2 = _interopRequireDefault(_button);
+
+	var _axios = __webpack_require__(499);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var TryOut = function (_Component) {
+	  _inherits(TryOut, _Component);
+
+	  function TryOut(props) {
+	    _classCallCheck(this, TryOut);
+
+	    var _this = _possibleConstructorReturn(this, (TryOut.__proto__ || Object.getPrototypeOf(TryOut)).call(this, props));
+
+	    _this.state = {
+	      selectedRowKeys: ['MB1'],
+	      columns: [{
+	        title: 'Tanggal',
+	        dataIndex: 'tanggal',
+	        key: 'tanggal'
+	      }, {
+	        title: 'Nilai',
+	        dataIndex: 'nilai',
+	        key: 'nilai'
+	      }],
+	      problems: []
+	    };
+	    return _this;
+	  }
+
+	  _createClass(TryOut, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.getTakenDepartmentProblems();
+	    }
+	  }, {
+	    key: 'onSelectLevelChange',
+	    value: function onSelectLevelChange(e) {
+	      this.setState({ selectedLevel: e.target.value });
+	    }
+	  }, {
+	    key: 'getTakenDepartmentProblems',
+	    value: function getTakenDepartmentProblems() {
+	      var _this2 = this;
+
+	      _axios2.default.get('/student/mppd/tryout', {}).then(function (response) {
+	        _this2.setState({
+	          problems: response.data
+	        });
+	      }).catch(function (error) {
+	        console.log(error);
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this3 = this;
+
+	      var selectedRowKeys = this.state.selectedRowKeys;
+
+	      var rowSelection = {
+	        selectedRowKeys: selectedRowKeys,
+	        onChange: function onChange(newSelectedRowKeys, selectedRows) {
+	          console.log('selectedRowKeys: ' + newSelectedRowKeys, 'selectedRows: ', selectedRows);
+	          _this3.setState({ selectedRowKeys: newSelectedRowKeys });
+	        },
+	        onSelect: function onSelect(record, selected, selectedRows) {
+	          console.log(record, selected, selectedRows);
+	        },
+	        onSelectAll: function onSelectAll(selected, selectedRows, changeRows) {
+	          console.log(selected, selectedRows, changeRows);
+	        },
+	        getCheckboxProps: function getCheckboxProps(record) {
+	          return {
+	            // disabled: record.name === 'Disabled User',    // Column configuration not to be checked
+	          };
+	        }
+	      };
+
+	      var selectedLevel = this.state.selectedLevel;
+
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'kompre' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'header' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'search' },
+	            _react2.default.createElement(
+	              'ul',
+	              null,
+	              _react2.default.createElement(
+	                'li',
+	                null,
+	                _react2.default.createElement(
+	                  _radio2.default.Group,
+	                  { value: selectedLevel, onChange: this.onSelectLevelChange },
+	                  _react2.default.createElement(
+	                    _radio2.default.Button,
+	                    { value: '1' },
+	                    ' 1 '
+	                  ),
+	                  _react2.default.createElement(
+	                    _radio2.default.Button,
+	                    { value: '2' },
+	                    ' 2 '
+	                  )
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'li',
+	                null,
+	                _react2.default.createElement(_button2.default, { shape: 'circle', icon: 'reload' })
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _button2.default,
+	            { type: 'primary', icon: 'plus', className: 'add-button' },
+	            'Simpan'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'content' },
+	          _react2.default.createElement(_table2.default, {
+	            size: 'medium',
+	            pagination: false,
+	            rowKey: 'kode',
+	            rowSelection: rowSelection,
+	            columns: this.state.columns,
+	            dataSource: this.state.problems
+	          })
+	        )
+	      );
+	    }
+	  }]);
+
+	  return TryOut;
+	}(_react.Component);
+
+	exports.default = TryOut;
+
+/***/ },
+/* 746 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _table = __webpack_require__(679);
+
+	var _table2 = _interopRequireDefault(_table);
+
+	var _radio = __webpack_require__(403);
+
+	var _radio2 = _interopRequireDefault(_radio);
+
+	var _button = __webpack_require__(398);
+
+	var _button2 = _interopRequireDefault(_button);
+
+	var _axios = __webpack_require__(499);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var FinalMppd = function (_Component) {
+	  _inherits(FinalMppd, _Component);
+
+	  function FinalMppd(props) {
+	    _classCallCheck(this, FinalMppd);
+
+	    var _this = _possibleConstructorReturn(this, (FinalMppd.__proto__ || Object.getPrototypeOf(FinalMppd)).call(this, props));
+
+	    _this.state = {
+	      selectedRowKeys: ['MB1'],
+	      columns: [{
+	        title: 'Tanggal',
+	        dataIndex: 'tanggal',
+	        key: 'tanggal'
+	      }, {
+	        title: 'Nilai CBT',
+	        dataIndex: 'nilai_cbt',
+	        key: 'nilai_cbt'
+	      }, {
+	        title: 'Nilai OSCE',
+	        dataIndex: 'nilai_osce',
+	        key: 'nilai_osce'
+	      }],
+	      problems: []
+	    };
+	    return _this;
+	  }
+
+	  _createClass(FinalMppd, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.getTakenDepartmentProblems();
+	    }
+	  }, {
+	    key: 'onSelectLevelChange',
+	    value: function onSelectLevelChange(e) {
+	      this.setState({ selectedLevel: e.target.value });
+	    }
+	  }, {
+	    key: 'getTakenDepartmentProblems',
+	    value: function getTakenDepartmentProblems() {
+	      var _this2 = this;
+
+	      _axios2.default.get('/student/mppd/finalmppd', {}).then(function (response) {
+	        _this2.setState({
+	          problems: response.data
+	        });
+	      }).catch(function (error) {
+	        console.log(error);
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this3 = this;
+
+	      var selectedRowKeys = this.state.selectedRowKeys;
+
+	      var rowSelection = {
+	        selectedRowKeys: selectedRowKeys,
+	        onChange: function onChange(newSelectedRowKeys, selectedRows) {
+	          console.log('selectedRowKeys: ' + newSelectedRowKeys, 'selectedRows: ', selectedRows);
+	          _this3.setState({ selectedRowKeys: newSelectedRowKeys });
+	        },
+	        onSelect: function onSelect(record, selected, selectedRows) {
+	          console.log(record, selected, selectedRows);
+	        },
+	        onSelectAll: function onSelectAll(selected, selectedRows, changeRows) {
+	          console.log(selected, selectedRows, changeRows);
+	        },
+	        getCheckboxProps: function getCheckboxProps(record) {
+	          return {
+	            // disabled: record.name === 'Disabled User',    // Column configuration not to be checked
+	          };
+	        }
+	      };
+
+	      var selectedLevel = this.state.selectedLevel;
+
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'kompre' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'header' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'search' },
+	            _react2.default.createElement(
+	              'ul',
+	              null,
+	              _react2.default.createElement(
+	                'li',
+	                null,
+	                _react2.default.createElement(
+	                  _radio2.default.Group,
+	                  { value: selectedLevel, onChange: this.onSelectLevelChange },
+	                  _react2.default.createElement(
+	                    _radio2.default.Button,
+	                    { value: '1' },
+	                    ' 1 '
+	                  ),
+	                  _react2.default.createElement(
+	                    _radio2.default.Button,
+	                    { value: '2' },
+	                    ' 2 '
+	                  )
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'li',
+	                null,
+	                _react2.default.createElement(_button2.default, { shape: 'circle', icon: 'reload' })
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _button2.default,
+	            { type: 'primary', icon: 'plus', className: 'add-button' },
+	            'Simpan'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'content' },
+	          _react2.default.createElement(_table2.default, {
+	            size: 'medium',
+	            pagination: false,
+	            rowKey: 'kode',
+	            rowSelection: rowSelection,
+	            columns: this.state.columns,
+	            dataSource: this.state.problems
+	          })
+	        )
+	      );
+	    }
+	  }]);
+
+	  return FinalMppd;
+	}(_react.Component);
+
+	exports.default = FinalMppd;
+
+/***/ },
+/* 747 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
@@ -84494,7 +85214,7 @@
 
 	var _col2 = _interopRequireDefault(_col);
 
-	var _DashboardSimpleInfo = __webpack_require__(744);
+	var _DashboardSimpleInfo = __webpack_require__(748);
 
 	var _DashboardSimpleInfo2 = _interopRequireDefault(_DashboardSimpleInfo);
 
@@ -84534,7 +85254,7 @@
 	exports.default = Dashboard;
 
 /***/ },
-/* 744 */
+/* 748 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -84559,7 +85279,7 @@
 
 	var _col2 = _interopRequireDefault(_col);
 
-	var _reactSparklines = __webpack_require__(745);
+	var _reactSparklines = __webpack_require__(749);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -84608,7 +85328,7 @@
 	exports.default = DashboardSimpleInfo;
 
 /***/ },
-/* 745 */
+/* 749 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function webpackUniversalModuleDefinition(root, factory) {
@@ -85684,7 +86404,7 @@
 	;
 
 /***/ },
-/* 746 */
+/* 750 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -85843,29 +86563,24 @@
 
 	      var searchFilter = this.state.searchFilter;
 
-	      var statusArray = [];
-	      statusArray.push(_react2.default.createElement(
+	      var hospitalTypes = [];
+	      hospitalTypes.push(_react2.default.createElement(
 	        Option,
 	        { key: '1' },
-	        'Aktif'
+	        'Rumah Sakit'
 	      ));
-	      statusArray.push(_react2.default.createElement(
+	      hospitalTypes.push(_react2.default.createElement(
 	        Option,
 	        { key: '2' },
-	        'Bermasalah'
-	      ));
-	      statusArray.push(_react2.default.createElement(
-	        Option,
-	        { key: '3' },
-	        'Lulus'
+	        'Klinik'
 	      ));
 
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'student-card-list' },
+	        { className: 'hospital' },
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'card-list-header' },
+	          { className: 'header' },
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'search' },
@@ -85878,7 +86593,7 @@
 	                _react2.default.createElement(_input2.default, {
 	                  style: { width: 200 },
 	                  className: 'search-text',
-	                  placeholder: 'Nama atau Stambuk'
+	                  placeholder: 'Kode atau Nama'
 	                })
 	              ),
 	              _react2.default.createElement(
@@ -85889,29 +86604,11 @@
 	                  {
 	                    mode: 'multiple',
 	                    style: { minWidth: 100 },
-	                    placeholder: 'Status',
+	                    placeholder: 'Tipe RUmah Sakit',
 	                    defaultValue: ['1'],
 	                    onChange: this.handleChange
 	                  },
-	                  statusArray
-	                )
-	              ),
-	              _react2.default.createElement(
-	                'li',
-	                null,
-	                _react2.default.createElement(
-	                  _radio2.default.Group,
-	                  { value: searchFilter, onChange: this.handleSizeChange },
-	                  _react2.default.createElement(
-	                    _radio2.default.Button,
-	                    { value: '1', icon: 'plus' },
-	                    ' 1 '
-	                  ),
-	                  _react2.default.createElement(
-	                    _radio2.default.Button,
-	                    { value: '2' },
-	                    ' 2 '
-	                  )
+	                  hospitalTypes
 	                )
 	              ),
 	              _react2.default.createElement(
@@ -85928,23 +86625,33 @@
 	          ),
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'pagination' },
-	            _react2.default.createElement(_pagination2.default, { simple: true, defaultCurrent: 1, total: 50 })
-	          ),
-	          _react2.default.createElement(
-	            _button2.default,
-	            { type: 'primary', icon: 'plus', className: 'add-button' },
-	            'Tambah Siswa'
+	            { className: 'right' },
+	            _react2.default.createElement(
+	              'ul',
+	              null,
+	              _react2.default.createElement(
+	                'li',
+	                { className: 'the-li' },
+	                _react2.default.createElement(_pagination2.default, { simple: true, defaultCurrent: 1, total: 50 })
+	              ),
+	              _react2.default.createElement(
+	                'li',
+	                { className: 'the-li' },
+	                _react2.default.createElement(
+	                  _button2.default,
+	                  { type: 'primary', icon: 'plus', className: 'add-button' },
+	                  'Rumah Sakit'
+	                )
+	              )
+	            )
 	          )
 	        ),
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'card-list-content' },
-	          _react2.default.createElement(
-	            _row2.default,
-	            { gutter: 20 },
-	            cardList
-	          )
+	          { className: 'content' },
+	          _react2.default.createElement('div', { className: 'left' }),
+	          _react2.default.createElement('div', { className: 'center' }),
+	          _react2.default.createElement('div', { className: 'right' })
 	        )
 	      );
 	    }
@@ -85961,7 +86668,7 @@
 	};
 
 /***/ },
-/* 747 */
+/* 751 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -85974,15 +86681,15 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Header = __webpack_require__(748);
+	var _Header = __webpack_require__(752);
 
 	var _Header2 = _interopRequireDefault(_Header);
 
-	var _SideMenu = __webpack_require__(749);
+	var _SideMenu = __webpack_require__(753);
 
 	var _SideMenu2 = _interopRequireDefault(_SideMenu);
 
-	var _LoginInfo = __webpack_require__(750);
+	var _LoginInfo = __webpack_require__(754);
 
 	var _LoginInfo2 = _interopRequireDefault(_LoginInfo);
 
@@ -86023,7 +86730,7 @@
 	exports.default = Workspace;
 
 /***/ },
-/* 748 */
+/* 752 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -86087,7 +86794,7 @@
 	exports.default = Header;
 
 /***/ },
-/* 749 */
+/* 753 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -86146,7 +86853,7 @@
 	    _react2.default.createElement(
 	      _menu2.default.Item,
 	      { key: 'hospital' },
-	      _react2.default.createElement(_icon2.default, { type: 'user' }),
+	      _react2.default.createElement(_icon2.default, { type: 'home' }),
 	      'Rumah Sakit'
 	    ),
 	    _react2.default.createElement(
@@ -86261,7 +86968,7 @@
 	exports.default = SideMenu;
 
 /***/ },
-/* 750 */
+/* 754 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -86334,726 +87041,6 @@
 	};
 
 	exports.default = LoginInfo;
-
-/***/ },
-/* 751 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _table = __webpack_require__(679);
-
-	var _table2 = _interopRequireDefault(_table);
-
-	var _radio = __webpack_require__(403);
-
-	var _radio2 = _interopRequireDefault(_radio);
-
-	var _button = __webpack_require__(398);
-
-	var _button2 = _interopRequireDefault(_button);
-
-	var _axios = __webpack_require__(499);
-
-	var _axios2 = _interopRequireDefault(_axios);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var MidKompre = function (_Component) {
-	  _inherits(MidKompre, _Component);
-
-	  function MidKompre(props) {
-	    _classCallCheck(this, MidKompre);
-
-	    var _this = _possibleConstructorReturn(this, (MidKompre.__proto__ || Object.getPrototypeOf(MidKompre)).call(this, props));
-
-	    _this.state = {
-	      selectedRowKeys: ['MB1'],
-	      columns: [{
-	        title: 'Tanggal',
-	        dataIndex: 'tanggal',
-	        key: 'tanggal'
-	      }, {
-	        title: 'Nilai',
-	        dataIndex: 'nilai',
-	        key: 'nilai'
-	      }],
-	      problems: []
-	    };
-	    return _this;
-	  }
-
-	  _createClass(MidKompre, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      this.getTakenDepartmentProblems();
-	    }
-	  }, {
-	    key: 'onSelectLevelChange',
-	    value: function onSelectLevelChange(e) {
-	      this.setState({ selectedLevel: e.target.value });
-	    }
-	  }, {
-	    key: 'getTakenDepartmentProblems',
-	    value: function getTakenDepartmentProblems() {
-	      var _this2 = this;
-
-	      _axios2.default.get('/student/mppd/midkompre', {}).then(function (response) {
-	        _this2.setState({
-	          problems: response.data
-	        });
-	      }).catch(function (error) {
-	        console.log(error);
-	      });
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this3 = this;
-
-	      var selectedRowKeys = this.state.selectedRowKeys;
-
-	      var rowSelection = {
-	        selectedRowKeys: selectedRowKeys,
-	        onChange: function onChange(newSelectedRowKeys, selectedRows) {
-	          console.log('selectedRowKeys: ' + newSelectedRowKeys, 'selectedRows: ', selectedRows);
-	          _this3.setState({ selectedRowKeys: newSelectedRowKeys });
-	        },
-	        onSelect: function onSelect(record, selected, selectedRows) {
-	          console.log(record, selected, selectedRows);
-	        },
-	        onSelectAll: function onSelectAll(selected, selectedRows, changeRows) {
-	          console.log(selected, selectedRows, changeRows);
-	        },
-	        getCheckboxProps: function getCheckboxProps(record) {
-	          return {
-	            // disabled: record.name === 'Disabled User',    // Column configuration not to be checked
-	          };
-	        }
-	      };
-
-	      var selectedLevel = this.state.selectedLevel;
-
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'kompre' },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'header' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'search' },
-	            _react2.default.createElement(
-	              'ul',
-	              null,
-	              _react2.default.createElement(
-	                'li',
-	                null,
-	                _react2.default.createElement(
-	                  _radio2.default.Group,
-	                  { value: selectedLevel, onChange: this.onSelectLevelChange },
-	                  _react2.default.createElement(
-	                    _radio2.default.Button,
-	                    { value: '1' },
-	                    ' 1 '
-	                  ),
-	                  _react2.default.createElement(
-	                    _radio2.default.Button,
-	                    { value: '2' },
-	                    ' 2 '
-	                  )
-	                )
-	              ),
-	              _react2.default.createElement(
-	                'li',
-	                null,
-	                _react2.default.createElement(_button2.default, { shape: 'circle', icon: 'reload' })
-	              )
-	            )
-	          ),
-	          _react2.default.createElement(
-	            _button2.default,
-	            { type: 'primary', icon: 'plus', className: 'add-button' },
-	            'Simpan'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'content' },
-	          _react2.default.createElement(_table2.default, {
-	            size: 'medium',
-	            pagination: false,
-	            rowKey: 'kode',
-	            rowSelection: rowSelection,
-	            columns: this.state.columns,
-	            dataSource: this.state.problems
-	          })
-	        )
-	      );
-	    }
-	  }]);
-
-	  return MidKompre;
-	}(_react.Component);
-
-	exports.default = MidKompre;
-
-/***/ },
-/* 752 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _table = __webpack_require__(679);
-
-	var _table2 = _interopRequireDefault(_table);
-
-	var _radio = __webpack_require__(403);
-
-	var _radio2 = _interopRequireDefault(_radio);
-
-	var _button = __webpack_require__(398);
-
-	var _button2 = _interopRequireDefault(_button);
-
-	var _axios = __webpack_require__(499);
-
-	var _axios2 = _interopRequireDefault(_axios);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var FinalKompre = function (_Component) {
-	  _inherits(FinalKompre, _Component);
-
-	  function FinalKompre(props) {
-	    _classCallCheck(this, FinalKompre);
-
-	    var _this = _possibleConstructorReturn(this, (FinalKompre.__proto__ || Object.getPrototypeOf(FinalKompre)).call(this, props));
-
-	    _this.state = {
-	      selectedRowKeys: ['MB1'],
-	      columns: [{
-	        title: 'Tanggal',
-	        dataIndex: 'tanggal',
-	        key: 'tanggal'
-	      }, {
-	        title: 'Nilai',
-	        dataIndex: 'nilai',
-	        key: 'nilai'
-	      }],
-	      problems: []
-	    };
-	    return _this;
-	  }
-
-	  _createClass(FinalKompre, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      this.getTakenDepartmentProblems();
-	    }
-	  }, {
-	    key: 'onSelectLevelChange',
-	    value: function onSelectLevelChange(e) {
-	      this.setState({ selectedLevel: e.target.value });
-	    }
-	  }, {
-	    key: 'getTakenDepartmentProblems',
-	    value: function getTakenDepartmentProblems() {
-	      var _this2 = this;
-
-	      _axios2.default.get('/student/mppd/finalkompre', {}).then(function (response) {
-	        _this2.setState({
-	          problems: response.data
-	        });
-	      }).catch(function (error) {
-	        console.log(error);
-	      });
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this3 = this;
-
-	      var selectedRowKeys = this.state.selectedRowKeys;
-
-	      var rowSelection = {
-	        selectedRowKeys: selectedRowKeys,
-	        onChange: function onChange(newSelectedRowKeys, selectedRows) {
-	          console.log('selectedRowKeys: ' + newSelectedRowKeys, 'selectedRows: ', selectedRows);
-	          _this3.setState({ selectedRowKeys: newSelectedRowKeys });
-	        },
-	        onSelect: function onSelect(record, selected, selectedRows) {
-	          console.log(record, selected, selectedRows);
-	        },
-	        onSelectAll: function onSelectAll(selected, selectedRows, changeRows) {
-	          console.log(selected, selectedRows, changeRows);
-	        },
-	        getCheckboxProps: function getCheckboxProps(record) {
-	          return {
-	            // disabled: record.name === 'Disabled User',    // Column configuration not to be checked
-	          };
-	        }
-	      };
-
-	      var selectedLevel = this.state.selectedLevel;
-
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'kompre' },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'header' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'search' },
-	            _react2.default.createElement(
-	              'ul',
-	              null,
-	              _react2.default.createElement(
-	                'li',
-	                null,
-	                _react2.default.createElement(
-	                  _radio2.default.Group,
-	                  { value: selectedLevel, onChange: this.onSelectLevelChange },
-	                  _react2.default.createElement(
-	                    _radio2.default.Button,
-	                    { value: '1' },
-	                    ' 1 '
-	                  ),
-	                  _react2.default.createElement(
-	                    _radio2.default.Button,
-	                    { value: '2' },
-	                    ' 2 '
-	                  )
-	                )
-	              ),
-	              _react2.default.createElement(
-	                'li',
-	                null,
-	                _react2.default.createElement(_button2.default, { shape: 'circle', icon: 'reload' })
-	              )
-	            )
-	          ),
-	          _react2.default.createElement(
-	            _button2.default,
-	            { type: 'primary', icon: 'plus', className: 'add-button' },
-	            'Simpan'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'content' },
-	          _react2.default.createElement(_table2.default, {
-	            size: 'medium',
-	            pagination: false,
-	            rowKey: 'kode',
-	            rowSelection: rowSelection,
-	            columns: this.state.columns,
-	            dataSource: this.state.problems
-	          })
-	        )
-	      );
-	    }
-	  }]);
-
-	  return FinalKompre;
-	}(_react.Component);
-
-	exports.default = FinalKompre;
-
-/***/ },
-/* 753 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _table = __webpack_require__(679);
-
-	var _table2 = _interopRequireDefault(_table);
-
-	var _radio = __webpack_require__(403);
-
-	var _radio2 = _interopRequireDefault(_radio);
-
-	var _button = __webpack_require__(398);
-
-	var _button2 = _interopRequireDefault(_button);
-
-	var _axios = __webpack_require__(499);
-
-	var _axios2 = _interopRequireDefault(_axios);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var TryOut = function (_Component) {
-	  _inherits(TryOut, _Component);
-
-	  function TryOut(props) {
-	    _classCallCheck(this, TryOut);
-
-	    var _this = _possibleConstructorReturn(this, (TryOut.__proto__ || Object.getPrototypeOf(TryOut)).call(this, props));
-
-	    _this.state = {
-	      selectedRowKeys: ['MB1'],
-	      columns: [{
-	        title: 'Tanggal',
-	        dataIndex: 'tanggal',
-	        key: 'tanggal'
-	      }, {
-	        title: 'Nilai',
-	        dataIndex: 'nilai',
-	        key: 'nilai'
-	      }],
-	      problems: []
-	    };
-	    return _this;
-	  }
-
-	  _createClass(TryOut, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      this.getTakenDepartmentProblems();
-	    }
-	  }, {
-	    key: 'onSelectLevelChange',
-	    value: function onSelectLevelChange(e) {
-	      this.setState({ selectedLevel: e.target.value });
-	    }
-	  }, {
-	    key: 'getTakenDepartmentProblems',
-	    value: function getTakenDepartmentProblems() {
-	      var _this2 = this;
-
-	      _axios2.default.get('/student/mppd/tryout', {}).then(function (response) {
-	        _this2.setState({
-	          problems: response.data
-	        });
-	      }).catch(function (error) {
-	        console.log(error);
-	      });
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this3 = this;
-
-	      var selectedRowKeys = this.state.selectedRowKeys;
-
-	      var rowSelection = {
-	        selectedRowKeys: selectedRowKeys,
-	        onChange: function onChange(newSelectedRowKeys, selectedRows) {
-	          console.log('selectedRowKeys: ' + newSelectedRowKeys, 'selectedRows: ', selectedRows);
-	          _this3.setState({ selectedRowKeys: newSelectedRowKeys });
-	        },
-	        onSelect: function onSelect(record, selected, selectedRows) {
-	          console.log(record, selected, selectedRows);
-	        },
-	        onSelectAll: function onSelectAll(selected, selectedRows, changeRows) {
-	          console.log(selected, selectedRows, changeRows);
-	        },
-	        getCheckboxProps: function getCheckboxProps(record) {
-	          return {
-	            // disabled: record.name === 'Disabled User',    // Column configuration not to be checked
-	          };
-	        }
-	      };
-
-	      var selectedLevel = this.state.selectedLevel;
-
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'kompre' },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'header' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'search' },
-	            _react2.default.createElement(
-	              'ul',
-	              null,
-	              _react2.default.createElement(
-	                'li',
-	                null,
-	                _react2.default.createElement(
-	                  _radio2.default.Group,
-	                  { value: selectedLevel, onChange: this.onSelectLevelChange },
-	                  _react2.default.createElement(
-	                    _radio2.default.Button,
-	                    { value: '1' },
-	                    ' 1 '
-	                  ),
-	                  _react2.default.createElement(
-	                    _radio2.default.Button,
-	                    { value: '2' },
-	                    ' 2 '
-	                  )
-	                )
-	              ),
-	              _react2.default.createElement(
-	                'li',
-	                null,
-	                _react2.default.createElement(_button2.default, { shape: 'circle', icon: 'reload' })
-	              )
-	            )
-	          ),
-	          _react2.default.createElement(
-	            _button2.default,
-	            { type: 'primary', icon: 'plus', className: 'add-button' },
-	            'Simpan'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'content' },
-	          _react2.default.createElement(_table2.default, {
-	            size: 'medium',
-	            pagination: false,
-	            rowKey: 'kode',
-	            rowSelection: rowSelection,
-	            columns: this.state.columns,
-	            dataSource: this.state.problems
-	          })
-	        )
-	      );
-	    }
-	  }]);
-
-	  return TryOut;
-	}(_react.Component);
-
-	exports.default = TryOut;
-
-/***/ },
-/* 754 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _table = __webpack_require__(679);
-
-	var _table2 = _interopRequireDefault(_table);
-
-	var _radio = __webpack_require__(403);
-
-	var _radio2 = _interopRequireDefault(_radio);
-
-	var _button = __webpack_require__(398);
-
-	var _button2 = _interopRequireDefault(_button);
-
-	var _axios = __webpack_require__(499);
-
-	var _axios2 = _interopRequireDefault(_axios);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var FinalMppd = function (_Component) {
-	  _inherits(FinalMppd, _Component);
-
-	  function FinalMppd(props) {
-	    _classCallCheck(this, FinalMppd);
-
-	    var _this = _possibleConstructorReturn(this, (FinalMppd.__proto__ || Object.getPrototypeOf(FinalMppd)).call(this, props));
-
-	    _this.state = {
-	      selectedRowKeys: ['MB1'],
-	      columns: [{
-	        title: 'Tanggal',
-	        dataIndex: 'tanggal',
-	        key: 'tanggal'
-	      }, {
-	        title: 'Nilai CBT',
-	        dataIndex: 'nilai_cbt',
-	        key: 'nilai_cbt'
-	      }, {
-	        title: 'Nilai OSCE',
-	        dataIndex: 'nilai_osce',
-	        key: 'nilai_osce'
-	      }],
-	      problems: []
-	    };
-	    return _this;
-	  }
-
-	  _createClass(FinalMppd, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      this.getTakenDepartmentProblems();
-	    }
-	  }, {
-	    key: 'onSelectLevelChange',
-	    value: function onSelectLevelChange(e) {
-	      this.setState({ selectedLevel: e.target.value });
-	    }
-	  }, {
-	    key: 'getTakenDepartmentProblems',
-	    value: function getTakenDepartmentProblems() {
-	      var _this2 = this;
-
-	      _axios2.default.get('/student/mppd/finalmppd', {}).then(function (response) {
-	        _this2.setState({
-	          problems: response.data
-	        });
-	      }).catch(function (error) {
-	        console.log(error);
-	      });
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this3 = this;
-
-	      var selectedRowKeys = this.state.selectedRowKeys;
-
-	      var rowSelection = {
-	        selectedRowKeys: selectedRowKeys,
-	        onChange: function onChange(newSelectedRowKeys, selectedRows) {
-	          console.log('selectedRowKeys: ' + newSelectedRowKeys, 'selectedRows: ', selectedRows);
-	          _this3.setState({ selectedRowKeys: newSelectedRowKeys });
-	        },
-	        onSelect: function onSelect(record, selected, selectedRows) {
-	          console.log(record, selected, selectedRows);
-	        },
-	        onSelectAll: function onSelectAll(selected, selectedRows, changeRows) {
-	          console.log(selected, selectedRows, changeRows);
-	        },
-	        getCheckboxProps: function getCheckboxProps(record) {
-	          return {
-	            // disabled: record.name === 'Disabled User',    // Column configuration not to be checked
-	          };
-	        }
-	      };
-
-	      var selectedLevel = this.state.selectedLevel;
-
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'kompre' },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'header' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'search' },
-	            _react2.default.createElement(
-	              'ul',
-	              null,
-	              _react2.default.createElement(
-	                'li',
-	                null,
-	                _react2.default.createElement(
-	                  _radio2.default.Group,
-	                  { value: selectedLevel, onChange: this.onSelectLevelChange },
-	                  _react2.default.createElement(
-	                    _radio2.default.Button,
-	                    { value: '1' },
-	                    ' 1 '
-	                  ),
-	                  _react2.default.createElement(
-	                    _radio2.default.Button,
-	                    { value: '2' },
-	                    ' 2 '
-	                  )
-	                )
-	              ),
-	              _react2.default.createElement(
-	                'li',
-	                null,
-	                _react2.default.createElement(_button2.default, { shape: 'circle', icon: 'reload' })
-	              )
-	            )
-	          ),
-	          _react2.default.createElement(
-	            _button2.default,
-	            { type: 'primary', icon: 'plus', className: 'add-button' },
-	            'Simpan'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'content' },
-	          _react2.default.createElement(_table2.default, {
-	            size: 'medium',
-	            pagination: false,
-	            rowKey: 'kode',
-	            rowSelection: rowSelection,
-	            columns: this.state.columns,
-	            dataSource: this.state.problems
-	          })
-	        )
-	      );
-	    }
-	  }]);
-
-	  return FinalMppd;
-	}(_react.Component);
-
-	exports.default = FinalMppd;
 
 /***/ }
 /******/ ]);
