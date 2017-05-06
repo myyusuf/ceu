@@ -86431,10 +86431,6 @@
 
 	var _button2 = _interopRequireDefault(_button);
 
-	var _radio = __webpack_require__(403);
-
-	var _radio2 = _interopRequireDefault(_radio);
-
 	var _select = __webpack_require__(417);
 
 	var _select2 = _interopRequireDefault(_select);
@@ -86451,9 +86447,17 @@
 
 	var _axios2 = _interopRequireDefault(_axios);
 
-	var _StudentCard = __webpack_require__(528);
+	var _HospitalList = __webpack_require__(755);
 
-	var _StudentCard2 = _interopRequireDefault(_StudentCard);
+	var _HospitalList2 = _interopRequireDefault(_HospitalList);
+
+	var _HospitalDepartmentList = __webpack_require__(756);
+
+	var _HospitalDepartmentList2 = _interopRequireDefault(_HospitalDepartmentList);
+
+	var _HospitalStudentList = __webpack_require__(757);
+
+	var _HospitalStudentList2 = _interopRequireDefault(_HospitalStudentList);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -86540,7 +86544,7 @@
 	        colList.push(_react2.default.createElement(
 	          _col2.default,
 	          { key: i, span: 8 },
-	          _react2.default.createElement(_StudentCard2.default, { key: i, student: student, onDetailsClick: this.showDetails })
+	          _react2.default.createElement(StudentCard, { key: i, student: student, onDetailsClick: this.showDetails })
 	        ));
 
 	        if ((i + 1) % colsPerRow === 0) {
@@ -86583,7 +86587,7 @@
 	          { className: 'header' },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'search' },
+	            { className: 'left' },
 	            _react2.default.createElement(
 	              'ul',
 	              null,
@@ -86649,9 +86653,21 @@
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'content' },
-	          _react2.default.createElement('div', { className: 'left' }),
-	          _react2.default.createElement('div', { className: 'center' }),
-	          _react2.default.createElement('div', { className: 'right' })
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'left' },
+	            _react2.default.createElement(_HospitalList2.default, null)
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'center' },
+	            _react2.default.createElement(_HospitalDepartmentList2.default, null)
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'right' },
+	            _react2.default.createElement(_HospitalStudentList2.default, null)
+	          )
 	        )
 	      );
 	    }
@@ -87041,6 +87057,442 @@
 	};
 
 	exports.default = LoginInfo;
+
+/***/ },
+/* 755 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _table = __webpack_require__(679);
+
+	var _table2 = _interopRequireDefault(_table);
+
+	var _axios = __webpack_require__(499);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var HospitalList = function (_Component) {
+	  _inherits(HospitalList, _Component);
+
+	  function HospitalList(props) {
+	    _classCallCheck(this, HospitalList);
+
+	    var _this = _possibleConstructorReturn(this, (HospitalList.__proto__ || Object.getPrototypeOf(HospitalList)).call(this, props));
+
+	    _this.state = {
+	      selectedRowKeys: ['MB1'],
+	      columns: [{
+	        title: 'Kode',
+	        dataIndex: 'kode',
+	        key: 'kode'
+	      }, {
+	        title: 'Nama',
+	        dataIndex: 'nama',
+	        key: 'nama'
+	      }],
+	      hospitals: []
+	    };
+	    return _this;
+	  }
+
+	  _createClass(HospitalList, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.getTakenDepartmentProblems();
+	    }
+	  }, {
+	    key: 'onSelectLevelChange',
+	    value: function onSelectLevelChange(e) {
+	      this.setState({ selectedLevel: e.target.value });
+	    }
+	  }, {
+	    key: 'getTakenDepartmentProblems',
+	    value: function getTakenDepartmentProblems() {
+	      var _this2 = this;
+
+	      _axios2.default.get('/hospitals', {}).then(function (response) {
+	        _this2.setState({
+	          hospitals: response.data
+	        });
+	      }).catch(function (error) {
+	        console.log(error);
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this3 = this;
+
+	      var selectedRowKeys = this.state.selectedRowKeys;
+
+	      var rowSelection = {
+	        type: 'radio',
+	        onChange: function onChange(selectedRowKeys, selectedRows) {
+	          // console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+	        },
+	        onSelect: function onSelect(record, selected, selectedRows) {
+	          _this3.onTakenDepartmentSelected(record);
+	        }
+	      };
+
+	      return _react2.default.createElement(_table2.default, {
+	        size: 'medium',
+	        pagination: false,
+	        rowKey: 'kode',
+	        rowSelection: rowSelection,
+	        columns: this.state.columns,
+	        dataSource: this.state.hospitals
+	      });
+	    }
+	  }]);
+
+	  return HospitalList;
+	}(_react.Component);
+
+	exports.default = HospitalList;
+
+/***/ },
+/* 756 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _table = __webpack_require__(679);
+
+	var _table2 = _interopRequireDefault(_table);
+
+	var _button = __webpack_require__(398);
+
+	var _button2 = _interopRequireDefault(_button);
+
+	var _radio = __webpack_require__(403);
+
+	var _radio2 = _interopRequireDefault(_radio);
+
+	var _axios = __webpack_require__(499);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var HospitalDepartmentList = function (_Component) {
+	  _inherits(HospitalDepartmentList, _Component);
+
+	  function HospitalDepartmentList(props) {
+	    _classCallCheck(this, HospitalDepartmentList);
+
+	    var _this = _possibleConstructorReturn(this, (HospitalDepartmentList.__proto__ || Object.getPrototypeOf(HospitalDepartmentList)).call(this, props));
+
+	    _this.state = {
+	      selectedRowKeys: ['MB1'],
+	      columns: [{
+	        title: 'Kode',
+	        dataIndex: 'kode',
+	        key: 'kode'
+	      }, {
+	        title: 'Nama',
+	        dataIndex: 'nama',
+	        key: 'nama'
+	      }],
+	      hospitals: [],
+	      searchFilter: '1'
+	    };
+	    return _this;
+	  }
+
+	  _createClass(HospitalDepartmentList, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.getTakenDepartmentProblems();
+	    }
+	  }, {
+	    key: 'onSelectLevelChange',
+	    value: function onSelectLevelChange(e) {
+	      this.setState({ selectedLevel: e.target.value });
+	    }
+	  }, {
+	    key: 'getTakenDepartmentProblems',
+	    value: function getTakenDepartmentProblems() {
+	      var _this2 = this;
+
+	      _axios2.default.get('/hospitals/departments', {}).then(function (response) {
+	        _this2.setState({
+	          hospitals: response.data
+	        });
+	      }).catch(function (error) {
+	        console.log(error);
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this3 = this;
+
+	      var selectedRowKeys = this.state.selectedRowKeys;
+
+	      var rowSelection = {
+	        type: 'radio',
+	        onChange: function onChange(selectedRowKeys, selectedRows) {
+	          // console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+	        },
+	        onSelect: function onSelect(record, selected, selectedRows) {
+	          _this3.onTakenDepartmentSelected(record);
+	        }
+	      };
+
+	      var searchFilter = this.state.searchFilter;
+
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'hospital-department' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'header' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'left' },
+	            _react2.default.createElement(
+	              'ul',
+	              null,
+	              _react2.default.createElement(
+	                'li',
+	                null,
+	                _react2.default.createElement(
+	                  _radio2.default.Group,
+	                  { value: searchFilter, onChange: this.handleSizeChange },
+	                  _react2.default.createElement(
+	                    _radio2.default.Button,
+	                    { value: '1', icon: 'plus' },
+	                    ' 1 '
+	                  ),
+	                  _react2.default.createElement(
+	                    _radio2.default.Button,
+	                    { value: '2' },
+	                    ' 2 '
+	                  )
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'li',
+	                null,
+	                _react2.default.createElement(_button2.default, { shape: 'circle', icon: 'reload', className: 'search-button' })
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'right' },
+	            _react2.default.createElement(
+	              _button2.default,
+	              { type: 'primary', icon: 'plus', className: 'add-button' },
+	              'Bagian'
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'content' },
+	          _react2.default.createElement(_table2.default, {
+	            size: 'medium',
+	            pagination: false,
+	            rowKey: 'kode',
+	            rowSelection: rowSelection,
+	            columns: this.state.columns,
+	            dataSource: this.state.hospitals
+	          })
+	        )
+	      );
+	    }
+	  }]);
+
+	  return HospitalDepartmentList;
+	}(_react.Component);
+
+	exports.default = HospitalDepartmentList;
+
+/***/ },
+/* 757 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _table = __webpack_require__(679);
+
+	var _table2 = _interopRequireDefault(_table);
+
+	var _button = __webpack_require__(398);
+
+	var _button2 = _interopRequireDefault(_button);
+
+	var _radio = __webpack_require__(403);
+
+	var _radio2 = _interopRequireDefault(_radio);
+
+	var _axios = __webpack_require__(499);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var HospitalStudentList = function (_Component) {
+	  _inherits(HospitalStudentList, _Component);
+
+	  function HospitalStudentList(props) {
+	    _classCallCheck(this, HospitalStudentList);
+
+	    var _this = _possibleConstructorReturn(this, (HospitalStudentList.__proto__ || Object.getPrototypeOf(HospitalStudentList)).call(this, props));
+
+	    _this.state = {
+	      selectedRowKeys: ['MB1'],
+	      columns: [{
+	        title: 'Stambuk',
+	        dataIndex: 'stambuk',
+	        key: 'stambuk'
+	      }, {
+	        title: 'Nama',
+	        dataIndex: 'nama',
+	        key: 'nama'
+	      }],
+	      hospitals: [],
+	      searchFilter: '1'
+	    };
+	    return _this;
+	  }
+
+	  _createClass(HospitalStudentList, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.getTakenDepartmentProblems();
+	    }
+	  }, {
+	    key: 'onSelectLevelChange',
+	    value: function onSelectLevelChange(e) {
+	      this.setState({ selectedLevel: e.target.value });
+	    }
+	  }, {
+	    key: 'getTakenDepartmentProblems',
+	    value: function getTakenDepartmentProblems() {
+	      var _this2 = this;
+
+	      _axios2.default.get('/hospitals/departments', {}).then(function (response) {
+	        _this2.setState({
+	          hospitals: response.data
+	        });
+	      }).catch(function (error) {
+	        console.log(error);
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this3 = this;
+
+	      var selectedRowKeys = this.state.selectedRowKeys;
+
+	      var rowSelection = {
+	        type: 'radio',
+	        onChange: function onChange(selectedRowKeys, selectedRows) {
+	          // console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+	        },
+	        onSelect: function onSelect(record, selected, selectedRows) {
+	          _this3.onTakenDepartmentSelected(record);
+	        }
+	      };
+
+	      var searchFilter = this.state.searchFilter;
+
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'hospital-student' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'header' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'left' },
+	            _react2.default.createElement(
+	              'ul',
+	              null,
+	              _react2.default.createElement(
+	                'li',
+	                null,
+	                _react2.default.createElement(_button2.default, { shape: 'circle', icon: 'reload', className: 'search-button' })
+	              )
+	            )
+	          ),
+	          _react2.default.createElement('div', { className: 'right' })
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'content' },
+	          _react2.default.createElement(_table2.default, {
+	            size: 'medium',
+	            pagination: false,
+	            rowKey: 'kode',
+	            rowSelection: rowSelection,
+	            columns: this.state.columns,
+	            dataSource: this.state.hospitals
+	          })
+	        )
+	      );
+	    }
+	  }]);
+
+	  return HospitalStudentList;
+	}(_react.Component);
+
+	exports.default = HospitalStudentList;
 
 /***/ }
 /******/ ]);
