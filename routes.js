@@ -1,5 +1,6 @@
 const Pages = require('./handlers/pages');
 const Assets = require('./handlers/assets');
+const Department = require('./handlers/department');
 const Student = require('./handlers/student');
 const TakenDepartment = require('./handlers/takendepartment');
 const TakenDepartmentProblem = require('./handlers/takendepartmentproblem');
@@ -19,6 +20,11 @@ module.exports = [
     method: 'GET',
     path: '/test_component',
     handler: Pages.testComponent,
+  },
+  {
+    method: 'GET',
+    path: '/departments',
+    handler: Department.find,
   },
   {
     method: 'GET',
