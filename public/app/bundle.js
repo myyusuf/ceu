@@ -55683,6 +55683,10 @@
 
 	var _StudentStatusTag2 = _interopRequireDefault(_StudentStatusTag);
 
+	var _StudentDepartmentStatusTag = __webpack_require__(772);
+
+	var _StudentDepartmentStatusTag2 = _interopRequireDefault(_StudentDepartmentStatusTag);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var StudentCard = function StudentCard(_ref) {
@@ -55809,11 +55813,7 @@
 	      _react2.default.createElement(
 	        _col2.default,
 	        { span: 12 },
-	        _react2.default.createElement(
-	          _tag2.default,
-	          { color: '#FFB300' },
-	          'Approval'
-	        )
+	        _react2.default.createElement(_StudentDepartmentStatusTag2.default, { value: student.status_bagian })
 	      )
 	    ),
 	    _react2.default.createElement(
@@ -55831,7 +55831,7 @@
 	      _react2.default.createElement(
 	        _col2.default,
 	        { span: 24, style: { paddingTop: 15 } },
-	        _react2.default.createElement(_progress2.default, { percent: 60 })
+	        _react2.default.createElement(_progress2.default, { percent: student.progres_keseluruhan })
 	      )
 	    )
 	  );
@@ -56803,10 +56803,25 @@
 	  colorCode: '#F44336'
 	}];
 
+	var STUDENT_DEPARTMENT_STATUS_ARRAY = [{
+	  id: 1,
+	  name: 'Berjalan',
+	  colorCode: '#2DB7F5'
+	}, {
+	  id: 2,
+	  name: 'Selesai',
+	  colorCode: '#4CAF50'
+	}, {
+	  id: 3,
+	  name: 'Bermasalah',
+	  colorCode: '#F44336'
+	}];
+
 	var STUDENT_LEVEL_ARRAY = ['1', '2'];
 
 	module.exports.STUDENT_STATUS_ARRAY = STUDENT_STATUS_ARRAY;
 	module.exports.STUDENT_LEVEL_ARRAY = STUDENT_LEVEL_ARRAY;
+	module.exports.STUDENT_DEPARTMENT_STATUS_ARRAY = STUDENT_DEPARTMENT_STATUS_ARRAY;
 
 /***/ },
 /* 533 */
@@ -89189,6 +89204,56 @@
 	};
 
 	exports.default = LoginInfo;
+
+/***/ },
+/* 772 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _tag = __webpack_require__(523);
+
+	var _tag2 = _interopRequireDefault(_tag);
+
+	var _CEUConstant = __webpack_require__(532);
+
+	var _CEUConstant2 = _interopRequireDefault(_CEUConstant);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var StudentDepartmentStatusTag = function StudentDepartmentStatusTag(_ref) {
+	  var value = _ref.value;
+
+	  var statusArray = [];
+
+	  _CEUConstant2.default.STUDENT_DEPARTMENT_STATUS_ARRAY.forEach(function (studentStatus) {
+	    statusArray.push(_react2.default.createElement(
+	      _tag2.default,
+	      { color: studentStatus.colorCode },
+	      studentStatus.name
+	    ));
+	  });
+
+	  return statusArray[value - 1];
+	};
+
+	StudentDepartmentStatusTag.propTypes = {
+	  value: _react2.default.PropTypes.number
+	};
+
+	StudentDepartmentStatusTag.defaultProps = {
+	  value: 1
+	};
+
+	exports.default = StudentDepartmentStatusTag;
 
 /***/ }
 /******/ ]);

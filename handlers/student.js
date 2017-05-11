@@ -19,8 +19,14 @@ exports.find = function findStudents(request, reply) {
 
   const selectStudents = function selectStudents(callback) {
     const query =
-    `SELECT * FROM
-      tb_siswa
+    `SELECT
+      ts.*,
+      tsb.status_bagian,
+      tsb.progres_keseluruhan
+    FROM
+      tb_siswa ts
+    LEFT JOIN
+      tb_status_bagian_diambil tsb ON ts.id = tsb.siswa_id
     WHERE
       (
         stambuk_lama LIKE ? OR
