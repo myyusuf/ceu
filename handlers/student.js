@@ -15,7 +15,7 @@ exports.find = function findStudents(request, reply) {
   const namaLike = `%${searchText}%`;
   const level = request.query.studentLevel;
 
-  console.log(stambukLamaLike);
+  const studentStatus = request.query['studentStatus[]'] || [];
 
   const selectStudents = function selectStudents(callback) {
     const query =
@@ -29,6 +29,8 @@ exports.find = function findStudents(request, reply) {
       )
     AND
       tingkat = ?
+    AND
+      status IN (?)
     ORDER BY
       nama
     LIMIT ?,? `;
@@ -38,6 +40,7 @@ exports.find = function findStudents(request, reply) {
       stambukBaruLike,
       namaLike,
       level,
+      studentStatus,
       pagenum * pagesize,
       pagesize,
     ], (err, rows) => {
@@ -58,8 +61,11 @@ exports.find = function findStudents(request, reply) {
         stambuk_lama LIKE ? OR
         stambuk_baru LIKE ? OR
         nama LIKE ?
-      ) AND
-      tingkat = ? `;
+      )
+      AND
+        tingkat = ?
+      AND
+        status IN (?) `;
 
     db.query(
       query, [
@@ -67,6 +73,7 @@ exports.find = function findStudents(request, reply) {
         stambukBaruLike,
         namaLike,
         level,
+        studentStatus,
       ], (err, rows) => {
         if (err) callback(err);
         result.totalRecords = rows[0].totalRecords;
