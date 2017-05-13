@@ -46,3 +46,11 @@
   width: 100%;
   padding: 20px;
 }
+
+/* Ant */
+.ant-form-item {
+  margin-bottom: 12px;
+}
+.ant-form-vertical .ant-form-item-label {
+  padding: 0;
+}

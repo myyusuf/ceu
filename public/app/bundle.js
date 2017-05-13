@@ -96,7 +96,7 @@
 
 	var _reactRouterDom = __webpack_require__(551);
 
-	var _Workspace = __webpack_require__(770);
+	var _Workspace = __webpack_require__(779);
 
 	var _Workspace2 = _interopRequireDefault(_Workspace);
 
@@ -88929,7 +88929,7 @@
 
 	var _StudentLevelRadio2 = _interopRequireDefault(_StudentLevelRadio);
 
-	var _DepartmentCreateForm = __webpack_require__(774);
+	var _DepartmentCreateForm = __webpack_require__(770);
 
 	var _DepartmentCreateForm2 = _interopRequireDefault(_DepartmentCreateForm);
 
@@ -89121,11 +89121,6 @@
 	              _react2.default.createElement(
 	                'li',
 	                { className: 'the-li' },
-	                _react2.default.createElement(_pagination2.default, { simple: true, defaultCurrent: 1, total: 50 })
-	              ),
-	              _react2.default.createElement(
-	                'li',
-	                { className: 'the-li' },
 	                _react2.default.createElement(
 	                  _button2.default,
 	                  {
@@ -89186,384 +89181,6 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Header = __webpack_require__(771);
-
-	var _Header2 = _interopRequireDefault(_Header);
-
-	var _SideMenu = __webpack_require__(772);
-
-	var _SideMenu2 = _interopRequireDefault(_SideMenu);
-
-	var _LoginInfo = __webpack_require__(773);
-
-	var _LoginInfo2 = _interopRequireDefault(_LoginInfo);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var Workspace = function Workspace(_ref) {
-	  var children = _ref.children;
-
-
-	  var location = window.location.href;
-	  var pageTitle = '';
-
-	  if (location.indexOf('dashboard') > 0) {
-	    pageTitle = 'Dashboard';
-	  } else if (location.indexOf('student') > 0) {
-	    pageTitle = 'Student';
-	  } else if (location.indexOf('hospital') > 0) {
-	    pageTitle = 'Hospital';
-	  } else if (location.indexOf('pretest') > 0) {
-	    pageTitle = 'Pre-Test';
-	  } else if (location.indexOf('posttest') > 0) {
-	    pageTitle = 'Post-Test';
-	  } else if (location.indexOf('mppd') > 0) {
-	    pageTitle = 'MPPD';
-	  } else if (location.indexOf('departments') > 0) {
-	    pageTitle = 'Bagian';
-	  }
-	  return _react2.default.createElement(
-	    'div',
-	    null,
-	    _react2.default.createElement(_Header2.default, { pageTitle: pageTitle }),
-	    _react2.default.createElement(
-	      'div',
-	      { className: 'workspace-left-menu' },
-	      _react2.default.createElement(_LoginInfo2.default, { name: 'Yusuf', roleName: 'Administrator' }),
-	      _react2.default.createElement(_SideMenu2.default, null)
-	    ),
-	    _react2.default.createElement(
-	      'div',
-	      { className: 'workspace-section' },
-	      children
-	    )
-	  );
-	};
-
-	exports.default = Workspace;
-
-/***/ },
-/* 771 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var Header = function Header(_ref) {
-	  var pageTitle = _ref.pageTitle;
-
-	  return _react2.default.createElement(
-	    "div",
-	    { className: "workspace-header" },
-	    _react2.default.createElement("img", { className: "logo", src: "assets/images/small_logo.png", alt: "Logo" }),
-	    _react2.default.createElement(
-	      "span",
-	      { className: "app-name" },
-	      "CEU"
-	    ),
-	    _react2.default.createElement(
-	      "span",
-	      { className: "page-title" },
-	      pageTitle
-	    ),
-	    _react2.default.createElement(
-	      "nav",
-	      null,
-	      _react2.default.createElement(
-	        "ul",
-	        null,
-	        _react2.default.createElement(
-	          "li",
-	          null,
-	          _react2.default.createElement("img", { src: "assets/images/icons/user.png", alt: "menu" })
-	        ),
-	        _react2.default.createElement(
-	          "li",
-	          null,
-	          _react2.default.createElement("img", { src: "assets/images/icons/settings.png", alt: "menu" })
-	        )
-	      )
-	    )
-	  );
-	};
-
-	Header.propTypes = {
-	  pageTitle: _react2.default.PropTypes.string
-	};
-
-	Header.defaultProps = {
-	  pageTitle: ''
-	};
-
-	exports.default = Header;
-
-/***/ },
-/* 772 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _menu = __webpack_require__(717);
-
-	var _menu2 = _interopRequireDefault(_menu);
-
-	var _icon = __webpack_require__(400);
-
-	var _icon2 = _interopRequireDefault(_icon);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	// import { Link } from 'react-router-dom';
-
-	var SubMenu = _menu2.default.SubMenu;
-
-	var SideMenu = function SideMenu() {
-	  var handleClick = function handleClick(e) {
-	    // console.log(`click : ${e.key}`);
-	    if (e.key === 'pretest' || e.key === 'posttest') {
-	      window.location.href = '#score/' + e.key;
-	    } else if (e.key === 'mppd') {
-	      window.location.href = '#schedule/' + e.key;
-	    } else {
-	      window.location.href = '#' + e.key;
-	    }
-	  };
-
-	  return _react2.default.createElement(
-	    _menu2.default,
-	    {
-	      className: 'side-menu',
-	      height: 300,
-	      style: { border: 0 },
-	      onClick: handleClick,
-	      defaultSelectedKeys: ['1'],
-	      defaultOpenKeys: ['sub1'],
-	      mode: 'inline'
-	    },
-	    _react2.default.createElement(
-	      _menu2.default.Item,
-	      { key: 'dashboard' },
-	      _react2.default.createElement(_icon2.default, { type: 'dot-chart' }),
-	      'Dashboard'
-	    ),
-	    _react2.default.createElement(
-	      _menu2.default.Item,
-	      { key: 'student' },
-	      _react2.default.createElement(_icon2.default, { type: 'user' }),
-	      'Mahasiswa'
-	    ),
-	    _react2.default.createElement(
-	      _menu2.default.Item,
-	      { key: 'hospital' },
-	      _react2.default.createElement(_icon2.default, { type: 'home' }),
-	      'Rumah Sakit'
-	    ),
-	    _react2.default.createElement(
-	      SubMenu,
-	      { key: 'nilai', title: _react2.default.createElement(
-	          'span',
-	          null,
-	          _react2.default.createElement(_icon2.default, { type: 'file-text' }),
-	          _react2.default.createElement(
-	            'span',
-	            null,
-	            'Nilai'
-	          )
-	        ) },
-	      _react2.default.createElement(
-	        _menu2.default.Item,
-	        { key: 'pretest' },
-	        'Pre Test'
-	      ),
-	      _react2.default.createElement(
-	        _menu2.default.Item,
-	        { key: 'posttest' },
-	        'Post Test'
-	      )
-	    ),
-	    _react2.default.createElement(
-	      SubMenu,
-	      { key: 'jadwal', title: _react2.default.createElement(
-	          'span',
-	          null,
-	          _react2.default.createElement(_icon2.default, { type: 'idcard' }),
-	          _react2.default.createElement(
-	            'span',
-	            null,
-	            'Jadwal'
-	          )
-	        ) },
-	      _react2.default.createElement(
-	        _menu2.default.Item,
-	        { key: 'mppd' },
-	        'Jadwal MPPD'
-	      )
-	    ),
-	    _react2.default.createElement(
-	      SubMenu,
-	      { key: 'laporan', title: _react2.default.createElement(
-	          'span',
-	          null,
-	          _react2.default.createElement(_icon2.default, { type: 'contacts' }),
-	          _react2.default.createElement(
-	            'span',
-	            null,
-	            'Laporan'
-	          )
-	        ) },
-	      _react2.default.createElement(
-	        _menu2.default.Item,
-	        { key: 'costunit' },
-	        'Cost Unit'
-	      )
-	    ),
-	    _react2.default.createElement(
-	      SubMenu,
-	      { key: 'settings', title: _react2.default.createElement(
-	          'span',
-	          null,
-	          _react2.default.createElement(_icon2.default, { type: 'appstore' }),
-	          _react2.default.createElement(
-	            'span',
-	            null,
-	            'Settings'
-	          )
-	        ) },
-	      _react2.default.createElement(
-	        _menu2.default.Item,
-	        { key: 'departments' },
-	        'Data Bagian'
-	      )
-	    ),
-	    _react2.default.createElement(
-	      SubMenu,
-	      { key: 'help', title: _react2.default.createElement(
-	          'span',
-	          null,
-	          _react2.default.createElement(_icon2.default, { type: 'question-circle-o' }),
-	          _react2.default.createElement(
-	            'span',
-	            null,
-	            'Help'
-	          )
-	        ) },
-	      _react2.default.createElement(
-	        _menu2.default.Item,
-	        { key: 'tutorial' },
-	        'Tutorial'
-	      )
-	    )
-	  );
-	};
-
-	exports.default = SideMenu;
-
-/***/ },
-/* 773 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _row = __webpack_require__(388);
-
-	var _row2 = _interopRequireDefault(_row);
-
-	var _col = __webpack_require__(397);
-
-	var _col2 = _interopRequireDefault(_col);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var LoginInfo = function LoginInfo(_ref) {
-	  var name = _ref.name,
-	      roleName = _ref.roleName;
-
-	  return _react2.default.createElement(
-	    'div',
-	    { className: 'login-info' },
-	    _react2.default.createElement(
-	      _row2.default,
-	      null,
-	      _react2.default.createElement(
-	        _col2.default,
-	        { span: 24 },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'login-info-image' },
-	          _react2.default.createElement('img', { className: 'img-circle', src: 'assets/images/avatar.png', alt: 'Avatar' })
-	        )
-	      )
-	    ),
-	    _react2.default.createElement(
-	      _row2.default,
-	      null,
-	      _react2.default.createElement(
-	        _col2.default,
-	        { span: 24 },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'login-info-title' },
-	          name
-	        )
-	      )
-	    ),
-	    _react2.default.createElement(
-	      _row2.default,
-	      null,
-	      _react2.default.createElement(
-	        _col2.default,
-	        { span: 24 },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'login-info-role' },
-	          roleName
-	        )
-	      )
-	    )
-	  );
-	};
-
-	exports.default = LoginInfo;
-
-/***/ },
-/* 774 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
 	var _form = __webpack_require__(594);
 
 	var _form2 = _interopRequireDefault(_form);
@@ -89572,13 +89189,9 @@
 
 	var _input2 = _interopRequireDefault(_input);
 
-	var _modal = __webpack_require__(775);
+	var _modal = __webpack_require__(771);
 
 	var _modal2 = _interopRequireDefault(_modal);
-
-	var _axios = __webpack_require__(492);
-
-	var _axios2 = _interopRequireDefault(_axios);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -89607,8 +89220,33 @@
 	        FormItem,
 	        { label: 'Kode' },
 	        getFieldDecorator('kode', {
-	          rules: [{ required: true, message: 'Kode bagian wajib diisi' }]
-	        })(_react2.default.createElement(_input2.default, null))
+	          rules: [{
+	            required: true,
+	            message: 'Kode bagian wajib diisi'
+	          }, {
+	            min: 3,
+	            message: 'Panjang kode bagian minimum 3 karakter'
+	          }, {
+	            max: 10,
+	            message: 'Panjang kode bagian maximum 10 karakter'
+	          }]
+	        })(_react2.default.createElement(_input2.default, { maxLength: '10' }))
+	      ),
+	      _react2.default.createElement(
+	        FormItem,
+	        { label: 'Nama' },
+	        getFieldDecorator('nama', {
+	          rules: [{
+	            required: true,
+	            message: 'Nama bagian wajib diisi'
+	          }, {
+	            min: 3,
+	            message: 'Panjang nama bagian minimum 3 karakter'
+	          }, {
+	            max: 30,
+	            message: 'Panjang nama bagian maximum 30 karakter'
+	          }]
+	        })(_react2.default.createElement(_input2.default, { maxLength: '30' }))
 	      )
 	    )
 	  );
@@ -89617,7 +89255,7 @@
 	exports.default = DepartmentCreateForm;
 
 /***/ },
-/* 775 */
+/* 771 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -89626,11 +89264,11 @@
 	    value: true
 	});
 
-	var _Modal = __webpack_require__(776);
+	var _Modal = __webpack_require__(772);
 
 	var _Modal2 = _interopRequireDefault(_Modal);
 
-	var _confirm = __webpack_require__(781);
+	var _confirm = __webpack_require__(777);
 
 	var _confirm2 = _interopRequireDefault(_confirm);
 
@@ -89683,7 +89321,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 776 */
+/* 772 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -89713,7 +89351,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _rcDialog = __webpack_require__(777);
+	var _rcDialog = __webpack_require__(773);
 
 	var _rcDialog2 = _interopRequireDefault(_rcDialog);
 
@@ -89830,7 +89468,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 777 */
+/* 773 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -89843,7 +89481,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Dialog = __webpack_require__(778);
+	var _Dialog = __webpack_require__(774);
 
 	var _Dialog2 = _interopRequireDefault(_Dialog);
 
@@ -89917,7 +89555,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 778 */
+/* 774 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -89942,11 +89580,11 @@
 
 	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
 
-	var _LazyRenderBox = __webpack_require__(779);
+	var _LazyRenderBox = __webpack_require__(775);
 
 	var _LazyRenderBox2 = _interopRequireDefault(_LazyRenderBox);
 
-	var _getScrollBarSize = __webpack_require__(780);
+	var _getScrollBarSize = __webpack_require__(776);
 
 	var _getScrollBarSize2 = _interopRequireDefault(_getScrollBarSize);
 
@@ -90244,7 +89882,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 779 */
+/* 775 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -90294,7 +89932,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 780 */
+/* 776 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -90344,7 +89982,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 781 */
+/* 777 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -90379,11 +90017,11 @@
 
 	var _icon2 = _interopRequireDefault(_icon);
 
-	var _Modal = __webpack_require__(776);
+	var _Modal = __webpack_require__(772);
 
 	var _Modal2 = _interopRequireDefault(_Modal);
 
-	var _ActionButton = __webpack_require__(782);
+	var _ActionButton = __webpack_require__(778);
 
 	var _ActionButton2 = _interopRequireDefault(_ActionButton);
 
@@ -90485,7 +90123,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 782 */
+/* 778 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -90593,6 +90231,384 @@
 
 	exports["default"] = ActionButton;
 	module.exports = exports['default'];
+
+/***/ },
+/* 779 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Header = __webpack_require__(780);
+
+	var _Header2 = _interopRequireDefault(_Header);
+
+	var _SideMenu = __webpack_require__(781);
+
+	var _SideMenu2 = _interopRequireDefault(_SideMenu);
+
+	var _LoginInfo = __webpack_require__(782);
+
+	var _LoginInfo2 = _interopRequireDefault(_LoginInfo);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Workspace = function Workspace(_ref) {
+	  var children = _ref.children;
+
+
+	  var location = window.location.href;
+	  var pageTitle = '';
+
+	  if (location.indexOf('dashboard') > 0) {
+	    pageTitle = 'Dashboard';
+	  } else if (location.indexOf('student') > 0) {
+	    pageTitle = 'Student';
+	  } else if (location.indexOf('hospital') > 0) {
+	    pageTitle = 'Hospital';
+	  } else if (location.indexOf('pretest') > 0) {
+	    pageTitle = 'Pre-Test';
+	  } else if (location.indexOf('posttest') > 0) {
+	    pageTitle = 'Post-Test';
+	  } else if (location.indexOf('mppd') > 0) {
+	    pageTitle = 'MPPD';
+	  } else if (location.indexOf('departments') > 0) {
+	    pageTitle = 'Bagian';
+	  }
+	  return _react2.default.createElement(
+	    'div',
+	    null,
+	    _react2.default.createElement(_Header2.default, { pageTitle: pageTitle }),
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'workspace-left-menu' },
+	      _react2.default.createElement(_LoginInfo2.default, { name: 'Yusuf', roleName: 'Administrator' }),
+	      _react2.default.createElement(_SideMenu2.default, null)
+	    ),
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'workspace-section' },
+	      children
+	    )
+	  );
+	};
+
+	exports.default = Workspace;
+
+/***/ },
+/* 780 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Header = function Header(_ref) {
+	  var pageTitle = _ref.pageTitle;
+
+	  return _react2.default.createElement(
+	    "div",
+	    { className: "workspace-header" },
+	    _react2.default.createElement("img", { className: "logo", src: "assets/images/small_logo.png", alt: "Logo" }),
+	    _react2.default.createElement(
+	      "span",
+	      { className: "app-name" },
+	      "CEU"
+	    ),
+	    _react2.default.createElement(
+	      "span",
+	      { className: "page-title" },
+	      pageTitle
+	    ),
+	    _react2.default.createElement(
+	      "nav",
+	      null,
+	      _react2.default.createElement(
+	        "ul",
+	        null,
+	        _react2.default.createElement(
+	          "li",
+	          null,
+	          _react2.default.createElement("img", { src: "assets/images/icons/user.png", alt: "menu" })
+	        ),
+	        _react2.default.createElement(
+	          "li",
+	          null,
+	          _react2.default.createElement("img", { src: "assets/images/icons/settings.png", alt: "menu" })
+	        )
+	      )
+	    )
+	  );
+	};
+
+	Header.propTypes = {
+	  pageTitle: _react2.default.PropTypes.string
+	};
+
+	Header.defaultProps = {
+	  pageTitle: ''
+	};
+
+	exports.default = Header;
+
+/***/ },
+/* 781 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _menu = __webpack_require__(717);
+
+	var _menu2 = _interopRequireDefault(_menu);
+
+	var _icon = __webpack_require__(400);
+
+	var _icon2 = _interopRequireDefault(_icon);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	// import { Link } from 'react-router-dom';
+
+	var SubMenu = _menu2.default.SubMenu;
+
+	var SideMenu = function SideMenu() {
+	  var handleClick = function handleClick(e) {
+	    // console.log(`click : ${e.key}`);
+	    if (e.key === 'pretest' || e.key === 'posttest') {
+	      window.location.href = '#score/' + e.key;
+	    } else if (e.key === 'mppd') {
+	      window.location.href = '#schedule/' + e.key;
+	    } else {
+	      window.location.href = '#' + e.key;
+	    }
+	  };
+
+	  return _react2.default.createElement(
+	    _menu2.default,
+	    {
+	      className: 'side-menu',
+	      height: 300,
+	      style: { border: 0 },
+	      onClick: handleClick,
+	      defaultSelectedKeys: ['1'],
+	      defaultOpenKeys: ['sub1'],
+	      mode: 'inline'
+	    },
+	    _react2.default.createElement(
+	      _menu2.default.Item,
+	      { key: 'dashboard' },
+	      _react2.default.createElement(_icon2.default, { type: 'dot-chart' }),
+	      'Dashboard'
+	    ),
+	    _react2.default.createElement(
+	      _menu2.default.Item,
+	      { key: 'student' },
+	      _react2.default.createElement(_icon2.default, { type: 'user' }),
+	      'Mahasiswa'
+	    ),
+	    _react2.default.createElement(
+	      _menu2.default.Item,
+	      { key: 'hospital' },
+	      _react2.default.createElement(_icon2.default, { type: 'home' }),
+	      'Rumah Sakit'
+	    ),
+	    _react2.default.createElement(
+	      SubMenu,
+	      { key: 'nilai', title: _react2.default.createElement(
+	          'span',
+	          null,
+	          _react2.default.createElement(_icon2.default, { type: 'file-text' }),
+	          _react2.default.createElement(
+	            'span',
+	            null,
+	            'Nilai'
+	          )
+	        ) },
+	      _react2.default.createElement(
+	        _menu2.default.Item,
+	        { key: 'pretest' },
+	        'Pre Test'
+	      ),
+	      _react2.default.createElement(
+	        _menu2.default.Item,
+	        { key: 'posttest' },
+	        'Post Test'
+	      )
+	    ),
+	    _react2.default.createElement(
+	      SubMenu,
+	      { key: 'jadwal', title: _react2.default.createElement(
+	          'span',
+	          null,
+	          _react2.default.createElement(_icon2.default, { type: 'idcard' }),
+	          _react2.default.createElement(
+	            'span',
+	            null,
+	            'Jadwal'
+	          )
+	        ) },
+	      _react2.default.createElement(
+	        _menu2.default.Item,
+	        { key: 'mppd' },
+	        'Jadwal MPPD'
+	      )
+	    ),
+	    _react2.default.createElement(
+	      SubMenu,
+	      { key: 'laporan', title: _react2.default.createElement(
+	          'span',
+	          null,
+	          _react2.default.createElement(_icon2.default, { type: 'contacts' }),
+	          _react2.default.createElement(
+	            'span',
+	            null,
+	            'Laporan'
+	          )
+	        ) },
+	      _react2.default.createElement(
+	        _menu2.default.Item,
+	        { key: 'costunit' },
+	        'Cost Unit'
+	      )
+	    ),
+	    _react2.default.createElement(
+	      SubMenu,
+	      { key: 'settings', title: _react2.default.createElement(
+	          'span',
+	          null,
+	          _react2.default.createElement(_icon2.default, { type: 'appstore' }),
+	          _react2.default.createElement(
+	            'span',
+	            null,
+	            'Settings'
+	          )
+	        ) },
+	      _react2.default.createElement(
+	        _menu2.default.Item,
+	        { key: 'departments' },
+	        'Data Bagian'
+	      )
+	    ),
+	    _react2.default.createElement(
+	      SubMenu,
+	      { key: 'help', title: _react2.default.createElement(
+	          'span',
+	          null,
+	          _react2.default.createElement(_icon2.default, { type: 'question-circle-o' }),
+	          _react2.default.createElement(
+	            'span',
+	            null,
+	            'Help'
+	          )
+	        ) },
+	      _react2.default.createElement(
+	        _menu2.default.Item,
+	        { key: 'tutorial' },
+	        'Tutorial'
+	      )
+	    )
+	  );
+	};
+
+	exports.default = SideMenu;
+
+/***/ },
+/* 782 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _row = __webpack_require__(388);
+
+	var _row2 = _interopRequireDefault(_row);
+
+	var _col = __webpack_require__(397);
+
+	var _col2 = _interopRequireDefault(_col);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var LoginInfo = function LoginInfo(_ref) {
+	  var name = _ref.name,
+	      roleName = _ref.roleName;
+
+	  return _react2.default.createElement(
+	    'div',
+	    { className: 'login-info' },
+	    _react2.default.createElement(
+	      _row2.default,
+	      null,
+	      _react2.default.createElement(
+	        _col2.default,
+	        { span: 24 },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'login-info-image' },
+	          _react2.default.createElement('img', { className: 'img-circle', src: 'assets/images/avatar.png', alt: 'Avatar' })
+	        )
+	      )
+	    ),
+	    _react2.default.createElement(
+	      _row2.default,
+	      null,
+	      _react2.default.createElement(
+	        _col2.default,
+	        { span: 24 },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'login-info-title' },
+	          name
+	        )
+	      )
+	    ),
+	    _react2.default.createElement(
+	      _row2.default,
+	      null,
+	      _react2.default.createElement(
+	        _col2.default,
+	        { span: 24 },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'login-info-role' },
+	          roleName
+	        )
+	      )
+	    )
+	  );
+	};
+
+	exports.default = LoginInfo;
 
 /***/ }
 /******/ ]);
