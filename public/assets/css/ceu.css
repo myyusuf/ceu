@@ -38,3 +38,11 @@
   margin-left: 10px;
   display: inline-flex;
 }
+
+.section-content {
+  position: absolute;
+  top: 70px;
+  bottom: 0;
+  width: 100%;
+  padding: 20px;
+}

@@ -88929,6 +88929,10 @@
 
 	var _StudentLevelRadio2 = _interopRequireDefault(_StudentLevelRadio);
 
+	var _DepartmentCreateForm = __webpack_require__(774);
+
+	var _DepartmentCreateForm2 = _interopRequireDefault(_DepartmentCreateForm);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -88950,6 +88954,7 @@
 	      searchText: '',
 	      studentLevel: '1',
 	      loading: false,
+	      createDepartmentFormVisible: false,
 	      columns: [{
 	        title: 'ID',
 	        dataIndex: 'id',
@@ -88965,10 +88970,14 @@
 	      }]
 	    };
 
-	    _this.showDetails = _this.showDetails.bind(_this);
 	    _this.onSearchTextChange = _this.onSearchTextChange.bind(_this);
 	    _this.onSearch = _this.onSearch.bind(_this);
 	    _this.onStudentLevelSelect = _this.onStudentLevelSelect.bind(_this);
+
+	    _this.onCreateDepartment = _this.onCreateDepartment.bind(_this);
+	    _this.handleCancel = _this.handleCancel.bind(_this);
+	    _this.handleCreate = _this.handleCreate.bind(_this);
+	    _this.saveFormRef = _this.saveFormRef.bind(_this);
 	    return _this;
 	  }
 
@@ -88995,6 +89004,11 @@
 	      this.setState({ departments: [] }, function () {
 	        _this2.getDepartments();
 	      });
+	    }
+	  }, {
+	    key: 'onCreateDepartment',
+	    value: function onCreateDepartment() {
+	      this.setState({ createDepartmentFormVisible: true });
 	    }
 	  }, {
 	    key: 'getDepartments',
@@ -89026,20 +89040,39 @@
 	      });
 	    }
 	  }, {
-	    key: 'showDetails',
-	    value: function showDetails(department) {
-	      // if (this.props.onShowDetails) {
-	      //   this.onShowDetails(student);
-	      // }
+	    key: 'handleCancel',
+	    value: function handleCancel() {
+	      var form = this.form;
+	      form.resetFields();
+	      this.setState({ createDepartmentFormVisible: false });
+	    }
+	  }, {
+	    key: 'handleCreate',
+	    value: function handleCreate() {
+	      var _this4 = this;
 
-	      window.location.href = '#/studentdetail/' + student.id + '/info';
+	      var form = this.form;
+	      form.validateFields(function (err, values) {
+	        if (err) {
+	          return;
+	        }
+
+	        console.log('Received values of form: ', values);
+	        form.resetFields();
+	        _this4.setState({ createDepartmentFormVisible: false });
+	      });
+	    }
+	  }, {
+	    key: 'saveFormRef',
+	    value: function saveFormRef(form) {
+	      this.form = form;
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'score' },
+	        { className: 'department' },
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'section-header' },
@@ -89095,7 +89128,12 @@
 	                { className: 'the-li' },
 	                _react2.default.createElement(
 	                  _button2.default,
-	                  { type: 'primary', icon: 'plus', className: 'add-button' },
+	                  {
+	                    type: 'primary',
+	                    icon: 'plus',
+	                    className: 'add-button',
+	                    onClick: this.onCreateDepartment
+	                  },
 	                  'Bagian'
 	                )
 	              )
@@ -89104,7 +89142,7 @@
 	        ),
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'content' },
+	          { className: 'section-content' },
 	          _react2.default.createElement(_table2.default, {
 	            size: 'middle',
 	            pagination: false,
@@ -89113,7 +89151,13 @@
 	            columns: this.state.columns,
 	            dataSource: this.state.departments
 	          })
-	        )
+	        ),
+	        _react2.default.createElement(_DepartmentCreateForm2.default, {
+	          ref: this.saveFormRef,
+	          visible: this.state.createDepartmentFormVisible,
+	          onCancel: this.handleCancel,
+	          onCreate: this.handleCreate
+	        })
 	      );
 	    }
 	  }]);
@@ -89505,6 +89549,1050 @@
 	};
 
 	exports.default = LoginInfo;
+
+/***/ },
+/* 774 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _form = __webpack_require__(594);
+
+	var _form2 = _interopRequireDefault(_form);
+
+	var _input = __webpack_require__(417);
+
+	var _input2 = _interopRequireDefault(_input);
+
+	var _modal = __webpack_require__(775);
+
+	var _modal2 = _interopRequireDefault(_modal);
+
+	var _axios = __webpack_require__(492);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var FormItem = _form2.default.Item;
+
+	var DepartmentCreateForm = _form2.default.create()(function (props) {
+	  var visible = props.visible,
+	      onCancel = props.onCancel,
+	      onCreate = props.onCreate,
+	      form = props.form;
+	  var getFieldDecorator = form.getFieldDecorator;
+
+	  return _react2.default.createElement(
+	    _modal2.default,
+	    {
+	      visible: visible,
+	      title: 'Bagian Baru',
+	      okText: 'Create',
+	      onCancel: onCancel,
+	      onOk: onCreate
+	    },
+	    _react2.default.createElement(
+	      _form2.default,
+	      { layout: 'vertical' },
+	      _react2.default.createElement(
+	        FormItem,
+	        { label: 'Kode' },
+	        getFieldDecorator('kode', {
+	          rules: [{ required: true, message: 'Kode bagian wajib diisi' }]
+	        })(_react2.default.createElement(_input2.default, null))
+	      )
+	    )
+	  );
+	});
+
+	exports.default = DepartmentCreateForm;
+
+/***/ },
+/* 775 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _Modal = __webpack_require__(776);
+
+	var _Modal2 = _interopRequireDefault(_Modal);
+
+	var _confirm = __webpack_require__(781);
+
+	var _confirm2 = _interopRequireDefault(_confirm);
+
+	var _objectAssign = __webpack_require__(4);
+
+	var _objectAssign2 = _interopRequireDefault(_objectAssign);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+	_Modal2["default"].info = function (props) {
+	    var config = (0, _objectAssign2["default"])({}, {
+	        type: 'info',
+	        iconType: 'info-circle',
+	        okCancel: false
+	    }, props);
+	    return (0, _confirm2["default"])(config);
+	};
+	_Modal2["default"].success = function (props) {
+	    var config = (0, _objectAssign2["default"])({}, {
+	        type: 'success',
+	        iconType: 'check-circle',
+	        okCancel: false
+	    }, props);
+	    return (0, _confirm2["default"])(config);
+	};
+	_Modal2["default"].error = function (props) {
+	    var config = (0, _objectAssign2["default"])({}, {
+	        type: 'error',
+	        iconType: 'cross-circle',
+	        okCancel: false
+	    }, props);
+	    return (0, _confirm2["default"])(config);
+	};
+	_Modal2["default"].warning = _Modal2["default"].warn = function (props) {
+	    var config = (0, _objectAssign2["default"])({}, {
+	        type: 'warning',
+	        iconType: 'exclamation-circle',
+	        okCancel: false
+	    }, props);
+	    return (0, _confirm2["default"])(config);
+	};
+	_Modal2["default"].confirm = function (props) {
+	    var config = (0, _objectAssign2["default"])({}, {
+	        type: 'confirm',
+	        okCancel: true
+	    }, props);
+	    return (0, _confirm2["default"])(config);
+	};
+	exports["default"] = _Modal2["default"];
+	module.exports = exports['default'];
+
+/***/ },
+/* 776 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports["default"] = undefined;
+
+	var _extends2 = __webpack_require__(179);
+
+	var _extends3 = _interopRequireDefault(_extends2);
+
+	var _classCallCheck2 = __webpack_require__(217);
+
+	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+	var _possibleConstructorReturn2 = __webpack_require__(218);
+
+	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+	var _inherits2 = __webpack_require__(254);
+
+	var _inherits3 = _interopRequireDefault(_inherits2);
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _rcDialog = __webpack_require__(777);
+
+	var _rcDialog2 = _interopRequireDefault(_rcDialog);
+
+	var _addEventListener = __webpack_require__(441);
+
+	var _addEventListener2 = _interopRequireDefault(_addEventListener);
+
+	var _button = __webpack_require__(398);
+
+	var _button2 = _interopRequireDefault(_button);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+	var mousePosition = void 0;
+	var mousePositionEventBinded = void 0;
+
+	var Modal = function (_React$Component) {
+	    (0, _inherits3["default"])(Modal, _React$Component);
+
+	    function Modal() {
+	        (0, _classCallCheck3["default"])(this, Modal);
+
+	        var _this = (0, _possibleConstructorReturn3["default"])(this, _React$Component.apply(this, arguments));
+
+	        _this.handleCancel = function (e) {
+	            var onCancel = _this.props.onCancel;
+	            if (onCancel) {
+	                onCancel(e);
+	            }
+	        };
+	        _this.handleOk = function (e) {
+	            var onOk = _this.props.onOk;
+	            if (onOk) {
+	                onOk(e);
+	            }
+	        };
+	        return _this;
+	    }
+
+	    Modal.prototype.componentDidMount = function componentDidMount() {
+	        if (mousePositionEventBinded) {
+	            return;
+	        }
+	        // 只有点击事件支持从鼠标位置动画展开
+	        (0, _addEventListener2["default"])(document.documentElement, 'click', function (e) {
+	            mousePosition = {
+	                x: e.pageX,
+	                y: e.pageY
+	            };
+	            // 100ms 内发生过点击事件，则从点击位置动画展示
+	            // 否则直接 zoom 展示
+	            // 这样可以兼容非点击方式展开
+	            setTimeout(function () {
+	                return mousePosition = null;
+	            }, 100);
+	        });
+	        mousePositionEventBinded = true;
+	    };
+
+	    Modal.prototype.render = function render() {
+	        var _props = this.props,
+	            okText = _props.okText,
+	            cancelText = _props.cancelText,
+	            confirmLoading = _props.confirmLoading,
+	            footer = _props.footer,
+	            visible = _props.visible;
+
+	        if (this.context.antLocale && this.context.antLocale.Modal) {
+	            okText = okText || this.context.antLocale.Modal.okText;
+	            cancelText = cancelText || this.context.antLocale.Modal.cancelText;
+	        }
+	        var defaultFooter = [_react2["default"].createElement(
+	            _button2["default"],
+	            { key: 'cancel', size: 'large', onClick: this.handleCancel },
+	            cancelText || '取消'
+	        ), _react2["default"].createElement(
+	            _button2["default"],
+	            { key: 'confirm', type: 'primary', size: 'large', loading: confirmLoading, onClick: this.handleOk },
+	            okText || '确定'
+	        )];
+	        return _react2["default"].createElement(_rcDialog2["default"], (0, _extends3["default"])({ onClose: this.handleCancel, footer: footer === undefined ? defaultFooter : footer }, this.props, { visible: visible, mousePosition: mousePosition }));
+	    };
+
+	    return Modal;
+	}(_react2["default"].Component);
+
+	exports["default"] = Modal;
+
+	Modal.defaultProps = {
+	    prefixCls: 'ant-modal',
+	    width: 520,
+	    transitionName: 'zoom',
+	    maskTransitionName: 'fade',
+	    confirmLoading: false,
+	    visible: false
+	};
+	Modal.propTypes = {
+	    prefixCls: _react.PropTypes.string,
+	    onOk: _react.PropTypes.func,
+	    onCancel: _react.PropTypes.func,
+	    okText: _react.PropTypes.node,
+	    cancelText: _react.PropTypes.node,
+	    width: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.string]),
+	    confirmLoading: _react.PropTypes.bool,
+	    visible: _react.PropTypes.bool,
+	    align: _react.PropTypes.object,
+	    footer: _react.PropTypes.node,
+	    title: _react.PropTypes.node,
+	    closable: _react.PropTypes.bool
+	};
+	Modal.contextTypes = {
+	    antLocale: _react2["default"].PropTypes.object
+	};
+	module.exports = exports['default'];
+
+/***/ },
+/* 777 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Dialog = __webpack_require__(778);
+
+	var _Dialog2 = _interopRequireDefault(_Dialog);
+
+	var _getContainerRenderMixin = __webpack_require__(461);
+
+	var _getContainerRenderMixin2 = _interopRequireDefault(_getContainerRenderMixin);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+	var __assign = undefined && undefined.__assign || Object.assign || function (t) {
+	    for (var s, i = 1, n = arguments.length; i < n; i++) {
+	        s = arguments[i];
+	        for (var p in s) {
+	            if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+	        }
+	    }
+	    return t;
+	};
+
+	var DialogWrap = _react2["default"].createClass({
+	    displayName: 'DialogWrap',
+
+	    mixins: [(0, _getContainerRenderMixin2["default"])({
+	        isVisible: function isVisible(instance) {
+	            return instance.props.visible;
+	        },
+
+	        autoDestroy: false,
+	        getComponent: function getComponent(instance, extra) {
+	            return _react2["default"].createElement(_Dialog2["default"], __assign({}, instance.props, extra, { key: "dialog" }));
+	        },
+	        getContainer: function getContainer(instance) {
+	            if (instance.props.getContainer) {
+	                return instance.props.getContainer();
+	            }
+	            var container = document.createElement('div');
+	            document.body.appendChild(container);
+	            return container;
+	        }
+	    })],
+	    getDefaultProps: function getDefaultProps() {
+	        return {
+	            visible: false
+	        };
+	    },
+	    shouldComponentUpdate: function shouldComponentUpdate(_ref) {
+	        var visible = _ref.visible;
+
+	        return !!(this.props.visible || visible);
+	    },
+	    componentWillUnmount: function componentWillUnmount() {
+	        if (this.props.visible) {
+	            this.renderComponent({
+	                afterClose: this.removeContainer,
+	                onClose: function onClose() {},
+
+	                visible: false
+	            });
+	        } else {
+	            this.removeContainer();
+	        }
+	    },
+	    getElement: function getElement(part) {
+	        return this._component.getElement(part);
+	    },
+	    render: function render() {
+	        return null;
+	    }
+	});
+	exports["default"] = DialogWrap;
+	module.exports = exports['default'];
+
+/***/ },
+/* 778 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(32);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _KeyCode = __webpack_require__(434);
+
+	var _KeyCode2 = _interopRequireDefault(_KeyCode);
+
+	var _rcAnimate = __webpack_require__(406);
+
+	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
+
+	var _LazyRenderBox = __webpack_require__(779);
+
+	var _LazyRenderBox2 = _interopRequireDefault(_LazyRenderBox);
+
+	var _getScrollBarSize = __webpack_require__(780);
+
+	var _getScrollBarSize2 = _interopRequireDefault(_getScrollBarSize);
+
+	var _objectAssign = __webpack_require__(4);
+
+	var _objectAssign2 = _interopRequireDefault(_objectAssign);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+	var __assign = undefined && undefined.__assign || Object.assign || function (t) {
+	    for (var s, i = 1, n = arguments.length; i < n; i++) {
+	        s = arguments[i];
+	        for (var p in s) {
+	            if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+	        }
+	    }
+	    return t;
+	};
+
+	var uuid = 0;
+	var openCount = 0;
+	/* eslint react/no-is-mounted:0 */
+	function noop() {}
+	function getScroll(w, top) {
+	    var ret = w['page' + (top ? 'Y' : 'X') + 'Offset'];
+	    var method = 'scroll' + (top ? 'Top' : 'Left');
+	    if (typeof ret !== 'number') {
+	        var d = w.document;
+	        ret = d.documentElement[method];
+	        if (typeof ret !== 'number') {
+	            ret = d.body[method];
+	        }
+	    }
+	    return ret;
+	}
+	function setTransformOrigin(node, value) {
+	    var style = node.style;
+	    ['Webkit', 'Moz', 'Ms', 'ms'].forEach(function (prefix) {
+	        style[prefix + 'TransformOrigin'] = value;
+	    });
+	    style['transformOrigin'] = value;
+	}
+	function offset(el) {
+	    var rect = el.getBoundingClientRect();
+	    var pos = {
+	        left: rect.left,
+	        top: rect.top
+	    };
+	    var doc = el.ownerDocument;
+	    var w = doc.defaultView || doc.parentWindow;
+	    pos.left += getScroll(w);
+	    pos.top += getScroll(w, true);
+	    return pos;
+	}
+	var Dialog = _react2["default"].createClass({
+	    displayName: 'Dialog',
+	    getDefaultProps: function getDefaultProps() {
+	        return {
+	            afterClose: noop,
+	            className: '',
+	            mask: true,
+	            visible: false,
+	            keyboard: true,
+	            closable: true,
+	            maskClosable: true,
+	            prefixCls: 'rc-dialog',
+	            onClose: noop
+	        };
+	    },
+	    componentWillMount: function componentWillMount() {
+	        this.inTransition = false;
+	        this.titleId = 'rcDialogTitle' + uuid++;
+	    },
+	    componentDidMount: function componentDidMount() {
+	        this.componentDidUpdate({});
+	    },
+	    componentDidUpdate: function componentDidUpdate(prevProps) {
+	        var props = this.props;
+	        var mousePosition = this.props.mousePosition;
+	        if (props.visible) {
+	            // first show
+	            if (!prevProps.visible) {
+	                this.openTime = Date.now();
+	                this.lastOutSideFocusNode = document.activeElement;
+	                this.addScrollingEffect();
+	                this.refs.wrap.focus();
+	                var dialogNode = _reactDom2["default"].findDOMNode(this.refs.dialog);
+	                if (mousePosition) {
+	                    var elOffset = offset(dialogNode);
+	                    setTransformOrigin(dialogNode, mousePosition.x - elOffset.left + 'px ' + (mousePosition.y - elOffset.top) + 'px');
+	                } else {
+	                    setTransformOrigin(dialogNode, '');
+	                }
+	            }
+	        } else if (prevProps.visible) {
+	            this.inTransition = true;
+	            if (props.mask && this.lastOutSideFocusNode) {
+	                try {
+	                    this.lastOutSideFocusNode.focus();
+	                } catch (e) {
+	                    this.lastOutSideFocusNode = null;
+	                }
+	                this.lastOutSideFocusNode = null;
+	            }
+	        }
+	    },
+	    componentWillUnmount: function componentWillUnmount() {
+	        if (this.props.visible || this.inTransition) {
+	            this.removeScrollingEffect();
+	        }
+	    },
+	    onAnimateLeave: function onAnimateLeave() {
+	        // need demo?
+	        // https://github.com/react-component/dialog/pull/28
+	        if (this.refs.wrap) {
+	            this.refs.wrap.style.display = 'none';
+	        }
+	        this.inTransition = false;
+	        this.removeScrollingEffect();
+	        this.props.afterClose();
+	    },
+	    onMaskClick: function onMaskClick(e) {
+	        // android trigger click on open (fastclick??)
+	        if (Date.now() - this.openTime < 300) {
+	            return;
+	        }
+	        if (e.target === e.currentTarget) {
+	            this.close(e);
+	        }
+	    },
+	    onKeyDown: function onKeyDown(e) {
+	        var props = this.props;
+	        if (props.keyboard && e.keyCode === _KeyCode2["default"].ESC) {
+	            this.close(e);
+	        }
+	        // keep focus inside dialog
+	        if (props.visible) {
+	            if (e.keyCode === _KeyCode2["default"].TAB) {
+	                var activeElement = document.activeElement;
+	                var dialogRoot = this.refs.wrap;
+	                var sentinel = this.refs.sentinel;
+	                if (e.shiftKey) {
+	                    if (activeElement === dialogRoot) {
+	                        sentinel.focus();
+	                    }
+	                } else if (activeElement === this.refs.sentinel) {
+	                    dialogRoot.focus();
+	                }
+	            }
+	        }
+	    },
+	    getDialogElement: function getDialogElement() {
+	        var props = this.props;
+	        var closable = props.closable;
+	        var prefixCls = props.prefixCls;
+	        var dest = {};
+	        if (props.width !== undefined) {
+	            dest.width = props.width;
+	        }
+	        if (props.height !== undefined) {
+	            dest.height = props.height;
+	        }
+	        var footer = void 0;
+	        if (props.footer) {
+	            footer = _react2["default"].createElement("div", { className: prefixCls + '-footer', ref: "footer" }, props.footer);
+	        }
+	        var header = void 0;
+	        if (props.title) {
+	            header = _react2["default"].createElement("div", { className: prefixCls + '-header', ref: "header" }, _react2["default"].createElement("div", { className: prefixCls + '-title', id: this.titleId }, props.title));
+	        }
+	        var closer = void 0;
+	        if (closable) {
+	            closer = _react2["default"].createElement("button", { onClick: this.close, "aria-label": "Close", className: prefixCls + '-close' }, _react2["default"].createElement("span", { className: prefixCls + '-close-x' }));
+	        }
+	        var style = (0, _objectAssign2["default"])({}, props.style, dest);
+	        var transitionName = this.getTransitionName();
+	        var dialogElement = _react2["default"].createElement(_LazyRenderBox2["default"], { key: "dialog-element", role: "document", ref: "dialog", style: style, className: prefixCls + ' ' + (props.className || ''), visible: props.visible }, _react2["default"].createElement("div", { className: prefixCls + '-content' }, closer, header, _react2["default"].createElement("div", __assign({ className: prefixCls + '-body', style: props.bodyStyle, ref: "body" }, props.bodyProps), props.children), footer), _react2["default"].createElement("div", { tabIndex: 0, ref: "sentinel", style: { width: 0, height: 0, overflow: 'hidden' } }, "sentinel"));
+	        return _react2["default"].createElement(_rcAnimate2["default"], { key: "dialog", showProp: "visible", onLeave: this.onAnimateLeave, transitionName: transitionName, component: "", transitionAppear: true }, dialogElement);
+	    },
+	    getZIndexStyle: function getZIndexStyle() {
+	        var style = {};
+	        var props = this.props;
+	        if (props.zIndex !== undefined) {
+	            style.zIndex = props.zIndex;
+	        }
+	        return style;
+	    },
+	    getWrapStyle: function getWrapStyle() {
+	        return (0, _objectAssign2["default"])({}, this.getZIndexStyle(), this.props.wrapStyle);
+	    },
+	    getMaskStyle: function getMaskStyle() {
+	        return (0, _objectAssign2["default"])({}, this.getZIndexStyle(), this.props.maskStyle);
+	    },
+	    getMaskElement: function getMaskElement() {
+	        var props = this.props;
+	        var maskElement = void 0;
+	        if (props.mask) {
+	            var maskTransition = this.getMaskTransitionName();
+	            maskElement = _react2["default"].createElement(_LazyRenderBox2["default"], __assign({ style: this.getMaskStyle(), key: "mask", className: props.prefixCls + '-mask', hiddenClassName: props.prefixCls + '-mask-hidden', visible: props.visible }, props.maskProps));
+	            if (maskTransition) {
+	                maskElement = _react2["default"].createElement(_rcAnimate2["default"], { key: "mask", showProp: "visible", transitionAppear: true, component: "", transitionName: maskTransition }, maskElement);
+	            }
+	        }
+	        return maskElement;
+	    },
+	    getMaskTransitionName: function getMaskTransitionName() {
+	        var props = this.props;
+	        var transitionName = props.maskTransitionName;
+	        var animation = props.maskAnimation;
+	        if (!transitionName && animation) {
+	            transitionName = props.prefixCls + '-' + animation;
+	        }
+	        return transitionName;
+	    },
+	    getTransitionName: function getTransitionName() {
+	        var props = this.props;
+	        var transitionName = props.transitionName;
+	        var animation = props.animation;
+	        if (!transitionName && animation) {
+	            transitionName = props.prefixCls + '-' + animation;
+	        }
+	        return transitionName;
+	    },
+	    getElement: function getElement(part) {
+	        return this.refs[part];
+	    },
+	    setScrollbar: function setScrollbar() {
+	        if (this.bodyIsOverflowing && this.scrollbarWidth !== undefined) {
+	            document.body.style.paddingRight = this.scrollbarWidth + 'px';
+	        }
+	    },
+	    addScrollingEffect: function addScrollingEffect() {
+	        openCount++;
+	        if (openCount !== 1) {
+	            return;
+	        }
+	        this.checkScrollbar();
+	        this.setScrollbar();
+	        document.body.style.overflow = 'hidden';
+	        // this.adjustDialog();
+	    },
+	    removeScrollingEffect: function removeScrollingEffect() {
+	        openCount--;
+	        if (openCount !== 0) {
+	            return;
+	        }
+	        document.body.style.overflow = '';
+	        this.resetScrollbar();
+	        // this.resetAdjustments();
+	    },
+	    close: function close(e) {
+	        this.props.onClose(e);
+	    },
+	    checkScrollbar: function checkScrollbar() {
+	        var fullWindowWidth = window.innerWidth;
+	        if (!fullWindowWidth) {
+	            var documentElementRect = document.documentElement.getBoundingClientRect();
+	            fullWindowWidth = documentElementRect.right - Math.abs(documentElementRect.left);
+	        }
+	        this.bodyIsOverflowing = document.body.clientWidth < fullWindowWidth;
+	        if (this.bodyIsOverflowing) {
+	            this.scrollbarWidth = (0, _getScrollBarSize2["default"])();
+	        }
+	    },
+	    resetScrollbar: function resetScrollbar() {
+	        document.body.style.paddingRight = '';
+	    },
+	    adjustDialog: function adjustDialog() {
+	        if (this.refs.wrap && this.scrollbarWidth !== undefined) {
+	            var modalIsOverflowing = this.refs.wrap.scrollHeight > document.documentElement.clientHeight;
+	            this.refs.wrap.style.paddingLeft = (!this.bodyIsOverflowing && modalIsOverflowing ? this.scrollbarWidth : '') + 'px';
+	            this.refs.wrap.style.paddingRight = (this.bodyIsOverflowing && !modalIsOverflowing ? this.scrollbarWidth : '') + 'px';
+	        }
+	    },
+	    resetAdjustments: function resetAdjustments() {
+	        if (this.refs.wrap) {
+	            this.refs.wrap.style.paddingLeft = this.refs.wrap.style.paddingLeft = '';
+	        }
+	    },
+	    render: function render() {
+	        var props = this.props;
+	        var prefixCls = props.prefixCls,
+	            maskClosable = props.maskClosable;
+
+	        var style = this.getWrapStyle();
+	        // clear hide display
+	        // and only set display after async anim, not here for hide
+	        if (props.visible) {
+	            style.display = null;
+	        }
+	        return _react2["default"].createElement("div", null, this.getMaskElement(), _react2["default"].createElement("div", __assign({ tabIndex: -1, onKeyDown: this.onKeyDown, className: prefixCls + '-wrap ' + (props.wrapClassName || ''), ref: "wrap", onClick: maskClosable ? this.onMaskClick : undefined, role: "dialog", "aria-labelledby": props.title ? this.titleId : null, style: style }, props.wrapProps), this.getDialogElement()));
+	    }
+	});
+	exports["default"] = Dialog;
+	module.exports = exports['default'];
+
+/***/ },
+/* 779 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _objectAssign = __webpack_require__(4);
+
+	var _objectAssign2 = _interopRequireDefault(_objectAssign);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+	var __assign = undefined && undefined.__assign || Object.assign || function (t) {
+	    for (var s, i = 1, n = arguments.length; i < n; i++) {
+	        s = arguments[i];
+	        for (var p in s) {
+	            if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+	        }
+	    }
+	    return t;
+	};
+
+	var LazyRenderBox = _react2["default"].createClass({
+	    displayName: 'LazyRenderBox',
+	    shouldComponentUpdate: function shouldComponentUpdate(nextProps) {
+	        return !!nextProps.hiddenClassName || !!nextProps.visible;
+	    },
+	    render: function render() {
+	        var className = this.props.className;
+	        if (!!this.props.hiddenClassName && !this.props.visible) {
+	            className += ' ' + this.props.hiddenClassName;
+	        }
+	        var props = (0, _objectAssign2["default"])({}, this.props);
+	        delete props.hiddenClassName;
+	        delete props.visible;
+	        props.className = className;
+	        return _react2["default"].createElement("div", __assign({}, props));
+	    }
+	});
+	exports["default"] = LazyRenderBox;
+	module.exports = exports['default'];
+
+/***/ },
+/* 780 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports["default"] = getScrollBarSize;
+	var cached = void 0;
+
+	function getScrollBarSize(fresh) {
+	  if (fresh || cached === undefined) {
+	    var inner = document.createElement('div');
+	    inner.style.width = '100%';
+	    inner.style.height = '200px';
+
+	    var outer = document.createElement('div');
+	    var outerStyle = outer.style;
+
+	    outerStyle.position = 'absolute';
+	    outerStyle.top = 0;
+	    outerStyle.left = 0;
+	    outerStyle.pointerEvents = 'none';
+	    outerStyle.visibility = 'hidden';
+	    outerStyle.width = '200px';
+	    outerStyle.height = '150px';
+	    outerStyle.overflow = 'hidden';
+
+	    outer.appendChild(inner);
+
+	    document.body.appendChild(outer);
+
+	    var widthContained = inner.offsetWidth;
+	    outer.style.overflow = 'scroll';
+	    var widthScroll = inner.offsetWidth;
+
+	    if (widthContained === widthScroll) {
+	      widthScroll = outer.clientWidth;
+	    }
+
+	    document.body.removeChild(outer);
+
+	    cached = widthContained - widthScroll;
+	  }
+	  return cached;
+	}
+	module.exports = exports['default'];
+
+/***/ },
+/* 781 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _defineProperty2 = __webpack_require__(391);
+
+	var _defineProperty3 = _interopRequireDefault(_defineProperty2);
+
+	exports["default"] = confirm;
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(32);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _classnames = __webpack_require__(395);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _objectAssign = __webpack_require__(4);
+
+	var _objectAssign2 = _interopRequireDefault(_objectAssign);
+
+	var _icon = __webpack_require__(400);
+
+	var _icon2 = _interopRequireDefault(_icon);
+
+	var _Modal = __webpack_require__(776);
+
+	var _Modal2 = _interopRequireDefault(_Modal);
+
+	var _ActionButton = __webpack_require__(782);
+
+	var _ActionButton2 = _interopRequireDefault(_ActionButton);
+
+	var _locale = __webpack_require__(262);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+	function confirm(config) {
+	    var props = (0, _objectAssign2["default"])({ iconType: 'question-circle' }, config);
+	    var prefixCls = props.prefixCls || 'ant-confirm';
+	    var div = document.createElement('div');
+	    document.body.appendChild(div);
+	    var width = props.width || 416;
+	    var style = props.style || {};
+	    // 默认为 false，保持旧版默认行为
+	    var maskClosable = props.maskClosable === undefined ? false : props.maskClosable;
+	    // 默认为 true，保持向下兼容
+	    if (!('okCancel' in props)) {
+	        props.okCancel = true;
+	    }
+	    var runtimeLocale = (0, _locale.getConfirmLocale)();
+	    props.okText = props.okText || (props.okCancel ? runtimeLocale.okText : runtimeLocale.justOkText);
+	    props.cancelText = props.cancelText || runtimeLocale.cancelText;
+	    function close() {
+	        var unmountResult = _reactDom2["default"].unmountComponentAtNode(div);
+	        if (unmountResult && div.parentNode) {
+	            div.parentNode.removeChild(div);
+	        }
+
+	        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	            args[_key] = arguments[_key];
+	        }
+
+	        var triggerCancel = args && args.length && args.some(function (param) {
+	            return param && param.triggerCancel;
+	        });
+	        if (props.onCancel && triggerCancel) {
+	            props.onCancel.apply(props, args);
+	        }
+	    }
+	    var body = _react2["default"].createElement(
+	        'div',
+	        { className: prefixCls + '-body' },
+	        _react2["default"].createElement(_icon2["default"], { type: props.iconType }),
+	        _react2["default"].createElement(
+	            'span',
+	            { className: prefixCls + '-title' },
+	            props.title
+	        ),
+	        _react2["default"].createElement(
+	            'div',
+	            { className: prefixCls + '-content' },
+	            props.content
+	        )
+	    );
+	    var footer = null;
+	    if (props.okCancel) {
+	        footer = _react2["default"].createElement(
+	            'div',
+	            { className: prefixCls + '-btns' },
+	            _react2["default"].createElement(
+	                _ActionButton2["default"],
+	                { actionFn: props.onCancel, closeModal: close },
+	                props.cancelText
+	            ),
+	            _react2["default"].createElement(
+	                _ActionButton2["default"],
+	                { type: 'primary', actionFn: props.onOk, closeModal: close, autoFocus: true },
+	                props.okText
+	            )
+	        );
+	    } else {
+	        footer = _react2["default"].createElement(
+	            'div',
+	            { className: prefixCls + '-btns' },
+	            _react2["default"].createElement(
+	                _ActionButton2["default"],
+	                { type: 'primary', actionFn: props.onOk, closeModal: close, autoFocus: true },
+	                props.okText
+	            )
+	        );
+	    }
+	    var classString = (0, _classnames2["default"])(prefixCls, (0, _defineProperty3["default"])({}, prefixCls + '-' + props.type, true), props.className);
+	    _reactDom2["default"].render(_react2["default"].createElement(
+	        _Modal2["default"],
+	        { className: classString, onCancel: close.bind(this, { triggerCancel: true }), visible: true, title: '', transitionName: 'zoom', footer: '', maskTransitionName: 'fade', maskClosable: maskClosable, style: style, width: width },
+	        _react2["default"].createElement(
+	            'div',
+	            { className: prefixCls + '-body-wrapper' },
+	            body,
+	            ' ',
+	            footer
+	        )
+	    ), div);
+	    return {
+	        destroy: close
+	    };
+	}
+	module.exports = exports['default'];
+
+/***/ },
+/* 782 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports["default"] = undefined;
+
+	var _classCallCheck2 = __webpack_require__(217);
+
+	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+	var _possibleConstructorReturn2 = __webpack_require__(218);
+
+	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+	var _inherits2 = __webpack_require__(254);
+
+	var _inherits3 = _interopRequireDefault(_inherits2);
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(32);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _button = __webpack_require__(398);
+
+	var _button2 = _interopRequireDefault(_button);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+	var ActionButton = function (_React$Component) {
+	    (0, _inherits3["default"])(ActionButton, _React$Component);
+
+	    function ActionButton(props) {
+	        (0, _classCallCheck3["default"])(this, ActionButton);
+
+	        var _this = (0, _possibleConstructorReturn3["default"])(this, _React$Component.call(this, props));
+
+	        _this.onClick = function () {
+	            var _this$props = _this.props,
+	                actionFn = _this$props.actionFn,
+	                closeModal = _this$props.closeModal;
+
+	            if (actionFn) {
+	                var ret = void 0;
+	                if (actionFn.length) {
+	                    ret = actionFn(closeModal);
+	                } else {
+	                    ret = actionFn();
+	                    if (!ret) {
+	                        closeModal();
+	                    }
+	                }
+	                if (ret && ret.then) {
+	                    _this.setState({ loading: true });
+	                    ret.then(function () {
+	                        // It's unnecessary to set loading=false, for the Modal will be unmounted after close.
+	                        // this.setState({ loading: false });
+	                        closeModal.apply(undefined, arguments);
+	                    });
+	                }
+	            } else {
+	                closeModal();
+	            }
+	        };
+	        _this.state = {
+	            loading: false
+	        };
+	        return _this;
+	    }
+
+	    ActionButton.prototype.componentDidMount = function componentDidMount() {
+	        if (this.props.autoFocus) {
+	            var $this = _reactDom2["default"].findDOMNode(this);
+	            this.timeoutId = setTimeout(function () {
+	                return $this.focus();
+	            });
+	        }
+	    };
+
+	    ActionButton.prototype.componentWillUnmount = function componentWillUnmount() {
+	        clearTimeout(this.timeoutId);
+	    };
+
+	    ActionButton.prototype.render = function render() {
+	        var _props = this.props,
+	            type = _props.type,
+	            children = _props.children;
+
+	        var loading = this.state.loading;
+	        return _react2["default"].createElement(
+	            _button2["default"],
+	            { type: type, size: 'large', onClick: this.onClick, loading: loading },
+	            children
+	        );
+	    };
+
+	    return ActionButton;
+	}(_react2["default"].Component);
+
+	exports["default"] = ActionButton;
+	module.exports = exports['default'];
 
 /***/ }
 /******/ ]);
