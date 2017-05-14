@@ -32,6 +32,11 @@ module.exports = [
     handler: Department.create,
   },
   {
+    method: 'PUT',
+    path: '/departments/{kode}',
+    handler: Department.update,
+  },
+  {
     method: 'GET',
     path: '/students',
     handler: Student.find,

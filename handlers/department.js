@@ -31,3 +31,30 @@ exports.create = function createDepartment(request, reply) {
     }
   });
 };
+
+exports.update = function updateDepartment(request, reply) {
+  const department = request.payload;
+  const kode = request.params.kode;
+
+  this.db.query(
+    `UPDATE
+      tb_bagian
+    SET
+      nama = ?,
+      tingkat = ?
+    WHERE
+      kode = ?`,
+    [
+      department.nama,
+      department.tingkat,
+      kode,
+    ], (err, result) => {
+      if (err) {
+        console.dir(err);
+        reply(err.message).code(500);
+      } else {
+        console.dir(result);
+        reply({ status: 'ok' });
+      }
+    });
+};

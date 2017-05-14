@@ -88929,6 +88929,10 @@
 
 	var _DepartmentCreateForm2 = _interopRequireDefault(_DepartmentCreateForm);
 
+	var _DepartmentUpdateForm = __webpack_require__(783);
+
+	var _DepartmentUpdateForm2 = _interopRequireDefault(_DepartmentUpdateForm);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -88951,6 +88955,8 @@
 	      studentLevel: '1',
 	      loading: false,
 	      createDepartmentFormVisible: false,
+	      updateDepartmentFormVisible: false,
+	      departmentToUpdate: {},
 	      columns: [{
 	        title: 'ID',
 	        dataIndex: 'id',
@@ -88963,6 +88969,30 @@
 	        title: 'Nama',
 	        dataIndex: 'nama',
 	        key: 'nama'
+	      }, {
+	        title: 'Action',
+	        key: 'action',
+	        render: function render(text, record) {
+	          return _react2.default.createElement(
+	            'span',
+	            null,
+	            _react2.default.createElement(_button2.default, {
+	              icon: 'edit',
+	              type: 'dashed',
+	              style: { marginRight: 15 },
+	              onClick: function onClick() {
+	                _this.onOpenUpdateDepartmentForm(record);
+	              }
+	            }),
+	            _react2.default.createElement(_button2.default, {
+	              icon: 'delete',
+	              type: 'dashed',
+	              onClick: function onClick() {
+	                _this.onOpenUpdateDepartmentForm(record);
+	              }
+	            })
+	          );
+	        }
 	      }]
 	    };
 
@@ -88970,10 +89000,15 @@
 	    _this.onSearch = _this.onSearch.bind(_this);
 	    _this.onStudentLevelSelect = _this.onStudentLevelSelect.bind(_this);
 
+	    _this.saveCreateDepartmentFormRef = _this.saveCreateDepartmentFormRef.bind(_this);
 	    _this.onOpenCreateDepartmentForm = _this.onOpenCreateDepartmentForm.bind(_this);
-	    _this.handleCancel = _this.handleCancel.bind(_this);
-	    _this.handlCreateDepartment = _this.handlCreateDepartment.bind(_this);
-	    _this.saveFormRef = _this.saveFormRef.bind(_this);
+	    _this.handleCancelCreate = _this.handleCancelCreate.bind(_this);
+	    _this.handleCreateDepartment = _this.handleCreateDepartment.bind(_this);
+
+	    _this.saveUpdateDepartmentFormRef = _this.saveUpdateDepartmentFormRef.bind(_this);
+	    _this.onOpenUpdateDepartmentForm = _this.onOpenUpdateDepartmentForm.bind(_this);
+	    _this.handleCloseUpdate = _this.handleCloseUpdate.bind(_this);
+	    _this.handleUpdateDepartment = _this.handleUpdateDepartment.bind(_this);
 	    return _this;
 	  }
 
@@ -89007,6 +89042,39 @@
 	      this.setState({ createDepartmentFormVisible: true });
 	    }
 	  }, {
+	    key: 'onOpenUpdateDepartmentForm',
+	    value: function onOpenUpdateDepartmentForm(record) {
+	      console.dir(record);
+	      this.setState({
+	        departmentToUpdate: record,
+	        updateDepartmentFormVisible: true
+	      });
+	    }
+	  }, {
+	    key: 'handleCancelCreate',
+	    value: function handleCancelCreate() {
+	      var form = this.createDepartmentForm;
+	      form.resetFields();
+	      this.setState({ createDepartmentFormVisible: false });
+	    }
+	  }, {
+	    key: 'saveCreateDepartmentFormRef',
+	    value: function saveCreateDepartmentFormRef(form) {
+	      this.createDepartmentForm = form;
+	    }
+	  }, {
+	    key: 'handleCloseUpdate',
+	    value: function handleCloseUpdate() {
+	      var form = this.updateDepartmentForm;
+	      form.resetFields();
+	      this.setState({ updateDepartmentFormVisible: false });
+	    }
+	  }, {
+	    key: 'saveUpdateDepartmentFormRef',
+	    value: function saveUpdateDepartmentFormRef(form) {
+	      this.updateDepartmentForm = form;
+	    }
+	  }, {
 	    key: 'getDepartments',
 	    value: function getDepartments() {
 	      var _this3 = this;
@@ -89036,18 +89104,11 @@
 	      });
 	    }
 	  }, {
-	    key: 'handleCancel',
-	    value: function handleCancel() {
-	      var form = this.form;
-	      form.resetFields();
-	      this.setState({ createDepartmentFormVisible: false });
-	    }
-	  }, {
-	    key: 'handlCreateDepartment',
-	    value: function handlCreateDepartment() {
+	    key: 'handleCreateDepartment',
+	    value: function handleCreateDepartment() {
 	      var _this4 = this;
 
-	      var form = this.form;
+	      var form = this.createDepartmentForm;
 	      form.validateFields(function (err, values) {
 	        if (err) {
 	          return;
@@ -89076,9 +89137,37 @@
 	      });
 	    }
 	  }, {
-	    key: 'saveFormRef',
-	    value: function saveFormRef(form) {
-	      this.form = form;
+	    key: 'handleUpdateDepartment',
+	    value: function handleUpdateDepartment() {
+	      var _this5 = this;
+
+	      var form = this.updateDepartmentForm;
+	      form.validateFields(function (err, values) {
+	        if (err) {
+	          return;
+	        }
+
+	        console.log('Received values of form: ', values);
+
+	        _axios2.default.put('/departments/' + values.kode, values).then(function (response) {
+	          // console.dir(response);
+	          _message2.default.success('Department updated successfully.');
+	          form.resetFields();
+	          _this5.setState({
+	            updateDepartmentFormVisible: false
+	          }, function () {
+	            _this5.getDepartments();
+	          });
+	        }).catch(function (error) {
+	          _message2.default.error(_react2.default.createElement(
+	            'span',
+	            null,
+	            error.message,
+	            _react2.default.createElement('br', null),
+	            error.response.data
+	          ));
+	        });
+	      });
 	    }
 	  }, {
 	    key: 'render',
@@ -89161,10 +89250,17 @@
 	          })
 	        ),
 	        _react2.default.createElement(_DepartmentCreateForm2.default, {
-	          ref: this.saveFormRef,
+	          ref: this.saveCreateDepartmentFormRef,
 	          visible: this.state.createDepartmentFormVisible,
-	          onCancel: this.handleCancel,
-	          onCreate: this.handlCreateDepartment
+	          onCancel: this.handleCancelCreate,
+	          onCreate: this.handleCreateDepartment
+	        }),
+	        _react2.default.createElement(_DepartmentUpdateForm2.default, {
+	          ref: this.saveUpdateDepartmentFormRef,
+	          visible: this.state.updateDepartmentFormVisible,
+	          onClose: this.handleCloseUpdate,
+	          onUpdate: this.handleUpdateDepartment,
+	          department: this.state.departmentToUpdate
 	        })
 	      );
 	    }
@@ -90651,6 +90747,130 @@
 	};
 
 	exports.default = LoginInfo;
+
+/***/ },
+/* 783 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _form = __webpack_require__(594);
+
+	var _form2 = _interopRequireDefault(_form);
+
+	var _input = __webpack_require__(417);
+
+	var _input2 = _interopRequireDefault(_input);
+
+	var _select = __webpack_require__(431);
+
+	var _select2 = _interopRequireDefault(_select);
+
+	var _modal = __webpack_require__(771);
+
+	var _modal2 = _interopRequireDefault(_modal);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Option = _select2.default.Option;
+	var FormItem = _form2.default.Item;
+
+	var DepartmentUpdateForm = _form2.default.create()(function (props) {
+	  var visible = props.visible,
+	      onClose = props.onClose,
+	      onUpdate = props.onUpdate,
+	      department = props.department,
+	      form = props.form;
+	  var getFieldDecorator = form.getFieldDecorator;
+
+
+	  return _react2.default.createElement(
+	    _modal2.default,
+	    {
+	      visible: visible,
+	      title: 'Edit Bagian',
+	      okText: 'Update',
+	      cancelText: 'Close',
+	      onCancel: onClose,
+	      onOk: onUpdate
+	    },
+	    _react2.default.createElement(
+	      _form2.default,
+	      { layout: 'vertical' },
+	      _react2.default.createElement(
+	        FormItem,
+	        { label: 'Kode' },
+	        getFieldDecorator('kode', {
+	          initialValue: department.kode,
+	          rules: [{
+	            required: true,
+	            message: 'Kode bagian wajib diisi'
+	          }, {
+	            min: 3,
+	            message: 'Panjang kode bagian minimum 3 karakter'
+	          }, {
+	            max: 10,
+	            message: 'Panjang kode bagian maximum 10 karakter'
+	          }]
+	        })(_react2.default.createElement(_input2.default, { maxLength: '10', disabled: true }))
+	      ),
+	      _react2.default.createElement(
+	        FormItem,
+	        { label: 'Nama' },
+	        getFieldDecorator('nama', {
+	          initialValue: department.nama,
+	          rules: [{
+	            required: true,
+	            message: 'Nama bagian wajib diisi'
+	          }, {
+	            min: 3,
+	            message: 'Panjang nama bagian minimum 3 karakter'
+	          }, {
+	            max: 30,
+	            message: 'Panjang nama bagian maximum 30 karakter'
+	          }]
+	        })(_react2.default.createElement(_input2.default, { maxLength: '30' }))
+	      ),
+	      _react2.default.createElement(
+	        FormItem,
+	        { label: 'Tingkat' },
+	        getFieldDecorator('tingkat', {
+	          initialValue: String(department.tingkat),
+	          rules: [{
+	            required: true,
+	            message: 'Tingkat wajib diisi'
+	          }]
+	        })(_react2.default.createElement(
+	          _select2.default,
+	          {
+	            mode: 'single',
+	            placeholder: 'Pilih tingkat'
+	          },
+	          _react2.default.createElement(
+	            Option,
+	            { key: '1' },
+	            'Tingkat 1'
+	          ),
+	          _react2.default.createElement(
+	            Option,
+	            { key: '2' },
+	            'Tingkat 2'
+	          )
+	        ))
+	      )
+	    )
+	  );
+	});
+
+	exports.default = DepartmentUpdateForm;
 
 /***/ }
 /******/ ]);
