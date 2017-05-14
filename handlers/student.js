@@ -1,6 +1,6 @@
 const flow = require('nimble');
 
-exports.find = function findStudents(request, reply) {
+exports.find = function findStudent(request, reply) {
   const db = this.db;
 
   const result = { data: [], totalRecords: 0 };
@@ -17,7 +17,7 @@ exports.find = function findStudents(request, reply) {
 
   const studentStatus = request.query['studentStatus[]'] || [];
 
-  const selectStudents = function selectStudents(callback) {
+  const selectStudents = (callback) => {
     const query =
     `SELECT
       ts.*,
@@ -56,7 +56,7 @@ exports.find = function findStudents(request, reply) {
     });
   };
 
-  const countStudents = function countStudents(callback) {
+  const countStudents = (callback) => {
     const query =
     `SELECT
       count(1) as totalRecords
@@ -99,7 +99,7 @@ exports.find = function findStudents(request, reply) {
   });
 };
 
-exports.findOne = function findStudent(request, reply) {
+exports.findOne = function findOneStudent(request, reply) {
   const db = this.db;
 
   const studentId = request.params.studentId;
@@ -114,4 +114,58 @@ exports.findOne = function findStudent(request, reply) {
          reply(rows[0]);
        }
      });
+};
+
+exports.create = function createStudent(request, reply) {
+  console.dir(request);
+  reply({ result: 'OK' });
+  // const createStudent = () => {
+  //   const student = {
+  //     stambuk_lama: req.body.stambukLama,
+  //     stambuk_baru: req.body.stambukBaru,
+  //     nama: req.body.nama,
+  //     tingkat: req.body.tingkat
+  //   };
+  // }
+  //
+  // var student = {
+  //   stambuk_lama: req.body.stambukLama,
+  //   stambuk_baru: req.body.stambukBaru,
+  //   nama: req.body.nama,
+  //   tingkat: req.body.tingkat
+  // };
+  //
+  // db.query('INSERT INTO tb_siswa SET ?', student, function(err, result){
+  //   if(err){
+  //     res.status(500).send('Error while doing operation, Ex. non unique stambuk');
+  //   }else{
+  //
+  //     var studentId = result.insertId;
+  //     var riwayatMppd = {
+  //       siswa_id: studentId,
+  //       status: '',
+  //       bagian_bermasalah: ''
+  //     };
+  //
+  //     db.query('INSERT INTO tb_riwayat_mppd SET ?', riwayatMppd, function(err, result){
+  //       if(err){
+  //         console.log(err);
+  //         res.status(500).send('Error while doing operation.');
+  //       }else{
+  //         var tbUjianKompre = {
+  //           siswa_id: studentId
+  //         };
+  //
+  //         db.query('INSERT INTO tb_ujian_kompre SET ?', tbUjianKompre, function(err, result){
+  //           if(err){
+  //             console.log(err);
+  //           }else{
+  //             res.json({status: 'INSERT_SUCCESS'});
+  //           }
+  //
+  //         });
+  //       }
+  //     });
+  //   }
+  // });
 };

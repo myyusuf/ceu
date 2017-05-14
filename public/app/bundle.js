@@ -88909,10 +88909,6 @@
 
 	var _input2 = _interopRequireDefault(_input);
 
-	var _pagination = __webpack_require__(422);
-
-	var _pagination2 = _interopRequireDefault(_pagination);
-
 	var _message = __webpack_require__(403);
 
 	var _message2 = _interopRequireDefault(_message);
@@ -88974,9 +88970,9 @@
 	    _this.onSearch = _this.onSearch.bind(_this);
 	    _this.onStudentLevelSelect = _this.onStudentLevelSelect.bind(_this);
 
-	    _this.onCreateDepartment = _this.onCreateDepartment.bind(_this);
+	    _this.onOpenCreateDepartmentForm = _this.onOpenCreateDepartmentForm.bind(_this);
 	    _this.handleCancel = _this.handleCancel.bind(_this);
-	    _this.handleCreate = _this.handleCreate.bind(_this);
+	    _this.handlCreateDepartment = _this.handlCreateDepartment.bind(_this);
 	    _this.saveFormRef = _this.saveFormRef.bind(_this);
 	    return _this;
 	  }
@@ -89006,8 +89002,8 @@
 	      });
 	    }
 	  }, {
-	    key: 'onCreateDepartment',
-	    value: function onCreateDepartment() {
+	    key: 'onOpenCreateDepartmentForm',
+	    value: function onOpenCreateDepartmentForm() {
 	      this.setState({ createDepartmentFormVisible: true });
 	    }
 	  }, {
@@ -89047,8 +89043,8 @@
 	      this.setState({ createDepartmentFormVisible: false });
 	    }
 	  }, {
-	    key: 'handleCreate',
-	    value: function handleCreate() {
+	    key: 'handlCreateDepartment',
+	    value: function handlCreateDepartment() {
 	      var _this4 = this;
 
 	      var form = this.form;
@@ -89058,8 +89054,25 @@
 	        }
 
 	        console.log('Received values of form: ', values);
-	        form.resetFields();
-	        _this4.setState({ createDepartmentFormVisible: false });
+
+	        _axios2.default.post('/departments', values).then(function (response) {
+	          // console.dir(response);
+	          _message2.default.success('Department created successfully.');
+	          form.resetFields();
+	          _this4.setState({
+	            createDepartmentFormVisible: false
+	          }, function () {
+	            _this4.getDepartments();
+	          });
+	        }).catch(function (error) {
+	          _message2.default.error(_react2.default.createElement(
+	            'span',
+	            null,
+	            error.message,
+	            _react2.default.createElement('br', null),
+	            error.response.data
+	          ));
+	        });
 	      });
 	    }
 	  }, {
@@ -89127,7 +89140,7 @@
 	                    type: 'primary',
 	                    icon: 'plus',
 	                    className: 'add-button',
-	                    onClick: this.onCreateDepartment
+	                    onClick: this.onOpenCreateDepartmentForm
 	                  },
 	                  'Bagian'
 	                )
@@ -89151,7 +89164,7 @@
 	          ref: this.saveFormRef,
 	          visible: this.state.createDepartmentFormVisible,
 	          onCancel: this.handleCancel,
-	          onCreate: this.handleCreate
+	          onCreate: this.handlCreateDepartment
 	        })
 	      );
 	    }
@@ -89163,9 +89176,7 @@
 	exports.default = DepartmentList;
 
 
-	DepartmentList.propTypes = {
-	  onShowDetails: _react2.default.PropTypes.any
-	};
+	DepartmentList.propTypes = {};
 
 /***/ },
 /* 770 */
@@ -89189,12 +89200,17 @@
 
 	var _input2 = _interopRequireDefault(_input);
 
+	var _select = __webpack_require__(431);
+
+	var _select2 = _interopRequireDefault(_select);
+
 	var _modal = __webpack_require__(771);
 
 	var _modal2 = _interopRequireDefault(_modal);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	var Option = _select2.default.Option;
 	var FormItem = _form2.default.Item;
 
 	var DepartmentCreateForm = _form2.default.create()(function (props) {
@@ -89247,6 +89263,32 @@
 	            message: 'Panjang nama bagian maximum 30 karakter'
 	          }]
 	        })(_react2.default.createElement(_input2.default, { maxLength: '30' }))
+	      ),
+	      _react2.default.createElement(
+	        FormItem,
+	        { label: 'Tingkat' },
+	        getFieldDecorator('tingkat', {
+	          rules: [{
+	            required: true,
+	            message: 'Tingkat wajib diisi'
+	          }]
+	        })(_react2.default.createElement(
+	          _select2.default,
+	          {
+	            mode: 'single',
+	            placeholder: 'Pilih tingkat'
+	          },
+	          _react2.default.createElement(
+	            Option,
+	            { key: '1' },
+	            'Tingkat 1'
+	          ),
+	          _react2.default.createElement(
+	            Option,
+	            { key: '2' },
+	            'Tingkat 2'
+	          )
+	        ))
 	      )
 	    )
 	  );
