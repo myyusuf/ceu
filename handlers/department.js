@@ -3,11 +3,24 @@ exports.find = function findDepartment(request, reply) {
 
   const searchText = request.query.searchText || '';
   const namaLike = `%${searchText}%`;
+  const kodeLike = `%${searchText}%`;
   const level = request.query.studentLevel;
 
-  const query = 'SELECT * FROM tb_bagian WHERE nama LIKE ? AND tingkat = ? ';
+  const query = `
+    SELECT
+      *
+    FROM
+      tb_bagian
+    WHERE
+      (
+        kode LIKE ?
+        OR
+        nama LIKE ?
+      )
+      AND
+      tingkat = ? `;
 
-  db.query(query, [namaLike, level], (err, rows) => {
+  db.query(query, [kodeLike, namaLike, level], (err, rows) => {
     if (err) reply('Error while doing operation.').code(500);
     reply(rows);
   });
