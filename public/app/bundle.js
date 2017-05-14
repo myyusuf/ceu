@@ -96,7 +96,7 @@
 
 	var _reactRouterDom = __webpack_require__(551);
 
-	var _Workspace = __webpack_require__(779);
+	var _Workspace = __webpack_require__(780);
 
 	var _Workspace2 = _interopRequireDefault(_Workspace);
 
@@ -88917,6 +88917,10 @@
 
 	var _table2 = _interopRequireDefault(_table);
 
+	var _modal = __webpack_require__(771);
+
+	var _modal2 = _interopRequireDefault(_modal);
+
 	var _axios = __webpack_require__(492);
 
 	var _axios2 = _interopRequireDefault(_axios);
@@ -88929,7 +88933,7 @@
 
 	var _DepartmentCreateForm2 = _interopRequireDefault(_DepartmentCreateForm);
 
-	var _DepartmentUpdateForm = __webpack_require__(783);
+	var _DepartmentUpdateForm = __webpack_require__(779);
 
 	var _DepartmentUpdateForm2 = _interopRequireDefault(_DepartmentUpdateForm);
 
@@ -88940,6 +88944,8 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var confirm = _modal2.default.confirm;
 
 	var DepartmentList = function (_Component) {
 	  _inherits(DepartmentList, _Component);
@@ -88957,6 +88963,7 @@
 	      createDepartmentFormVisible: false,
 	      updateDepartmentFormVisible: false,
 	      departmentToUpdate: {},
+	      departmentToDelete: {},
 	      columns: [{
 	        title: 'ID',
 	        dataIndex: 'id',
@@ -88988,7 +88995,7 @@
 	              icon: 'delete',
 	              type: 'dashed',
 	              onClick: function onClick() {
-	                _this.onOpenUpdateDepartmentForm(record);
+	                _this.onOpenDeleteDepartmentDialog(record);
 	              }
 	            })
 	          );
@@ -89009,6 +89016,8 @@
 	    _this.onOpenUpdateDepartmentForm = _this.onOpenUpdateDepartmentForm.bind(_this);
 	    _this.handleCloseUpdate = _this.handleCloseUpdate.bind(_this);
 	    _this.handleUpdateDepartment = _this.handleUpdateDepartment.bind(_this);
+
+	    _this.onOpenDeleteDepartmentDialog = _this.onOpenDeleteDepartmentDialog.bind(_this);
 	    return _this;
 	  }
 
@@ -89048,6 +89057,21 @@
 	      this.setState({
 	        departmentToUpdate: record,
 	        updateDepartmentFormVisible: true
+	      });
+	    }
+	  }, {
+	    key: 'onOpenDeleteDepartmentDialog',
+	    value: function onOpenDeleteDepartmentDialog(record) {
+	      var departmentList = this;
+	      confirm({
+	        title: 'Anda akan menghapus bagian : ' + record.nama,
+	        content: 'Tindakan ini tidak dapat dibatalkan.',
+	        onOk: function onOk() {
+	          departmentList.handleDeleteDepartment(record);
+	        },
+	        onCancel: function onCancel() {
+	          // console.log('Cancel');
+	        }
 	      });
 	    }
 	  }, {
@@ -89167,6 +89191,29 @@
 	            error.response.data
 	          ));
 	        });
+	      });
+	    }
+	  }, {
+	    key: 'handleDeleteDepartment',
+	    value: function handleDeleteDepartment(departmentToDelete) {
+	      var _this6 = this;
+
+	      _axios2.default.delete('/departments/' + departmentToDelete.kode, {}).then(function (response) {
+	        // console.dir(response);
+	        _message2.default.success('Department deleted successfully.');
+	        _this6.setState({
+	          departmentToDelete: {}
+	        }, function () {
+	          _this6.getDepartments();
+	        });
+	      }).catch(function (error) {
+	        _message2.default.error(_react2.default.createElement(
+	          'span',
+	          null,
+	          error.message,
+	          _react2.default.createElement('br', null),
+	          error.response ? error.response.data : ''
+	        ));
 	      });
 	    }
 	  }, {
@@ -90384,15 +90431,139 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Header = __webpack_require__(780);
+	var _form = __webpack_require__(594);
+
+	var _form2 = _interopRequireDefault(_form);
+
+	var _input = __webpack_require__(417);
+
+	var _input2 = _interopRequireDefault(_input);
+
+	var _select = __webpack_require__(431);
+
+	var _select2 = _interopRequireDefault(_select);
+
+	var _modal = __webpack_require__(771);
+
+	var _modal2 = _interopRequireDefault(_modal);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Option = _select2.default.Option;
+	var FormItem = _form2.default.Item;
+
+	var DepartmentUpdateForm = _form2.default.create()(function (props) {
+	  var visible = props.visible,
+	      onClose = props.onClose,
+	      onUpdate = props.onUpdate,
+	      department = props.department,
+	      form = props.form;
+	  var getFieldDecorator = form.getFieldDecorator;
+
+
+	  return _react2.default.createElement(
+	    _modal2.default,
+	    {
+	      visible: visible,
+	      title: 'Edit Bagian',
+	      okText: 'Update',
+	      cancelText: 'Close',
+	      onCancel: onClose,
+	      onOk: onUpdate
+	    },
+	    _react2.default.createElement(
+	      _form2.default,
+	      { layout: 'vertical' },
+	      _react2.default.createElement(
+	        FormItem,
+	        { label: 'Kode' },
+	        getFieldDecorator('kode', {
+	          initialValue: department.kode,
+	          rules: [{
+	            required: true,
+	            message: 'Kode bagian wajib diisi'
+	          }, {
+	            min: 3,
+	            message: 'Panjang kode bagian minimum 3 karakter'
+	          }, {
+	            max: 10,
+	            message: 'Panjang kode bagian maximum 10 karakter'
+	          }]
+	        })(_react2.default.createElement(_input2.default, { maxLength: '10', disabled: true }))
+	      ),
+	      _react2.default.createElement(
+	        FormItem,
+	        { label: 'Nama' },
+	        getFieldDecorator('nama', {
+	          initialValue: department.nama,
+	          rules: [{
+	            required: true,
+	            message: 'Nama bagian wajib diisi'
+	          }, {
+	            min: 3,
+	            message: 'Panjang nama bagian minimum 3 karakter'
+	          }, {
+	            max: 30,
+	            message: 'Panjang nama bagian maximum 30 karakter'
+	          }]
+	        })(_react2.default.createElement(_input2.default, { maxLength: '30' }))
+	      ),
+	      _react2.default.createElement(
+	        FormItem,
+	        { label: 'Tingkat' },
+	        getFieldDecorator('tingkat', {
+	          initialValue: String(department.tingkat),
+	          rules: [{
+	            required: true,
+	            message: 'Tingkat wajib diisi'
+	          }]
+	        })(_react2.default.createElement(
+	          _select2.default,
+	          {
+	            mode: 'single',
+	            placeholder: 'Pilih tingkat'
+	          },
+	          _react2.default.createElement(
+	            Option,
+	            { key: '1' },
+	            'Tingkat 1'
+	          ),
+	          _react2.default.createElement(
+	            Option,
+	            { key: '2' },
+	            'Tingkat 2'
+	          )
+	        ))
+	      )
+	    )
+	  );
+	});
+
+	exports.default = DepartmentUpdateForm;
+
+/***/ },
+/* 780 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Header = __webpack_require__(781);
 
 	var _Header2 = _interopRequireDefault(_Header);
 
-	var _SideMenu = __webpack_require__(781);
+	var _SideMenu = __webpack_require__(782);
 
 	var _SideMenu2 = _interopRequireDefault(_SideMenu);
 
-	var _LoginInfo = __webpack_require__(782);
+	var _LoginInfo = __webpack_require__(783);
 
 	var _LoginInfo2 = _interopRequireDefault(_LoginInfo);
 
@@ -90441,7 +90612,7 @@
 	exports.default = Workspace;
 
 /***/ },
-/* 780 */
+/* 781 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -90505,7 +90676,7 @@
 	exports.default = Header;
 
 /***/ },
-/* 781 */
+/* 782 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -90674,7 +90845,7 @@
 	exports.default = SideMenu;
 
 /***/ },
-/* 782 */
+/* 783 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -90747,130 +90918,6 @@
 	};
 
 	exports.default = LoginInfo;
-
-/***/ },
-/* 783 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _form = __webpack_require__(594);
-
-	var _form2 = _interopRequireDefault(_form);
-
-	var _input = __webpack_require__(417);
-
-	var _input2 = _interopRequireDefault(_input);
-
-	var _select = __webpack_require__(431);
-
-	var _select2 = _interopRequireDefault(_select);
-
-	var _modal = __webpack_require__(771);
-
-	var _modal2 = _interopRequireDefault(_modal);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var Option = _select2.default.Option;
-	var FormItem = _form2.default.Item;
-
-	var DepartmentUpdateForm = _form2.default.create()(function (props) {
-	  var visible = props.visible,
-	      onClose = props.onClose,
-	      onUpdate = props.onUpdate,
-	      department = props.department,
-	      form = props.form;
-	  var getFieldDecorator = form.getFieldDecorator;
-
-
-	  return _react2.default.createElement(
-	    _modal2.default,
-	    {
-	      visible: visible,
-	      title: 'Edit Bagian',
-	      okText: 'Update',
-	      cancelText: 'Close',
-	      onCancel: onClose,
-	      onOk: onUpdate
-	    },
-	    _react2.default.createElement(
-	      _form2.default,
-	      { layout: 'vertical' },
-	      _react2.default.createElement(
-	        FormItem,
-	        { label: 'Kode' },
-	        getFieldDecorator('kode', {
-	          initialValue: department.kode,
-	          rules: [{
-	            required: true,
-	            message: 'Kode bagian wajib diisi'
-	          }, {
-	            min: 3,
-	            message: 'Panjang kode bagian minimum 3 karakter'
-	          }, {
-	            max: 10,
-	            message: 'Panjang kode bagian maximum 10 karakter'
-	          }]
-	        })(_react2.default.createElement(_input2.default, { maxLength: '10', disabled: true }))
-	      ),
-	      _react2.default.createElement(
-	        FormItem,
-	        { label: 'Nama' },
-	        getFieldDecorator('nama', {
-	          initialValue: department.nama,
-	          rules: [{
-	            required: true,
-	            message: 'Nama bagian wajib diisi'
-	          }, {
-	            min: 3,
-	            message: 'Panjang nama bagian minimum 3 karakter'
-	          }, {
-	            max: 30,
-	            message: 'Panjang nama bagian maximum 30 karakter'
-	          }]
-	        })(_react2.default.createElement(_input2.default, { maxLength: '30' }))
-	      ),
-	      _react2.default.createElement(
-	        FormItem,
-	        { label: 'Tingkat' },
-	        getFieldDecorator('tingkat', {
-	          initialValue: String(department.tingkat),
-	          rules: [{
-	            required: true,
-	            message: 'Tingkat wajib diisi'
-	          }]
-	        })(_react2.default.createElement(
-	          _select2.default,
-	          {
-	            mode: 'single',
-	            placeholder: 'Pilih tingkat'
-	          },
-	          _react2.default.createElement(
-	            Option,
-	            { key: '1' },
-	            'Tingkat 1'
-	          ),
-	          _react2.default.createElement(
-	            Option,
-	            { key: '2' },
-	            'Tingkat 2'
-	          )
-	        ))
-	      )
-	    )
-	  );
-	});
-
-	exports.default = DepartmentUpdateForm;
 
 /***/ }
 /******/ ]);

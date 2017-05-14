@@ -37,6 +37,11 @@ module.exports = [
     handler: Department.update,
   },
   {
+    method: 'DELETE',
+    path: '/departments/{kode}',
+    handler: Department.delete,
+  },
+  {
     method: 'GET',
     path: '/students',
     handler: Student.find,

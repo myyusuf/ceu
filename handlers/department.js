@@ -58,3 +58,18 @@ exports.update = function updateDepartment(request, reply) {
       }
     });
 };
+
+exports.delete = function deleteDepartment(request, reply) {
+  const kode = request.params.kode;
+  this.db.query(
+  'DELETE FROM tb_bagian WHERE kode = ? ',
+  [kode], (err, result) => {
+    if (err) {
+      console.dir(err);
+      reply(err.message).code(500);
+    } else {
+      console.dir(result);
+      reply({ status: 'ok' });
+    }
+  });
+};
