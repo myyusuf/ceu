@@ -18,7 +18,8 @@ exports.create = function createDepartment(request, reply) {
     kode: request.payload.kode,
     nama: request.payload.nama,
     tingkat: request.payload.tingkat,
-    // description: request.payload.description,
+    durasi_minggu: request.payload.durasi_minggu,
+    keterangan: request.payload.keterangan,
   };
 
   this.db.query('INSERT INTO tb_bagian SET ?', department, (err, result) => {
@@ -41,12 +42,16 @@ exports.update = function updateDepartment(request, reply) {
       tb_bagian
     SET
       nama = ?,
-      tingkat = ?
+      tingkat = ?,
+      durasi_minggu = ?,
+      keterangan = ?
     WHERE
       kode = ?`,
     [
       department.nama,
       department.tingkat,
+      department.durasi_minggu,
+      department.keterangan,
       kode,
     ], (err, result) => {
       if (err) {

@@ -88917,7 +88917,7 @@
 
 	var _table2 = _interopRequireDefault(_table);
 
-	var _modal = __webpack_require__(771);
+	var _modal = __webpack_require__(770);
 
 	var _modal2 = _interopRequireDefault(_modal);
 
@@ -88929,7 +88929,7 @@
 
 	var _StudentLevelRadio2 = _interopRequireDefault(_StudentLevelRadio);
 
-	var _DepartmentCreateForm = __webpack_require__(770);
+	var _DepartmentCreateForm = __webpack_require__(778);
 
 	var _DepartmentCreateForm2 = _interopRequireDefault(_DepartmentCreateForm);
 
@@ -88965,9 +88965,15 @@
 	      departmentToUpdate: {},
 	      departmentToDelete: {},
 	      columns: [{
-	        title: 'ID',
-	        dataIndex: 'id',
-	        key: 'id'
+	        title: 'No',
+	        key: 'id',
+	        render: function render(text, record, index) {
+	          return _react2.default.createElement(
+	            'span',
+	            null,
+	            index + 1
+	          );
+	        }
 	      }, {
 	        title: 'Kode',
 	        dataIndex: 'kode',
@@ -88976,6 +88982,10 @@
 	        title: 'Nama',
 	        dataIndex: 'nama',
 	        key: 'nama'
+	      }, {
+	        title: 'Durasi Dalam Minggu',
+	        dataIndex: 'durasi_minggu',
+	        key: 'durasi_minggu'
 	      }, {
 	        title: 'Action',
 	        key: 'action',
@@ -88992,8 +89002,9 @@
 	              }
 	            }),
 	            _react2.default.createElement(_button2.default, {
+	              ghost: true,
 	              icon: 'delete',
-	              type: 'dashed',
+	              type: 'danger',
 	              onClick: function onClick() {
 	                _this.onOpenDeleteDepartmentDialog(record);
 	              }
@@ -89328,132 +89339,14 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _form = __webpack_require__(594);
-
-	var _form2 = _interopRequireDefault(_form);
-
-	var _input = __webpack_require__(417);
-
-	var _input2 = _interopRequireDefault(_input);
-
-	var _select = __webpack_require__(431);
-
-	var _select2 = _interopRequireDefault(_select);
-
-	var _modal = __webpack_require__(771);
-
-	var _modal2 = _interopRequireDefault(_modal);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var Option = _select2.default.Option;
-	var FormItem = _form2.default.Item;
-
-	var DepartmentCreateForm = _form2.default.create()(function (props) {
-	  var visible = props.visible,
-	      onCancel = props.onCancel,
-	      onCreate = props.onCreate,
-	      form = props.form;
-	  var getFieldDecorator = form.getFieldDecorator;
-
-	  return _react2.default.createElement(
-	    _modal2.default,
-	    {
-	      visible: visible,
-	      title: 'Bagian Baru',
-	      okText: 'Create',
-	      onCancel: onCancel,
-	      onOk: onCreate
-	    },
-	    _react2.default.createElement(
-	      _form2.default,
-	      { layout: 'vertical' },
-	      _react2.default.createElement(
-	        FormItem,
-	        { label: 'Kode' },
-	        getFieldDecorator('kode', {
-	          rules: [{
-	            required: true,
-	            message: 'Kode bagian wajib diisi'
-	          }, {
-	            min: 3,
-	            message: 'Panjang kode bagian minimum 3 karakter'
-	          }, {
-	            max: 10,
-	            message: 'Panjang kode bagian maximum 10 karakter'
-	          }]
-	        })(_react2.default.createElement(_input2.default, { maxLength: '10' }))
-	      ),
-	      _react2.default.createElement(
-	        FormItem,
-	        { label: 'Nama' },
-	        getFieldDecorator('nama', {
-	          rules: [{
-	            required: true,
-	            message: 'Nama bagian wajib diisi'
-	          }, {
-	            min: 3,
-	            message: 'Panjang nama bagian minimum 3 karakter'
-	          }, {
-	            max: 30,
-	            message: 'Panjang nama bagian maximum 30 karakter'
-	          }]
-	        })(_react2.default.createElement(_input2.default, { maxLength: '30' }))
-	      ),
-	      _react2.default.createElement(
-	        FormItem,
-	        { label: 'Tingkat' },
-	        getFieldDecorator('tingkat', {
-	          rules: [{
-	            required: true,
-	            message: 'Tingkat wajib diisi'
-	          }]
-	        })(_react2.default.createElement(
-	          _select2.default,
-	          {
-	            mode: 'single',
-	            placeholder: 'Pilih tingkat'
-	          },
-	          _react2.default.createElement(
-	            Option,
-	            { key: '1' },
-	            'Tingkat 1'
-	          ),
-	          _react2.default.createElement(
-	            Option,
-	            { key: '2' },
-	            'Tingkat 2'
-	          )
-	        ))
-	      )
-	    )
-	  );
-	});
-
-	exports.default = DepartmentCreateForm;
-
-/***/ },
-/* 771 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
 
-	var _Modal = __webpack_require__(772);
+	var _Modal = __webpack_require__(771);
 
 	var _Modal2 = _interopRequireDefault(_Modal);
 
-	var _confirm = __webpack_require__(777);
+	var _confirm = __webpack_require__(776);
 
 	var _confirm2 = _interopRequireDefault(_confirm);
 
@@ -89506,7 +89399,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 772 */
+/* 771 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -89536,7 +89429,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _rcDialog = __webpack_require__(773);
+	var _rcDialog = __webpack_require__(772);
 
 	var _rcDialog2 = _interopRequireDefault(_rcDialog);
 
@@ -89653,7 +89546,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 773 */
+/* 772 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -89666,7 +89559,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Dialog = __webpack_require__(774);
+	var _Dialog = __webpack_require__(773);
 
 	var _Dialog2 = _interopRequireDefault(_Dialog);
 
@@ -89740,7 +89633,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 774 */
+/* 773 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -89765,11 +89658,11 @@
 
 	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
 
-	var _LazyRenderBox = __webpack_require__(775);
+	var _LazyRenderBox = __webpack_require__(774);
 
 	var _LazyRenderBox2 = _interopRequireDefault(_LazyRenderBox);
 
-	var _getScrollBarSize = __webpack_require__(776);
+	var _getScrollBarSize = __webpack_require__(775);
 
 	var _getScrollBarSize2 = _interopRequireDefault(_getScrollBarSize);
 
@@ -90067,7 +89960,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 775 */
+/* 774 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -90117,7 +90010,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 776 */
+/* 775 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -90167,7 +90060,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 777 */
+/* 776 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -90202,11 +90095,11 @@
 
 	var _icon2 = _interopRequireDefault(_icon);
 
-	var _Modal = __webpack_require__(772);
+	var _Modal = __webpack_require__(771);
 
 	var _Modal2 = _interopRequireDefault(_Modal);
 
-	var _ActionButton = __webpack_require__(778);
+	var _ActionButton = __webpack_require__(777);
 
 	var _ActionButton2 = _interopRequireDefault(_ActionButton);
 
@@ -90308,7 +90201,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 778 */
+/* 777 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -90418,6 +90311,144 @@
 	module.exports = exports['default'];
 
 /***/ },
+/* 778 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _form = __webpack_require__(594);
+
+	var _form2 = _interopRequireDefault(_form);
+
+	var _input = __webpack_require__(417);
+
+	var _input2 = _interopRequireDefault(_input);
+
+	var _inputNumber = __webpack_require__(744);
+
+	var _inputNumber2 = _interopRequireDefault(_inputNumber);
+
+	var _select = __webpack_require__(431);
+
+	var _select2 = _interopRequireDefault(_select);
+
+	var _modal = __webpack_require__(770);
+
+	var _modal2 = _interopRequireDefault(_modal);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Option = _select2.default.Option;
+	var FormItem = _form2.default.Item;
+
+	var DepartmentCreateForm = _form2.default.create()(function (props) {
+	  var visible = props.visible,
+	      onCancel = props.onCancel,
+	      onCreate = props.onCreate,
+	      form = props.form;
+	  var getFieldDecorator = form.getFieldDecorator;
+
+	  return _react2.default.createElement(
+	    _modal2.default,
+	    {
+	      visible: visible,
+	      title: 'Bagian Baru',
+	      okText: 'Create',
+	      onCancel: onCancel,
+	      onOk: onCreate
+	    },
+	    _react2.default.createElement(
+	      _form2.default,
+	      { layout: 'vertical' },
+	      _react2.default.createElement(
+	        FormItem,
+	        { label: 'Kode' },
+	        getFieldDecorator('kode', {
+	          rules: [{
+	            required: true,
+	            message: 'Kode bagian wajib diisi'
+	          }, {
+	            min: 3,
+	            message: 'Panjang kode bagian minimum 3 karakter'
+	          }, {
+	            max: 10,
+	            message: 'Panjang kode bagian maximum 10 karakter'
+	          }]
+	        })(_react2.default.createElement(_input2.default, { maxLength: '10' }))
+	      ),
+	      _react2.default.createElement(
+	        FormItem,
+	        { label: 'Nama' },
+	        getFieldDecorator('nama', {
+	          rules: [{
+	            required: true,
+	            message: 'Nama bagian wajib diisi'
+	          }, {
+	            min: 3,
+	            message: 'Panjang nama bagian minimum 3 karakter'
+	          }, {
+	            max: 30,
+	            message: 'Panjang nama bagian maximum 30 karakter'
+	          }]
+	        })(_react2.default.createElement(_input2.default, { maxLength: '30' }))
+	      ),
+	      _react2.default.createElement(
+	        FormItem,
+	        { label: 'Tingkat' },
+	        getFieldDecorator('tingkat', {
+	          rules: [{
+	            required: true,
+	            message: 'Tingkat wajib diisi'
+	          }]
+	        })(_react2.default.createElement(
+	          _select2.default,
+	          {
+	            mode: 'single',
+	            placeholder: 'Pilih tingkat',
+	            style: { width: '50%' }
+	          },
+	          _react2.default.createElement(
+	            Option,
+	            { key: '1' },
+	            'Tingkat 1'
+	          ),
+	          _react2.default.createElement(
+	            Option,
+	            { key: '2' },
+	            'Tingkat 2'
+	          )
+	        ))
+	      ),
+	      _react2.default.createElement(
+	        FormItem,
+	        { label: 'Durasi Dalam Minggu' },
+	        getFieldDecorator('durasi_minggu', {
+	          initialValue: 4,
+	          rules: []
+	        })(_react2.default.createElement(_inputNumber2.default, { min: 4, max: 10 }))
+	      ),
+	      _react2.default.createElement(
+	        FormItem,
+	        { label: 'Keterangan' },
+	        getFieldDecorator('keterangan', {
+	          rules: []
+	        })(_react2.default.createElement(_input2.default, { type: 'textarea' }))
+	      )
+	    )
+	  );
+	});
+
+	exports.default = DepartmentCreateForm;
+
+/***/ },
 /* 779 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -90439,11 +90470,15 @@
 
 	var _input2 = _interopRequireDefault(_input);
 
+	var _inputNumber = __webpack_require__(744);
+
+	var _inputNumber2 = _interopRequireDefault(_inputNumber);
+
 	var _select = __webpack_require__(431);
 
 	var _select2 = _interopRequireDefault(_select);
 
-	var _modal = __webpack_require__(771);
+	var _modal = __webpack_require__(770);
 
 	var _modal2 = _interopRequireDefault(_modal);
 
@@ -90534,6 +90569,22 @@
 	            'Tingkat 2'
 	          )
 	        ))
+	      ),
+	      _react2.default.createElement(
+	        FormItem,
+	        { label: 'Durasi Dalam Minggu' },
+	        getFieldDecorator('durasi_minggu', {
+	          initialValue: department.durasi_minggu,
+	          rules: []
+	        })(_react2.default.createElement(_inputNumber2.default, { min: 4, max: 10 }))
+	      ),
+	      _react2.default.createElement(
+	        FormItem,
+	        { label: 'Keterangan' },
+	        getFieldDecorator('keterangan', {
+	          initialValue: department.keterangan,
+	          rules: []
+	        })(_react2.default.createElement(_input2.default, { type: 'textarea' }))
 	      )
 	    )
 	  );
