@@ -39287,6 +39287,10 @@
 
 	var _StudentLevelRadio2 = _interopRequireDefault(_StudentLevelRadio);
 
+	var _StudentCreateForm = __webpack_require__(784);
+
+	var _StudentCreateForm2 = _interopRequireDefault(_StudentCreateForm);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -39319,7 +39323,8 @@
 	      searchText: '',
 	      pageNum: 1,
 	      totalRecords: 0,
-	      loading: false
+	      loading: false,
+	      createStudentFormVisible: false
 	    };
 
 	    _this.onSearchTextChange = _this.onSearchTextChange.bind(_this);
@@ -39327,6 +39332,11 @@
 	    _this.onStudentLevelSelect = _this.onStudentLevelSelect.bind(_this);
 	    _this.onPageChange = _this.onPageChange.bind(_this);
 	    _this.onSearch = _this.onSearch.bind(_this);
+
+	    _this.saveCreateStudentFormRef = _this.saveCreateStudentFormRef.bind(_this);
+	    _this.onOpenCreateStudentForm = _this.onOpenCreateStudentForm.bind(_this);
+	    _this.handleCancelCreate = _this.handleCancelCreate.bind(_this);
+	    _this.handleCreateStudent = _this.handleCreateStudent.bind(_this);
 	    return _this;
 	  }
 
@@ -39369,6 +39379,23 @@
 	      });
 	    }
 	  }, {
+	    key: 'onOpenCreateStudentForm',
+	    value: function onOpenCreateStudentForm() {
+	      this.setState({ createStudentFormVisible: true });
+	    }
+	  }, {
+	    key: 'handleCancelCreate',
+	    value: function handleCancelCreate() {
+	      var form = this.createStudentForm;
+	      form.resetFields();
+	      this.setState({ createStudentFormVisible: false });
+	    }
+	  }, {
+	    key: 'saveCreateStudentFormRef',
+	    value: function saveCreateStudentFormRef(form) {
+	      this.createStudentForm = form;
+	    }
+	  }, {
 	    key: 'getStudents',
 	    value: function getStudents() {
 	      var _this4 = this;
@@ -39398,6 +39425,39 @@
 	            errorMessage += error.message;
 	          }
 	          _message2.default.error(errorMessage);
+	        });
+	      });
+	    }
+	  }, {
+	    key: 'handleCreateStudent',
+	    value: function handleCreateStudent() {
+	      var _this5 = this;
+
+	      var form = this.createStudentForm;
+	      form.validateFields(function (err, values) {
+	        if (err) {
+	          return;
+	        }
+
+	        console.log('Received values of form: ', values);
+
+	        _axios2.default.post('/departments', values).then(function (response) {
+	          // console.dir(response);
+	          _message2.default.success('Student created successfully.');
+	          form.resetFields();
+	          _this5.setState({
+	            createStudentFormVisible: false
+	          }, function () {
+	            _this5.getStudents();
+	          });
+	        }).catch(function (error) {
+	          _message2.default.error(_react2.default.createElement(
+	            'span',
+	            null,
+	            error.message,
+	            _react2.default.createElement('br', null),
+	            error.response.data
+	          ));
 	        });
 	      });
 	    }
@@ -39511,7 +39571,12 @@
 	                { className: 'the-li' },
 	                _react2.default.createElement(
 	                  _button2.default,
-	                  { type: 'primary', icon: 'plus', className: 'add-button' },
+	                  {
+	                    type: 'primary',
+	                    icon: 'plus',
+	                    className: 'add-button',
+	                    onClick: this.onOpenCreateStudentForm
+	                  },
 	                  'Siswa'
 	                )
 	              )
@@ -39530,7 +39595,13 @@
 	              cardList
 	            )
 	          )
-	        )
+	        ),
+	        _react2.default.createElement(_StudentCreateForm2.default, {
+	          ref: this.saveCreateStudentFormRef,
+	          visible: this.state.createStudentFormVisible,
+	          onCancel: this.handleCancelCreate,
+	          onCreate: this.handleCreateStudent
+	        })
 	      );
 	    }
 	  }]);
@@ -90969,6 +91040,144 @@
 	};
 
 	exports.default = LoginInfo;
+
+/***/ },
+/* 784 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _form = __webpack_require__(594);
+
+	var _form2 = _interopRequireDefault(_form);
+
+	var _input = __webpack_require__(417);
+
+	var _input2 = _interopRequireDefault(_input);
+
+	var _inputNumber = __webpack_require__(744);
+
+	var _inputNumber2 = _interopRequireDefault(_inputNumber);
+
+	var _select = __webpack_require__(431);
+
+	var _select2 = _interopRequireDefault(_select);
+
+	var _modal = __webpack_require__(770);
+
+	var _modal2 = _interopRequireDefault(_modal);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Option = _select2.default.Option;
+	var FormItem = _form2.default.Item;
+
+	var StudentCreateForm = _form2.default.create()(function (props) {
+	  var visible = props.visible,
+	      onCancel = props.onCancel,
+	      onCreate = props.onCreate,
+	      form = props.form;
+	  var getFieldDecorator = form.getFieldDecorator;
+
+	  return _react2.default.createElement(
+	    _modal2.default,
+	    {
+	      visible: visible,
+	      title: 'Siswa Baru',
+	      okText: 'Create',
+	      onCancel: onCancel,
+	      onOk: onCreate
+	    },
+	    _react2.default.createElement(
+	      _form2.default,
+	      { layout: 'vertical' },
+	      _react2.default.createElement(
+	        FormItem,
+	        { label: 'Kode' },
+	        getFieldDecorator('kode', {
+	          rules: [{
+	            required: true,
+	            message: 'Kode bagian wajib diisi'
+	          }, {
+	            min: 3,
+	            message: 'Panjang kode bagian minimum 3 karakter'
+	          }, {
+	            max: 10,
+	            message: 'Panjang kode bagian maximum 10 karakter'
+	          }]
+	        })(_react2.default.createElement(_input2.default, { maxLength: '10' }))
+	      ),
+	      _react2.default.createElement(
+	        FormItem,
+	        { label: 'Nama' },
+	        getFieldDecorator('nama', {
+	          rules: [{
+	            required: true,
+	            message: 'Nama bagian wajib diisi'
+	          }, {
+	            min: 3,
+	            message: 'Panjang nama bagian minimum 3 karakter'
+	          }, {
+	            max: 30,
+	            message: 'Panjang nama bagian maximum 30 karakter'
+	          }]
+	        })(_react2.default.createElement(_input2.default, { maxLength: '30' }))
+	      ),
+	      _react2.default.createElement(
+	        FormItem,
+	        { label: 'Tingkat' },
+	        getFieldDecorator('tingkat', {
+	          rules: [{
+	            required: true,
+	            message: 'Tingkat wajib diisi'
+	          }]
+	        })(_react2.default.createElement(
+	          _select2.default,
+	          {
+	            mode: 'single',
+	            placeholder: 'Pilih tingkat',
+	            style: { width: '50%' }
+	          },
+	          _react2.default.createElement(
+	            Option,
+	            { key: '1' },
+	            'Tingkat 1'
+	          ),
+	          _react2.default.createElement(
+	            Option,
+	            { key: '2' },
+	            'Tingkat 2'
+	          )
+	        ))
+	      ),
+	      _react2.default.createElement(
+	        FormItem,
+	        { label: 'Durasi Dalam Minggu' },
+	        getFieldDecorator('durasi_minggu', {
+	          initialValue: 4,
+	          rules: []
+	        })(_react2.default.createElement(_inputNumber2.default, { min: 4, max: 10 }))
+	      ),
+	      _react2.default.createElement(
+	        FormItem,
+	        { label: 'Keterangan' },
+	        getFieldDecorator('keterangan', {
+	          rules: []
+	        })(_react2.default.createElement(_input2.default, { type: 'textarea' }))
+	      )
+	    )
+	  );
+	});
+
+	exports.default = StudentCreateForm;
 
 /***/ }
 /******/ ]);
