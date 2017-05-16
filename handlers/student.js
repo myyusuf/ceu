@@ -117,55 +117,64 @@ exports.findOne = function findOneStudent(request, reply) {
 };
 
 exports.create = function createStudent(request, reply) {
-  console.dir(request);
-  reply({ result: 'OK' });
-  // const createStudent = () => {
-  //   const student = {
-  //     stambuk_lama: req.body.stambukLama,
-  //     stambuk_baru: req.body.stambukBaru,
-  //     nama: req.body.nama,
-  //     tingkat: req.body.tingkat
-  //   };
-  // }
-  //
-  // var student = {
-  //   stambuk_lama: req.body.stambukLama,
-  //   stambuk_baru: req.body.stambukBaru,
-  //   nama: req.body.nama,
-  //   tingkat: req.body.tingkat
-  // };
-  //
-  // db.query('INSERT INTO tb_siswa SET ?', student, function(err, result){
-  //   if(err){
-  //     res.status(500).send('Error while doing operation, Ex. non unique stambuk');
-  //   }else{
-  //
-  //     var studentId = result.insertId;
-  //     var riwayatMppd = {
-  //       siswa_id: studentId,
-  //       status: '',
-  //       bagian_bermasalah: ''
-  //     };
-  //
-  //     db.query('INSERT INTO tb_riwayat_mppd SET ?', riwayatMppd, function(err, result){
-  //       if(err){
-  //         console.log(err);
-  //         res.status(500).send('Error while doing operation.');
-  //       }else{
-  //         var tbUjianKompre = {
-  //           siswa_id: studentId
-  //         };
-  //
-  //         db.query('INSERT INTO tb_ujian_kompre SET ?', tbUjianKompre, function(err, result){
-  //           if(err){
-  //             console.log(err);
-  //           }else{
-  //             res.json({status: 'INSERT_SUCCESS'});
-  //           }
-  //
-  //         });
-  //       }
-  //     });
-  //   }
-  // });
+  const series = [];
+  const result = {};
+  const db = this.db;
+
+  const insertStudent = function insertStudent(callback) {
+    const student = {
+      stambuk_lama: request.payload.stambuk_lama,
+      stambuk_baru: request.payload.stambuk_baru,
+      nama: request.payload.nama,
+      tingkat: request.payload.tingkat,
+      gender: request.payload.gender,
+    };
+
+    db.query('INSERT INTO tb_siswa SET ?', student, (err, insertResult) => {
+      if (err) {
+        callback(err);
+      } else {
+        result.studentCreatedId = insertResult.insertId;
+        callback();
+      }
+    });
+  };
+
+  const insertStatusBagianDiambil = function insertStatusBagianDiambil(callback) {
+    const tbStatusBagianDiambil = {
+      siswa_id: result.studentCreatedId,
+    };
+
+    db.query('INSERT INTO tb_status_bagian_diambil SET ?', tbStatusBagianDiambil, (err, insertResult) => {
+      if (err) {
+        callback(err);
+      } else {
+        result.statusCreatedId = insertResult.insertId;
+        callback();
+      }
+    });
+  };
+
+  series.push(insertStudent, insertStatusBagianDiambil);
+
+  db.beginTransaction((err) => {
+    if (err) { throw err; }
+    flow.series(series, (error) => {
+      if (error) {
+        console.log(error);
+        db.rollback(() => {
+          reply('Error while doing operation.').code(500);
+        });
+      } else {
+        db.commit((errCommit) => {
+          if (errCommit) {
+            db.rollback(() => {
+              reply('Error while doing operation.').code(500);
+            });
+          }
+          reply(result);
+        });
+      }
+    });
+  });
 };

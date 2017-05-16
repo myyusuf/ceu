@@ -47,6 +47,11 @@ module.exports = [
     handler: Student.find,
   },
   {
+    method: 'POST',
+    path: '/students',
+    handler: Student.create,
+  },
+  {
     method: 'GET',
     path: '/students/{studentId}',
     handler: Student.findOne,
