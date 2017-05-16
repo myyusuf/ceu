@@ -22,23 +22,29 @@ exports.find = function findStudent(request, reply) {
     `SELECT
       ts.*,
       tsb.status_bagian,
-      tsb.progres_keseluruhan
+      tsb.progres_keseluruhan,
+      tb.nama AS nama_bagian,
+      tb.warna AS warna_bagian
     FROM
       tb_siswa ts
     LEFT JOIN
       tb_status_bagian_diambil tsb ON ts.id = tsb.siswa_id
+    LEFT JOIN
+      tb_bagian_diambil tbd ON tbd.id = tsb.bagian_diambil_id
+    LEFT JOIN
+      tb_bagian tb ON tb.id = tbd.bagian_id
     WHERE
       (
-        stambuk_lama LIKE ? OR
-        stambuk_baru LIKE ? OR
-        nama LIKE ?
+        ts.stambuk_lama LIKE ? OR
+        ts.stambuk_baru LIKE ? OR
+        ts.nama LIKE ?
       )
     AND
-      tingkat = ?
+      ts.tingkat = ?
     AND
-      status IN (?)
+      ts.status IN (?)
     ORDER BY
-      nama
+      ts.nama
     LIMIT ?,? `;
 
     db.query(query, [

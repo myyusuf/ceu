@@ -55770,6 +55770,23 @@
 	  var student = _ref.student,
 	      onDetailsClick = _ref.onDetailsClick;
 
+	  var tagBagian = _react2.default.createElement(
+	    _tag2.default,
+	    { color: '#A3A3A3' },
+	    'Belum ada bagian'
+	  );
+	  if (student.nama_bagian !== undefined && student.nama_bagian !== null) {
+	    var warnaBagian = '#A3A3A3';
+	    if (student.warna_bagian !== undefined && student.warna_bagian !== null) {
+	      warnaBagian = '#' + student.warna_bagian;
+	    }
+
+	    tagBagian = _react2.default.createElement(
+	      _tag2.default,
+	      { color: warnaBagian },
+	      student.nama_bagian
+	    );
+	  }
 	  return _react2.default.createElement(
 	    _card2.default,
 	    { className: 'student-card' },
@@ -55868,11 +55885,7 @@
 	      _react2.default.createElement(
 	        _col2.default,
 	        { span: 12 },
-	        _react2.default.createElement(
-	          _tag2.default,
-	          { color: '#2db7f5' },
-	          'Interna'
-	        )
+	        tagBagian
 	      )
 	    ),
 	    _react2.default.createElement(
@@ -56881,6 +56894,10 @@
 	}];
 
 	var STUDENT_DEPARTMENT_STATUS_ARRAY = [{
+	  id: 0,
+	  name: 'Belum ada bagian',
+	  colorCode: '#A3A3A3'
+	}, {
 	  id: 1,
 	  name: 'Berjalan',
 	  colorCode: '#2DB7F5'
@@ -56937,7 +56954,7 @@
 	    ));
 	  });
 
-	  return statusArray[value - 1];
+	  return statusArray[value];
 	};
 
 	StudentDepartmentStatusTag.propTypes = {
