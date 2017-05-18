@@ -90206,6 +90206,7 @@
 	var confirm = _modal2.default.confirm;
 
 	var WrappedDepartmentCreateForm = _form2.default.create()(_DepartmentCreateForm2.default);
+	var WrappedDepartmentUpdateForm = _form2.default.create()(_DepartmentUpdateForm2.default);
 
 	var DepartmentList = function (_Component) {
 	  _inherits(DepartmentList, _Component);
@@ -90246,6 +90247,12 @@
 	        title: 'Durasi Dalam Minggu',
 	        dataIndex: 'durasi_minggu',
 	        key: 'durasi_minggu'
+	      }, {
+	        title: 'Warna',
+	        key: 'warna',
+	        render: function render(text, record) {
+	          return _react2.default.createElement('div', { className: 'department-color-box', style: { backgroundColor: record.warna } });
+	        }
 	      }, {
 	        title: 'Action',
 	        key: 'action',
@@ -90573,7 +90580,7 @@
 	          onCancel: this.handleCancelCreate,
 	          onCreate: this.handleCreateDepartment
 	        }),
-	        _react2.default.createElement(_DepartmentUpdateForm2.default, {
+	        _react2.default.createElement(WrappedDepartmentUpdateForm, {
 	          ref: this.saveUpdateDepartmentFormRef,
 	          visible: this.state.updateDepartmentFormVisible,
 	          onClose: this.handleCloseUpdate,
@@ -90648,6 +90655,7 @@
 
 	var Option = _select2.default.Option;
 	var FormItem = _form2.default.Item;
+	var INITIAL_COLOR = '#A3A3A3';
 
 	var DepartmentCreateForm = function (_Component) {
 	  _inherits(DepartmentCreateForm, _Component);
@@ -90658,7 +90666,7 @@
 	    var _this = _possibleConstructorReturn(this, (DepartmentCreateForm.__proto__ || Object.getPrototypeOf(DepartmentCreateForm)).call(this, props));
 
 	    _this.state = {
-	      color: '#a3a3a3'
+	      color: INITIAL_COLOR
 	    };
 
 	    _this.onColorChange = _this.onColorChange.bind(_this);
@@ -90673,7 +90681,7 @@
 	      });
 
 	      this.props.form.setFieldsValue({
-	        warna: color.hex
+	        warna: color.hex.toUpperCase()
 	      });
 	    }
 	  }, {
@@ -90787,9 +90795,9 @@
 	                FormItem,
 	                { label: 'Warna' },
 	                getFieldDecorator('warna', {
-	                  initialValue: '#a3a3a3',
+	                  initialValue: INITIAL_COLOR,
 	                  rules: []
-	                })(_react2.default.createElement(_input2.default, { maxLength: '6', style: { backgroundColor: this.state.color } }))
+	                })(_react2.default.createElement(_input2.default, { maxLength: '6', style: { backgroundColor: this.state.color }, readOnly: true }))
 	              ),
 	              _react2.default.createElement(_reactColor.SliderPicker, { color: this.state.color, onChangeComplete: this.onColorChange })
 	            )
@@ -103854,6 +103862,8 @@
 	  value: true
 	});
 
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
@@ -103878,114 +103888,187 @@
 
 	var _modal2 = _interopRequireDefault(_modal);
 
+	var _row = __webpack_require__(388);
+
+	var _row2 = _interopRequireDefault(_row);
+
+	var _col = __webpack_require__(397);
+
+	var _col2 = _interopRequireDefault(_col);
+
+	var _reactColor = __webpack_require__(780);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var Option = _select2.default.Option;
 	var FormItem = _form2.default.Item;
 
-	var DepartmentUpdateForm = _form2.default.create()(function (props) {
-	  var visible = props.visible,
-	      onClose = props.onClose,
-	      onUpdate = props.onUpdate,
-	      department = props.department,
-	      form = props.form;
-	  var getFieldDecorator = form.getFieldDecorator;
+	var DepartmentUpdateForm = function (_Component) {
+	  _inherits(DepartmentUpdateForm, _Component);
 
+	  function DepartmentUpdateForm(props) {
+	    _classCallCheck(this, DepartmentUpdateForm);
 
-	  return _react2.default.createElement(
-	    _modal2.default,
-	    {
-	      visible: visible,
-	      wrapClassName: 'vertical-center-modal',
-	      title: 'Edit Bagian',
-	      okText: 'Update',
-	      cancelText: 'Close',
-	      onCancel: onClose,
-	      onOk: onUpdate
-	    },
-	    _react2.default.createElement(
-	      _form2.default,
-	      { layout: 'vertical' },
-	      _react2.default.createElement(
-	        FormItem,
-	        { label: 'Kode' },
-	        getFieldDecorator('kode', {
-	          initialValue: department.kode,
-	          rules: [{
-	            required: true,
-	            message: 'Kode bagian wajib diisi'
-	          }, {
-	            min: 3,
-	            message: 'Panjang kode bagian minimum 3 karakter'
-	          }, {
-	            max: 10,
-	            message: 'Panjang kode bagian maximum 10 karakter'
-	          }]
-	        })(_react2.default.createElement(_input2.default, { maxLength: '10', disabled: true }))
-	      ),
-	      _react2.default.createElement(
-	        FormItem,
-	        { label: 'Nama' },
-	        getFieldDecorator('nama', {
-	          initialValue: department.nama,
-	          rules: [{
-	            required: true,
-	            message: 'Nama bagian wajib diisi'
-	          }, {
-	            min: 3,
-	            message: 'Panjang nama bagian minimum 3 karakter'
-	          }, {
-	            max: 30,
-	            message: 'Panjang nama bagian maximum 30 karakter'
-	          }]
-	        })(_react2.default.createElement(_input2.default, { maxLength: '30' }))
-	      ),
-	      _react2.default.createElement(
-	        FormItem,
-	        { label: 'Tingkat' },
-	        getFieldDecorator('tingkat', {
-	          initialValue: String(department.tingkat),
-	          rules: [{
-	            required: true,
-	            message: 'Tingkat wajib diisi'
-	          }]
-	        })(_react2.default.createElement(
-	          _select2.default,
-	          {
-	            mode: 'single',
-	            placeholder: 'Pilih tingkat'
-	          },
+	    var _this = _possibleConstructorReturn(this, (DepartmentUpdateForm.__proto__ || Object.getPrototypeOf(DepartmentUpdateForm)).call(this, props));
+
+	    _this.state = {
+	      departmentColor: ''
+	    };
+
+	    _this.onColorChange = _this.onColorChange.bind(_this);
+	    return _this;
+	  }
+
+	  _createClass(DepartmentUpdateForm, [{
+	    key: 'onColorChange',
+	    value: function onColorChange(color) {
+	      this.props.form.setFieldsValue({
+	        warna: color.hex.toUpperCase()
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _props = this.props,
+	          visible = _props.visible,
+	          onClose = _props.onClose,
+	          onUpdate = _props.onUpdate,
+	          department = _props.department,
+	          form = _props.form;
+	      var getFieldDecorator = form.getFieldDecorator;
+
+	      return _react2.default.createElement(
+	        _modal2.default,
+	        {
+	          visible: visible,
+	          wrapClassName: 'vertical-center-modal',
+	          title: 'Edit Bagian',
+	          okText: 'Update',
+	          cancelText: 'Close',
+	          onCancel: onClose,
+	          onOk: onUpdate
+	        },
+	        _react2.default.createElement(
+	          _form2.default,
+	          { layout: 'vertical' },
 	          _react2.default.createElement(
-	            Option,
-	            { key: '1' },
-	            'Tingkat 1'
+	            FormItem,
+	            { label: 'Kode' },
+	            getFieldDecorator('kode', {
+	              initialValue: department.kode,
+	              rules: [{
+	                required: true,
+	                message: 'Kode bagian wajib diisi'
+	              }, {
+	                min: 3,
+	                message: 'Panjang kode bagian minimum 3 karakter'
+	              }, {
+	                max: 10,
+	                message: 'Panjang kode bagian maximum 10 karakter'
+	              }]
+	            })(_react2.default.createElement(_input2.default, { maxLength: '10', disabled: true }))
 	          ),
 	          _react2.default.createElement(
-	            Option,
-	            { key: '2' },
-	            'Tingkat 2'
+	            FormItem,
+	            { label: 'Nama' },
+	            getFieldDecorator('nama', {
+	              initialValue: department.nama,
+	              rules: [{
+	                required: true,
+	                message: 'Nama bagian wajib diisi'
+	              }, {
+	                min: 3,
+	                message: 'Panjang nama bagian minimum 3 karakter'
+	              }, {
+	                max: 30,
+	                message: 'Panjang nama bagian maximum 30 karakter'
+	              }]
+	            })(_react2.default.createElement(_input2.default, { maxLength: '30' }))
+	          ),
+	          _react2.default.createElement(
+	            FormItem,
+	            { label: 'Tingkat' },
+	            getFieldDecorator('tingkat', {
+	              initialValue: String(department.tingkat),
+	              rules: [{
+	                required: true,
+	                message: 'Tingkat wajib diisi'
+	              }]
+	            })(_react2.default.createElement(
+	              _select2.default,
+	              {
+	                mode: 'single',
+	                placeholder: 'Pilih tingkat'
+	              },
+	              _react2.default.createElement(
+	                Option,
+	                { key: '1' },
+	                'Tingkat 1'
+	              ),
+	              _react2.default.createElement(
+	                Option,
+	                { key: '2' },
+	                'Tingkat 2'
+	              )
+	            ))
+	          ),
+	          _react2.default.createElement(
+	            FormItem,
+	            { label: 'Durasi Dalam Minggu' },
+	            getFieldDecorator('durasi_minggu', {
+	              initialValue: department.durasi_minggu,
+	              rules: []
+	            })(_react2.default.createElement(_inputNumber2.default, { min: 4, max: 10 }))
+	          ),
+	          _react2.default.createElement(
+	            _row2.default,
+	            { gutter: 15 },
+	            _react2.default.createElement(
+	              _col2.default,
+	              { span: 12 },
+	              _react2.default.createElement(
+	                FormItem,
+	                { label: 'Keterangan' },
+	                getFieldDecorator('keterangan', {
+	                  initialValue: department.keterangan,
+	                  rules: []
+	                })(_react2.default.createElement(_input2.default, { type: 'textarea', style: { height: 70 } }))
+	              )
+	            ),
+	            _react2.default.createElement(
+	              _col2.default,
+	              { span: 12 },
+	              _react2.default.createElement(
+	                FormItem,
+	                { label: 'Warna' },
+	                getFieldDecorator('warna', {
+	                  initialValue: department.warna || '#FFF',
+	                  rules: []
+	                })(_react2.default.createElement(_input2.default, {
+	                  maxLength: '6',
+	                  style: { backgroundColor: this.props.form.getFieldValue('warna') },
+	                  readOnly: true
+	                }))
+	              ),
+	              _react2.default.createElement(_reactColor.SliderPicker, {
+	                color: this.props.form.getFieldValue('warna'),
+	                onChangeComplete: this.onColorChange
+	              })
+	            )
 	          )
-	        ))
-	      ),
-	      _react2.default.createElement(
-	        FormItem,
-	        { label: 'Durasi Dalam Minggu' },
-	        getFieldDecorator('durasi_minggu', {
-	          initialValue: department.durasi_minggu,
-	          rules: []
-	        })(_react2.default.createElement(_inputNumber2.default, { min: 4, max: 10 }))
-	      ),
-	      _react2.default.createElement(
-	        FormItem,
-	        { label: 'Keterangan' },
-	        getFieldDecorator('keterangan', {
-	          initialValue: department.keterangan,
-	          rules: []
-	        })(_react2.default.createElement(_input2.default, { type: 'textarea' }))
-	      )
-	    )
-	  );
-	});
+	        )
+	      );
+	    }
+	  }]);
+
+	  return DepartmentUpdateForm;
+	}(_react.Component);
 
 	exports.default = DepartmentUpdateForm;
 
