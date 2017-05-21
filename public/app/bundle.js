@@ -67580,6 +67580,7 @@
 	    };
 
 	    _this.onSelectDetailChange = _this.onSelectDetailChange.bind(_this);
+	    _this.updateStudent = _this.updateStudent.bind(_this);
 	    return _this;
 	  }
 
@@ -67619,6 +67620,11 @@
 	      });
 	    }
 	  }, {
+	    key: 'updateStudent',
+	    value: function updateStudent(student) {
+	      this.getStudent();
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var student = this.state.student || {};
@@ -67636,7 +67642,7 @@
 	          _react2.default.createElement(
 	            _reactRouterDom.Route,
 	            { path: this.props.match.url + '/info' },
-	            _react2.default.createElement(_StudentInfoForm2.default, { student: this.state.student })
+	            _react2.default.createElement(_StudentInfoForm2.default, { student: this.state.student, onStudentUpdated: this.updateStudent })
 	          ),
 	          _react2.default.createElement(
 	            _reactRouterDom.Route,
@@ -71689,6 +71695,10 @@
 
 	var _tabs2 = _interopRequireDefault(_tabs);
 
+	var _message = __webpack_require__(403);
+
+	var _message2 = _interopRequireDefault(_message);
+
 	var _StudentMainInfoForm = __webpack_require__(716);
 
 	var _StudentMainInfoForm2 = _interopRequireDefault(_StudentMainInfoForm);
@@ -71762,6 +71772,8 @@
 	  }, {
 	    key: 'handleUpdateStudentInfo',
 	    value: function handleUpdateStudentInfo() {
+	      var _this2 = this;
+
 	      var form = this.studentInfoMainForm;
 	      form.validateFields(function (err, values) {
 	        if (err) {
@@ -71771,27 +71783,24 @@
 	        var studentInfo = values;
 
 	        studentInfo.tanggal_lahir = values.tanggal_lahir ? values.tanggal_lahir.format('YYYY-MM-DD') : '';
+	        studentInfo.id = _this2.state.student.id;
 
 	        console.log('Received values of form: ', studentInfo);
 
-	        // axios.put(`/students/${values.kode}`, values)
-	        // .then((response) => {
-	        //   // console.dir(response);
-	        //   Message.success('Department updated successfully.');
-	        //   form.resetFields();
-	        //   this.setState({
-	        //     updateDepartmentFormVisible: false,
-	        //   }, () => {
-	        //     this.getDepartments();
-	        //   });
-	        // })
-	        // .catch((error) => {
-	        //   Message.error(
-	        //     <span>
-	        //       {error.message}<br />
-	        //       {error.response.data}
-	        //     </span>);
-	        // });
+	        _axios2.default.put('/students/' + studentInfo.id, studentInfo).then(function (response) {
+	          // console.dir(response);
+	          _message2.default.success('Student updated successfully.');
+	          // form.resetFields();
+	          _this2.props.onStudentUpdated(studentInfo);
+	        }).catch(function (error) {
+	          _message2.default.error(_react2.default.createElement(
+	            'span',
+	            null,
+	            error.message,
+	            _react2.default.createElement('br', null),
+	            error.response.data
+	          ));
+	        });
 	      });
 	    }
 	  }, {
@@ -79477,6 +79486,10 @@
 
 	var _datePicker2 = _interopRequireDefault(_datePicker);
 
+	var _moment = __webpack_require__(264);
+
+	var _moment2 = _interopRequireDefault(_moment);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -79506,6 +79519,10 @@
 	          form = _props.form;
 	      var getFieldDecorator = form.getFieldDecorator;
 
+	      var tanggalLahir = null;
+	      if (student.tanggal_lahir) {
+	        tanggalLahir = (0, _moment2.default)(new Date(student.tanggal_lahir));
+	      }
 	      return _react2.default.createElement(
 	        _form2.default,
 	        { layout: 'vertical', style: { paddingLeft: 25, width: '50%' } },
@@ -79610,6 +79627,7 @@
 	              FormItem,
 	              { label: 'Tempat Lahir' },
 	              getFieldDecorator('tempat_lahir', {
+	                initialValue: student.tempat_lahir,
 	                rules: []
 	              })(_react2.default.createElement(_input2.default, { maxLength: '10' }))
 	            )
@@ -79621,6 +79639,7 @@
 	              FormItem,
 	              { label: 'Tanggal Lahir' },
 	              getFieldDecorator('tanggal_lahir', {
+	                initialValue: tanggalLahir,
 	                rules: []
 	              })(_react2.default.createElement(_datePicker2.default, null))
 	            )

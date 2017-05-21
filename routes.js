@@ -52,6 +52,11 @@ module.exports = [
     handler: Student.create,
   },
   {
+    method: 'PUT',
+    path: '/students/{id}',
+    handler: Student.update,
+  },
+  {
     method: 'GET',
     path: '/students/{studentId}',
     handler: Student.findOne,

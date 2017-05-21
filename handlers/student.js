@@ -1,4 +1,5 @@
 const flow = require('nimble');
+const moment = require('moment');
 
 exports.find = function findStudent(request, reply) {
   const db = this.db;
@@ -183,4 +184,46 @@ exports.create = function createStudent(request, reply) {
       }
     });
   });
+};
+
+exports.update = function updateDepartment(request, reply) {
+  const student = request.payload;
+  const id = request.params.id;
+  let tanggalLahir = null;
+
+  if (student.tanggal_lahir) {
+    tanggalLahir = moment(student.tanggal_lahir, 'YYYY-MM-DD').toDate();
+  }
+
+  this.db.query(
+    `UPDATE
+      tb_siswa
+    SET
+      stambuk_lama = ?,
+      stambuk_baru = ?,
+      nama = ?,
+      tingkat = ?,
+      tempat_lahir = ?,
+      tanggal_lahir = ?,
+      gender = ?
+    WHERE
+      id = ?`,
+    [
+      student.stambuk_lama,
+      student.stambuk_baru,
+      student.nama,
+      student.tingkat,
+      student.tempat_lahir,
+      tanggalLahir,
+      student.gender,
+      id,
+    ], (err, result) => {
+      if (err) {
+        console.dir(err);
+        reply(err.message).code(500);
+      } else {
+        console.dir(result);
+        reply({ status: 'ok' });
+      }
+    });
 };
