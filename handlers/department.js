@@ -32,6 +32,9 @@ exports.create = function createDepartment(request, reply) {
     nama: request.payload.nama,
     tingkat: request.payload.tingkat,
     durasi_minggu: request.payload.durasi_minggu,
+    durasi_minggu_rs1: request.payload.durasi_minggu_rs1,
+    durasi_minggu_rs2: request.payload.durasi_minggu_rs2,
+    durasi_minggu_klinik: request.payload.durasi_minggu_klinik,
     keterangan: request.payload.keterangan,
     warna: request.payload.warna,
   };
@@ -58,6 +61,9 @@ exports.update = function updateDepartment(request, reply) {
       nama = ?,
       tingkat = ?,
       durasi_minggu = ?,
+      durasi_minggu_rs1 = ?,
+      durasi_minggu_rs2 = ?,
+      durasi_minggu_klinik = ?,
       keterangan = ?,
       warna = ?
     WHERE
@@ -66,6 +72,9 @@ exports.update = function updateDepartment(request, reply) {
       department.nama,
       department.tingkat,
       department.durasi_minggu,
+      department.durasi_minggu_rs1,
+      department.durasi_minggu_rs2,
+      department.durasi_minggu_klinik,
       department.keterangan,
       department.warna,
       kode,

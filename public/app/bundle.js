@@ -91110,12 +91110,56 @@
 	            ))
 	          ),
 	          _react2.default.createElement(
-	            FormItem,
-	            { label: 'Durasi Dalam Minggu' },
-	            getFieldDecorator('durasi_minggu', {
-	              initialValue: 4,
-	              rules: []
-	            })(_react2.default.createElement(_inputNumber2.default, { min: 4, max: 10 }))
+	            _row2.default,
+	            { gutter: 0 },
+	            _react2.default.createElement(
+	              _col2.default,
+	              { span: 6 },
+	              _react2.default.createElement(
+	                FormItem,
+	                { label: 'Durasi (Minggu)' },
+	                getFieldDecorator('durasi_minggu', {
+	                  initialValue: 4,
+	                  rules: []
+	                })(_react2.default.createElement(_inputNumber2.default, { min: 4, max: 10 }))
+	              )
+	            ),
+	            _react2.default.createElement(
+	              _col2.default,
+	              { span: 6 },
+	              _react2.default.createElement(
+	                FormItem,
+	                { label: 'Durasi RS1' },
+	                getFieldDecorator('durasi_minggu_rs1', {
+	                  initialValue: 4,
+	                  rules: []
+	                })(_react2.default.createElement(_inputNumber2.default, { min: 4, max: 10 }))
+	              )
+	            ),
+	            _react2.default.createElement(
+	              _col2.default,
+	              { span: 6 },
+	              _react2.default.createElement(
+	                FormItem,
+	                { label: 'Durasi RS2' },
+	                getFieldDecorator('durasi_minggu_rs2', {
+	                  initialValue: 4,
+	                  rules: []
+	                })(_react2.default.createElement(_inputNumber2.default, { min: 4, max: 10 }))
+	              )
+	            ),
+	            _react2.default.createElement(
+	              _col2.default,
+	              { span: 6 },
+	              _react2.default.createElement(
+	                FormItem,
+	                { label: 'Durasi Puskesmas' },
+	                getFieldDecorator('durasi_minggu_klinik', {
+	                  initialValue: 4,
+	                  rules: []
+	                })(_react2.default.createElement(_inputNumber2.default, { min: 4, max: 10 }))
+	              )
+	            )
 	          ),
 	          _react2.default.createElement(
 	            _row2.default,
