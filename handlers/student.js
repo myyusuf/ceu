@@ -111,12 +111,24 @@ exports.findOne = function findOneStudent(request, reply) {
 
   const studentId = request.params.studentId;
 
-  const query = 'SELECT * FROM tb_siswa WHERE id = ? ';
+  const query = `
+  SELECT
+    ts.*,
+    tks.alamat
+  FROM
+    tb_siswa ts
+  LEFT JOIN tb_kontak_siswa tks ON ts.id = tks.siswa_id
+  WHERE
+    ts.id = ? `;
 
   db.query(
     query, [studentId],
      (err, rows) => {
-       if (err) reply('Error while doing operation.').code(500);
+       if (err) {
+         console.log(err);
+         reply('Error while doing operation.').code(500);
+       }
+
        if (rows.length > 0) {
          reply(rows[0]);
        }
@@ -218,6 +230,10 @@ exports.create = function createStudent(request, reply) {
 };
 
 exports.update = function updateDepartment(request, reply) {
+  const db = this.db;
+  const series = [];
+  const result = { status: 'OK' };
+
   const infoForm = request.payload.infoForm;
   const educationForm = request.payload.educationForm;
   const contactForm = request.payload.contactForm;
@@ -233,35 +249,122 @@ exports.update = function updateDepartment(request, reply) {
   console.log(educationForm);
   console.log(contactForm);
 
-  this.db.query(
-    `UPDATE
-      tb_siswa
-    SET
-      stambuk_lama = ?,
-      stambuk_baru = ?,
-      nama = ?,
-      tingkat = ?,
-      tempat_lahir = ?,
-      tanggal_lahir = ?,
-      gender = ?
-    WHERE
-      id = ?`,
-    [
-      infoForm.stambuk_lama,
-      infoForm.stambuk_baru,
-      infoForm.nama,
-      infoForm.tingkat,
-      infoForm.tempat_lahir,
-      tanggalLahir,
-      infoForm.gender,
-      id,
-    ], (err, result) => {
-      if (err) {
-        console.dir(err);
-        reply(err.message).code(500);
+  const updateStudentInfo = function updateStudentInfo(callback) {
+    db.query(
+      `UPDATE
+        tb_siswa
+      SET
+        stambuk_lama = ?,
+        stambuk_baru = ?,
+        nama = ?,
+        tingkat = ?,
+        tempat_lahir = ?,
+        tanggal_lahir = ?,
+        gender = ?
+      WHERE
+        id = ?`,
+      [
+        infoForm.stambuk_lama,
+        infoForm.stambuk_baru,
+        infoForm.nama,
+        infoForm.tingkat,
+        infoForm.tempat_lahir,
+        tanggalLahir,
+        infoForm.gender,
+        id,
+      ], (err, result) => {
+        if (err) {
+          callback(err);
+        } else {
+          callback();
+        }
+      });
+  };
+
+  const updateStudentEducation = function updateStudentEducation(callback) {
+    if (educationForm === undefined) {
+      callback();
+      return;
+    }
+
+    db.query(
+      `UPDATE
+        tb_pendidikan_siswa
+      SET
+        tahun_masuk = ?,
+        tahun_keluar = ?,
+        nomer_ijazah = ?,
+        ipk = ?
+      WHERE
+        id = ?`,
+      [
+        educationForm.tahun_masuk,
+        educationForm.tahun_keluar,
+        educationForm.nomer_ijazah,
+        educationForm.ipk,
+        id,
+      ], (err, result) => {
+        if (err) {
+          callback(err);
+        } else {
+          callback();
+        }
+      });
+  };
+
+  const updateStudentContact = function updateStudentContact(callback) {
+    if (contactForm === undefined) {
+      callback();
+      return;
+    }
+
+    db.query(
+      `UPDATE
+        tb_kontak_siswa
+      SET
+        alamat = ?,
+        telepon = ?,
+        handphone = ?,
+        email = ?
+      WHERE
+        id = ?`,
+      [
+        contactForm.alamat,
+        contactForm.telepon,
+        contactForm.handphone,
+        contactForm.email,
+        id,
+      ], (err, result) => {
+        if (err) {
+          callback(err);
+        } else {
+          callback();
+        }
+      });
+  };
+
+  series.push(updateStudentInfo,
+    updateStudentEducation,
+    updateStudentContact);
+
+  db.beginTransaction((err) => {
+    if (err) { throw err; }
+    flow.series(series, (error) => {
+      if (error) {
+        console.log(error);
+        db.rollback(() => {
+          reply('Error while doing operation.').code(500);
+        });
       } else {
-        console.dir(result);
-        reply({ status: 'ok' });
+        db.commit((errCommit) => {
+          if (errCommit) {
+            db.rollback(() => {
+              reply('Error while doing operation.').code(500);
+            });
+          }
+          reply(result);
+        });
       }
     });
+  });
 };

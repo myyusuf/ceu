@@ -80184,7 +80184,9 @@
 	  _createClass(StudentContactForm, [{
 	    key: 'render',
 	    value: function render() {
-	      var form = this.props.form;
+	      var _props = this.props,
+	          student = _props.student,
+	          form = _props.form;
 	      var getFieldDecorator = form.getFieldDecorator;
 
 	      return _react2.default.createElement(
@@ -80194,6 +80196,7 @@
 	          FormItem,
 	          { label: 'Alamat' },
 	          getFieldDecorator('alamat', {
+	            initialValue: student.alamat,
 	            rules: []
 	          })(_react2.default.createElement(_input2.default, { maxLength: '100' }))
 	        ),
