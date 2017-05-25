@@ -114,9 +114,17 @@ exports.findOne = function findOneStudent(request, reply) {
   const query = `
   SELECT
     ts.*,
-    tks.alamat
+    tps.tahun_masuk,
+    tps.tahun_lulus,
+    tps.nomer_ijazah,
+    tps.ipk,
+    tks.alamat,
+    tks.telepon,
+    tks.handphone,
+    tks.email
   FROM
     tb_siswa ts
+  LEFT JOIN tb_pendidikan_siswa tps ON ts.id = tps.siswa_id
   LEFT JOIN tb_kontak_siswa tks ON ts.id = tks.siswa_id
   WHERE
     ts.id = ? `;
@@ -292,14 +300,14 @@ exports.update = function updateDepartment(request, reply) {
         tb_pendidikan_siswa
       SET
         tahun_masuk = ?,
-        tahun_keluar = ?,
+        tahun_lulus = ?,
         nomer_ijazah = ?,
         ipk = ?
       WHERE
         id = ?`,
       [
         educationForm.tahun_masuk,
-        educationForm.tahun_keluar,
+        educationForm.tahun_lulus,
         educationForm.nomer_ijazah,
         educationForm.ipk,
         id,

@@ -80045,7 +80045,9 @@
 	  _createClass(StudentEducationForm, [{
 	    key: 'render',
 	    value: function render() {
-	      var form = this.props.form;
+	      var _props = this.props,
+	          student = _props.student,
+	          form = _props.form;
 	      var getFieldDecorator = form.getFieldDecorator;
 
 	      return _react2.default.createElement(
@@ -80061,6 +80063,7 @@
 	              FormItem,
 	              { label: 'Tahun Masuk' },
 	              getFieldDecorator('tahun_masuk', {
+	                initialValue: student.tahun_masuk,
 	                rules: []
 	              })(_react2.default.createElement(_inputNumber2.default, { min: 1980, max: 2000, style: { width: '100%' } }))
 	            )
@@ -80072,6 +80075,7 @@
 	              FormItem,
 	              { label: 'Tahun Lulus' },
 	              getFieldDecorator('tahun_lulus', {
+	                initialValue: student.tahun_lulus,
 	                rules: []
 	              })(_react2.default.createElement(_inputNumber2.default, { min: 2000, max: 2070, style: { width: '100%' } }))
 	            )
@@ -80087,6 +80091,7 @@
 	              FormItem,
 	              { label: 'Nomer Ijazah' },
 	              getFieldDecorator('nomer_ijazah', {
+	                initialValue: student.nomer_ijazah,
 	                rules: []
 	              })(_react2.default.createElement(_input2.default, { maxLength: '20' }))
 	            )
@@ -80098,6 +80103,7 @@
 	              FormItem,
 	              { label: 'IPK' },
 	              getFieldDecorator('ipk', {
+	                initialValue: student.ipk,
 	                rules: []
 	              })(_react2.default.createElement(_inputNumber2.default, { step: 0.1, min: 0 }))
 	            )
@@ -80210,6 +80216,7 @@
 	              FormItem,
 	              { label: 'Telepon' },
 	              getFieldDecorator('telepon', {
+	                initialValue: student.telepon,
 	                rules: []
 	              })(_react2.default.createElement(_input2.default, { maxLength: '15' }))
 	            )
@@ -80221,6 +80228,7 @@
 	              FormItem,
 	              { label: 'Handphone' },
 	              getFieldDecorator('handphone', {
+	                initialValue: student.handphone,
 	                rules: []
 	              })(_react2.default.createElement(_input2.default, { maxLength: '15' }))
 	            )
@@ -80230,6 +80238,7 @@
 	          FormItem,
 	          { label: 'Email' },
 	          getFieldDecorator('email', {
+	            initialValue: student.email,
 	            rules: [{
 	              type: 'email', message: 'The input is not valid E-mail!'
 	            }]
