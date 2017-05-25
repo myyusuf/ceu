@@ -162,7 +162,38 @@ exports.create = function createStudent(request, reply) {
     });
   };
 
-  series.push(insertStudent, insertStatusBagianDiambil);
+  const insertTbKontakSiswa = function insertTbKontakSiswa(callback) {
+    const tbKontakSiswa = {
+      siswa_id: result.studentCreatedId,
+    };
+
+    db.query('INSERT INTO tb_kontak_siswa SET ?', tbKontakSiswa, (err, insertResult) => {
+      if (err) {
+        callback(err);
+      } else {
+        callback();
+      }
+    });
+  };
+
+  const insertTbPendidikanSiswa = function insertTbPendidikanSiswa(callback) {
+    const tbPendidikanSiswa = {
+      siswa_id: result.studentCreatedId,
+    };
+
+    db.query('INSERT INTO tb_pendidikan_siswa SET ?', tbPendidikanSiswa, (err, insertResult) => {
+      if (err) {
+        callback(err);
+      } else {
+        callback();
+      }
+    });
+  };
+
+  series.push(insertStudent,
+    insertStatusBagianDiambil,
+    insertTbKontakSiswa,
+    insertTbPendidikanSiswa);
 
   db.beginTransaction((err) => {
     if (err) { throw err; }
@@ -187,13 +218,20 @@ exports.create = function createStudent(request, reply) {
 };
 
 exports.update = function updateDepartment(request, reply) {
-  const student = request.payload;
+  const infoForm = request.payload.infoForm;
+  const educationForm = request.payload.educationForm;
+  const contactForm = request.payload.contactForm;
+
   const id = request.params.id;
   let tanggalLahir = null;
 
-  if (student.tanggal_lahir) {
-    tanggalLahir = moment(student.tanggal_lahir, 'YYYY-MM-DD').toDate();
+  if (infoForm.tanggal_lahir) {
+    tanggalLahir = moment(infoForm.tanggal_lahir, 'YYYY-MM-DD').toDate();
   }
+
+  console.log(infoForm);
+  console.log(educationForm);
+  console.log(contactForm);
 
   this.db.query(
     `UPDATE
@@ -209,13 +247,13 @@ exports.update = function updateDepartment(request, reply) {
     WHERE
       id = ?`,
     [
-      student.stambuk_lama,
-      student.stambuk_baru,
-      student.nama,
-      student.tingkat,
-      student.tempat_lahir,
+      infoForm.stambuk_lama,
+      infoForm.stambuk_baru,
+      infoForm.nama,
+      infoForm.tingkat,
+      infoForm.tempat_lahir,
       tanggalLahir,
-      student.gender,
+      infoForm.gender,
       id,
     ], (err, result) => {
       if (err) {
