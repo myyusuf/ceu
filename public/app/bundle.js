@@ -80392,16 +80392,16 @@
 	        { className: 'taken-department' },
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'header' },
+	          { className: 'sub-section-header' },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'search' },
+	            { className: 'left' },
 	            _react2.default.createElement(
 	              'ul',
-	              null,
+	              { className: 'the-ul' },
 	              _react2.default.createElement(
 	                'li',
-	                null,
+	                { className: 'the-li' },
 	                _react2.default.createElement(
 	                  _radio2.default.Group,
 	                  { value: selectedLevel, onChange: this.onSelectLevelChange },
@@ -80419,17 +80419,17 @@
 	              ),
 	              _react2.default.createElement(
 	                'li',
-	                null,
+	                { className: 'the-li' },
 	                _react2.default.createElement(_button2.default, { shape: 'circle', icon: 'reload' })
 	              ),
 	              _react2.default.createElement(
 	                'li',
-	                null,
+	                { className: 'the-li' },
 	                _react2.default.createElement(_button2.default, { shape: 'circle', type: 'primary', icon: 'download' })
 	              ),
 	              _react2.default.createElement(
 	                'li',
-	                null,
+	                { className: 'the-li' },
 	                _react2.default.createElement(
 	                  _button2.default,
 	                  { style: { marginLeft: 20 }, icon: 'menu-unfold' },
@@ -80439,9 +80439,21 @@
 	            )
 	          ),
 	          _react2.default.createElement(
-	            _button2.default,
-	            { type: 'primary', icon: 'plus', className: 'add-button' },
-	            'Tambah Bagian'
+	            'div',
+	            { className: 'right' },
+	            _react2.default.createElement(
+	              'ul',
+	              { className: 'the-ul' },
+	              _react2.default.createElement(
+	                'li',
+	                { className: 'the-li' },
+	                _react2.default.createElement(
+	                  _button2.default,
+	                  { type: 'primary', icon: 'plus', className: 'add-button' },
+	                  'Bagian'
+	                )
+	              )
+	            )
 	          )
 	        ),
 	        _react2.default.createElement(
