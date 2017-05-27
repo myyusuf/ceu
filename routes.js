@@ -76,4 +76,9 @@ module.exports = [
     path: '/takendepartments/{siswaId}',
     handler: TakenDepartment.find,
   },
+  {
+    method: 'POST',
+    path: '/createtakendepartments_bylevel',
+    handler: TakenDepartment.createByLevel,
+  },
 ];

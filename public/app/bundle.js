@@ -80371,6 +80371,8 @@
 	    _this.saveAddTakenDepartmentFormRef = _this.saveAddTakenDepartmentFormRef.bind(_this);
 	    _this.handleCancelAdd = _this.handleCancelAdd.bind(_this);
 	    _this.handleCreate = _this.handleCreate.bind(_this);
+
+	    _this.handleCreateByLevel = _this.handleCreateByLevel.bind(_this);
 	    return _this;
 	  }
 
@@ -80394,11 +80396,14 @@
 	  }, {
 	    key: 'onAddButtonPressed',
 	    value: function onAddButtonPressed(e) {
+	      var theThis = this;
 	      if (e.key === '1') {
 	        confirm({
 	          title: 'Tambah Bagian Tingkat 1',
 	          content: 'Anda akan menambah semua bagian tingkat 1.',
-	          onOk: function onOk() {},
+	          onOk: function onOk() {
+	            theThis.handleCreateByLevel('1');
+	          },
 	          onCancel: function onCancel() {
 	            // console.log('Cancel');
 	          }
@@ -80407,13 +80412,15 @@
 	        confirm({
 	          title: 'Tambah Bagian Tingkat 2',
 	          content: 'Anda akan menambah semua bagian tingkat 2.',
-	          onOk: function onOk() {},
+	          onOk: function onOk() {
+	            theThis.handleCreateByLevel('2');
+	          },
 	          onCancel: function onCancel() {
 	            // console.log('Cancel');
 	          }
 	        });
 	      } else if (e.key === '3') {
-	        this.setState({ addTakenDepartmentFormVisible: true });
+	        theThis.setState({ addTakenDepartmentFormVisible: true });
 	      }
 	    }
 	  }, {
@@ -80443,6 +80450,26 @@
 	      var form = this.addTakenDepartmentForm;
 	      form.resetFields();
 	      this.setState({ addTakenDepartmentFormVisible: false });
+	    }
+	  }, {
+	    key: 'handleCreateByLevel',
+	    value: function handleCreateByLevel(level) {
+	      var values = {
+	        studentId: this.state.student.id,
+	        level: level
+	      };
+	      _axios2.default.post('/createtakendepartments_bylevel', values).then(function (response) {
+	        // console.dir(response);
+	        _message2.default.success('Taken department added successfully.');
+	      }).catch(function (error) {
+	        _message2.default.error(_react2.default.createElement(
+	          'span',
+	          null,
+	          error.message,
+	          _react2.default.createElement('br', null),
+	          error.response.data
+	        ));
+	      });
 	    }
 	  }, {
 	    key: 'handleCreate',
@@ -80595,7 +80622,8 @@
 	            'div',
 	            { className: 'left' },
 	            _react2.default.createElement(_table2.default, {
-	              size: 'medium',
+	              size: 'middle',
+	              style: { height: 100 },
 	              pagination: false,
 	              rowKey: 'judul',
 	              columns: this.state.columns,
@@ -85243,6 +85271,7 @@
 
 	var TabPane = _tabs2.default.TabPane;
 
+	var WrappedTakenDepartmentForm = _form2.default.create()(_TakenDepartmentForm2.default);
 	var WrappedHospitalScheduleForm = _form2.default.create()(_HospitalScheduleForm2.default);
 	var WrappedDepartmentScoreForm = _form2.default.create()(_DepartmentScoreForm2.default);
 
@@ -85268,14 +85297,14 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      console.log('this.props.takenDepartment : ', this.props.takenDepartment);
+	      // console.log('this.props.takenDepartment : ', this.props.takenDepartment);
 	      return _react2.default.createElement(
 	        _tabs2.default,
 	        { defaultActiveKey: '1' },
 	        _react2.default.createElement(
 	          TabPane,
 	          { tab: 'Detail', key: '1' },
-	          _react2.default.createElement(_TakenDepartmentForm2.default, {
+	          _react2.default.createElement(WrappedTakenDepartmentForm, {
 	            takenDepartment: this.props.takenDepartment
 	          })
 	        ),
@@ -85334,8 +85363,6 @@
 	  value: true
 	});
 
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _react = __webpack_require__(1);
@@ -85365,6 +85392,14 @@
 	var _datePicker = __webpack_require__(657);
 
 	var _datePicker2 = _interopRequireDefault(_datePicker);
+
+	var _row = __webpack_require__(388);
+
+	var _row2 = _interopRequireDefault(_row);
+
+	var _col = __webpack_require__(397);
+
+	var _col2 = _interopRequireDefault(_col);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -85420,117 +85455,146 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      function onChange(date, dateString) {
-	        console.log(date, dateString);
-	      }
-
-	      var formItemLayout = {
-	        labelCol: {
-	          xs: { span: 24 },
-	          sm: { span: 6 }
-	        },
-	        wrapperCol: {
-	          xs: { span: 24 },
-	          sm: { span: 14 }
-	        }
-	      };
-	      var tailFormItemLayout = {
-	        wrapperCol: {
-	          xs: {
-	            span: 24,
-	            offset: 0
-	          },
-	          sm: {
-	            span: 14,
-	            offset: 6
-	          }
-	        }
-	      };
+	      var _props = this.props,
+	          takenDepartment = _props.takenDepartment,
+	          form = _props.form;
+	      var getFieldDecorator = form.getFieldDecorator;
 
 	      return _react2.default.createElement(
 	        _form2.default,
-	        { onSubmit: this.handleSubmit, className: 'taken-department-form' },
+	        {
+	          layout: 'vertical',
+	          onSubmit: this.handleSubmit,
+	          style: { paddingLeft: 20, paddingRight: 20 }
+	        },
 	        _react2.default.createElement(
-	          FormItem,
-	          _extends({}, formItemLayout, {
-	            label: _react2.default.createElement(
-	              'span',
-	              null,
-	              'Bagian'
-	            )
-	          }),
-	          _react2.default.createElement(_input2.default, { disabled: true, value: this.props.takenDepartment.nama })
-	        ),
-	        _react2.default.createElement(
-	          FormItem,
-	          _extends({}, formItemLayout, {
-	            label: _react2.default.createElement(
-	              'span',
-	              null,
-	              'Judul'
-	            )
-	          }),
-	          _react2.default.createElement(_input2.default, { value: this.props.takenDepartment.judul })
-	        ),
-	        _react2.default.createElement(
-	          FormItem,
-	          _extends({}, formItemLayout, {
-	            label: _react2.default.createElement(
-	              'span',
-	              null,
-	              'Tanggal Rencana'
-	            )
-	          }),
-	          _react2.default.createElement(RangePicker, { onChange: onChange })
-	        ),
-	        _react2.default.createElement(
-	          FormItem,
-	          _extends({}, formItemLayout, {
-	            label: _react2.default.createElement(
-	              'span',
-	              null,
-	              'Tanggal Mulai'
-	            )
-	          }),
-	          _react2.default.createElement(_datePicker2.default, { onChange: onChange })
-	        ),
-	        _react2.default.createElement(
-	          FormItem,
-	          _extends({}, formItemLayout, {
-	            style: { marginBottom: 8 },
-	            label: _react2.default.createElement(
-	              'span',
-	              null,
-	              'Tanggal Selesai'
-	            )
-	          }),
-	          _react2.default.createElement(_datePicker2.default, { onChange: onChange })
-	        ),
-	        _react2.default.createElement(
-	          FormItem,
-	          _extends({}, tailFormItemLayout, { style: { marginBottom: 5 } }),
+	          _row2.default,
+	          { gutter: 15 },
 	          _react2.default.createElement(
+	            _col2.default,
+	            { span: 12 },
+	            _react2.default.createElement(
+	              FormItem,
+	              { label: 'Bagian' },
+	              getFieldDecorator('bagian', {
+	                initialValue: takenDepartment.nama,
+	                rules: []
+	              })(_react2.default.createElement(_input2.default, { maxLength: '10', disabled: true }))
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _col2.default,
+	            { span: 12 },
+	            _react2.default.createElement(
+	              FormItem,
+	              { label: 'Judul' },
+	              getFieldDecorator('judul', {
+	                initialValue: takenDepartment.judul,
+	                rules: [{
+	                  required: true,
+	                  message: 'Judul wajib diisi'
+	                }, {
+	                  min: 3,
+	                  message: 'Panjang judul minimum 3 karakter'
+	                }, {
+	                  max: 30,
+	                  message: 'Panjang judul maximum 30 karakter'
+	                }]
+	              })(_react2.default.createElement(_input2.default, { maxLength: '30' }))
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          FormItem,
+	          { label: 'Tanggal Rencana' },
+	          getFieldDecorator('tanggal_rencana', {
+	            rules: []
+	          })(_react2.default.createElement(RangePicker, { style: { width: '48%' } }))
+	        ),
+	        _react2.default.createElement(
+	          _row2.default,
+	          { gutter: 15 },
+	          _react2.default.createElement(
+	            _col2.default,
+	            { span: 6 },
+	            _react2.default.createElement(
+	              FormItem,
+	              { label: 'Tanggal Mulai' },
+	              getFieldDecorator('tanggal_mulai', {
+	                initialValue: takenDepartment.tanggal_mulai,
+	                rules: []
+	              })(_react2.default.createElement(_datePicker2.default, null))
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _col2.default,
+	            { span: 6 },
+	            _react2.default.createElement(
+	              FormItem,
+	              { label: 'Tanggal Selesai' },
+	              getFieldDecorator('tanggal_selesai', {
+	                initialValue: takenDepartment.tanggal_selesai,
+	                rules: []
+	              })(_react2.default.createElement(_datePicker2.default, null))
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          FormItem,
+	          null,
+	          getFieldDecorator('rotasi_akhir', {
+	            rules: []
+	          })(_react2.default.createElement(
 	            _checkbox2.default,
 	            null,
 	            'Rotasi Akhir'
-	          )
+	          ))
 	        ),
 	        _react2.default.createElement(
 	          FormItem,
-	          _extends({}, tailFormItemLayout, { style: { marginBottom: 8 } }),
-	          _react2.default.createElement(
+	          null,
+	          getFieldDecorator('selesai', {
+	            rules: []
+	          })(_react2.default.createElement(
 	            _checkbox2.default,
 	            null,
 	            'Selesai'
-	          )
+	          ))
 	        ),
 	        _react2.default.createElement(
-	          FormItem,
-	          tailFormItemLayout,
+	          _row2.default,
+	          { gutter: 10 },
 	          _react2.default.createElement(
-	            _button2.default,
-	            { type: 'primary', htmlType: 'submit', size: 'large' },
-	            'Save'
+	            _col2.default,
+	            { span: 3 },
+	            _react2.default.createElement(
+	              FormItem,
+	              null,
+	              _react2.default.createElement(
+	                _button2.default,
+	                { type: 'primary', htmlType: 'submit', size: 'large' },
+	                'Save'
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _col2.default,
+	            { span: 3 },
+	            _react2.default.createElement(
+	              FormItem,
+	              null,
+	              _react2.default.createElement(
+	                _button2.default,
+	                {
+	                  type: 'danger',
+	                  ghost: true,
+	                  icon: 'delete',
+	                  htmlType: 'submit',
+	                  size: 'large'
+	                },
+	                'Delete'
+	              )
+	            )
 	          )
 	        )
 	      );

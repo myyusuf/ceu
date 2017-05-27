@@ -19,6 +19,7 @@
   left: 0;
   width: 35%;
   padding: 20px;
+  border-right: 1px solid #EAECEE;
 }
 
 .taken-department .content .right {
