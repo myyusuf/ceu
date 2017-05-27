@@ -26,6 +26,18 @@ exports.find = function findDepartment(request, reply) {
   });
 };
 
+exports.findAll = function findAllDepartment(request, reply) {
+  const db = this.db;
+
+  const query = 'SELECT * FROM tb_bagian';
+
+  db.query(query, [], (err, rows) => {
+    console.log(err);
+    if (err) { reply('Error while doing operation.').code(500); return; }
+    reply(rows);
+  });
+};
+
 exports.create = function createDepartment(request, reply) {
   const department = {
     kode: request.payload.kode,

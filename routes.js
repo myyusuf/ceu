@@ -27,6 +27,11 @@ module.exports = [
     handler: Department.find,
   },
   {
+    method: 'GET',
+    path: '/departments_all',
+    handler: Department.findAll,
+  },
+  {
     method: 'POST',
     path: '/departments',
     handler: Department.create,

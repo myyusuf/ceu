@@ -135,6 +135,7 @@ exports.findOne = function findOneStudent(request, reply) {
        if (err) {
          console.log(err);
          reply('Error while doing operation.').code(500);
+         return;
        }
 
        if (rows.length > 0) {
