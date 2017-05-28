@@ -1,4 +1,5 @@
 const flow = require('nimble');
+const moment = require('moment');
 
 exports.find = function findTakenDepartments(request, reply) {
   const db = this.db;
@@ -22,7 +23,9 @@ exports.find = function findTakenDepartments(request, reply) {
 exports.createByLevel = function createByLevel(request, reply) {
 
   const studentId = request.payload.studentId;
-  const level = request.payload.level;
+  const level = request.payload.tingkat;
+  const sufix = request.payload.sufix;
+  const tanggalMulai = moment(request.payload.tanggal_mulai, 'YYYY-MM-DD').toDate();
   const series = [];
   const db = this.db;
   const result = { status: 'OK' };
@@ -54,16 +57,22 @@ exports.createByLevel = function createByLevel(request, reply) {
             SET
               siswa_id = ?,
               bagian_id = ?,
-              judul = ?
+              judul = ?,
+              plan_start_date = ?
             `,
-          [studentId, department.id, department.nama], (err, result) => {
-            if (err) {
-              console.dir(err);
-              paralleCallback(err);
-              return;
-            }
-            paralleCallback();
-          });
+            [
+              studentId,
+              department.id,
+              `${department.nama} ${sufix}`,
+              tanggalMulai,
+            ], (err, result) => {
+              if (err) {
+                console.dir(err);
+                paralleCallback(err);
+                return;
+              }
+              paralleCallback();
+            });
         };
         parallels.push(createDepartment);
       })();

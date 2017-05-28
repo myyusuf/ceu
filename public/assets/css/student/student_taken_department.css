@@ -33,3 +33,31 @@
 .taken-department-form .ant-form-item {
   margin-bottom: 20px;
 }
+
+.empty-taken-department {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: #F3F3F3;
+}
+
+.empty-taken-department div {
+  /*position: absolute;*/
+  padding-top: 200px;
+  margin: auto;
+  width: 260px;
+  color: #CCC;
+  font-size: 23px;
+  font-weight: bold;
+}
+
+.empty-taken-department div span {
+  float: left;
+  margin-top: 10px;
+}
+
+.empty-taken-department div img  {
+  float: right;
+}
