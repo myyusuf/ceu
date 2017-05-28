@@ -1,6 +1,7 @@
 const Pages = require('./handlers/pages');
 const Assets = require('./handlers/assets');
 const Department = require('./handlers/department');
+const Hospital = require('./handlers/hospital');
 const Student = require('./handlers/student');
 const TakenDepartment = require('./handlers/takendepartment');
 const TakenDepartmentProblem = require('./handlers/takendepartmentproblem');
@@ -80,5 +81,31 @@ module.exports = [
     method: 'POST',
     path: '/createtakendepartments_bylevel',
     handler: TakenDepartment.createByLevel,
+  },
+
+  {
+    method: 'GET',
+    path: '/hospitals',
+    handler: Hospital.find,
+  },
+  {
+    method: 'GET',
+    path: '/hospitals_all',
+    handler: Hospital.findAll,
+  },
+  {
+    method: 'POST',
+    path: '/hospitals',
+    handler: Hospital.create,
+  },
+  {
+    method: 'PUT',
+    path: '/hospitals/{kode}',
+    handler: Hospital.update,
+  },
+  {
+    method: 'DELETE',
+    path: '/hospitals/{kode}',
+    handler: Hospital.delete,
   },
 ];

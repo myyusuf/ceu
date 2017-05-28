@@ -85325,7 +85325,9 @@
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'tab-container' },
-	            _react2.default.createElement(WrappedHospitalScheduleForm, null)
+	            _react2.default.createElement(WrappedHospitalScheduleForm, {
+	              takenDepartment: this.props.takenDepartment
+	            })
 	          )
 	        ),
 	        _react2.default.createElement(
@@ -85412,6 +85414,10 @@
 
 	var _col2 = _interopRequireDefault(_col);
 
+	var _moment = __webpack_require__(264);
+
+	var _moment2 = _interopRequireDefault(_moment);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -85471,6 +85477,15 @@
 	          form = _props.form;
 	      var getFieldDecorator = form.getFieldDecorator;
 
+	      var planStartDate = null;
+	      var planEndDate = null;
+	      if (takenDepartment.plan_start_date) {
+	        planStartDate = (0, _moment2.default)(new Date(takenDepartment.plan_start_date));
+	      }
+	      if (takenDepartment.plan_end_date) {
+	        planEndDate = (0, _moment2.default)(new Date(takenDepartment.plan_end_date));
+	      }
+
 	      return _react2.default.createElement(
 	        _form2.default,
 	        {
@@ -85519,6 +85534,7 @@
 	          FormItem,
 	          { label: 'Tanggal Rencana' },
 	          getFieldDecorator('tanggal_rencana', {
+	            initialValue: [planStartDate, planEndDate],
 	            rules: []
 	          })(_react2.default.createElement(RangePicker, { style: { width: '48%' } }))
 	        ),
@@ -85627,8 +85643,6 @@
 	  value: true
 	});
 
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _react = __webpack_require__(1);
@@ -85659,13 +85673,25 @@
 
 	var _axios2 = _interopRequireDefault(_axios);
 
+	var _datePicker = __webpack_require__(657);
+
+	var _datePicker2 = _interopRequireDefault(_datePicker);
+
+	var _tabs = __webpack_require__(704);
+
+	var _tabs2 = _interopRequireDefault(_tabs);
+
+	var _row = __webpack_require__(388);
+
+	var _row2 = _interopRequireDefault(_row);
+
 	var _col = __webpack_require__(397);
 
 	var _col2 = _interopRequireDefault(_col);
 
-	var _datePicker = __webpack_require__(657);
+	var _moment = __webpack_require__(264);
 
-	var _datePicker2 = _interopRequireDefault(_datePicker);
+	var _moment2 = _interopRequireDefault(_moment);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -85677,8 +85703,8 @@
 
 	var RangePicker = _datePicker2.default.RangePicker;
 
-
 	var FormItem = _form2.default.Item;
+	var TabPane = _tabs2.default.TabPane;
 
 	var TakenDivisionForm = function (_Component) {
 	  _inherits(TakenDivisionForm, _Component);
@@ -85726,220 +85752,263 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var getFieldDecorator = this.props.form.getFieldDecorator;
+	      var _props = this.props,
+	          takenDepartment = _props.takenDepartment,
+	          form = _props.form;
+	      var getFieldDecorator = form.getFieldDecorator;
 
 
-	      function onChange(date, dateString) {
-	        console.log(date, dateString);
+	      var hospital1PlanStartDate = null;
+	      var hospital1PlanEndDate = null;
+	      if (takenDepartment.hospital1_plan_start_date) {
+	        hospital1PlanStartDate = (0, _moment2.default)(new Date(takenDepartment.hospital1_plan_start_date));
+	      }
+	      if (takenDepartment.hospital1_plan_end_date) {
+	        hospital1PlanEndDate = (0, _moment2.default)(new Date(takenDepartment.hospital1_plan_end_date));
 	      }
 
-	      var formItemLayout = {
-	        labelCol: {
-	          xs: { span: 24 },
-	          sm: { span: 6 }
-	        },
-	        wrapperCol: {
-	          xs: { span: 24 },
-	          sm: { span: 14 }
-	        }
-	      };
-	      var tailFormItemLayout = {
-	        wrapperCol: {
-	          xs: {
-	            span: 24,
-	            offset: 0
-	          },
-	          sm: {
-	            span: 14,
-	            offset: 6
-	          }
-	        }
-	      };
+	      var hospital2PlanStartDate = null;
+	      var hospital2PlanEndDate = null;
+	      if (takenDepartment.hospital2_plan_start_date) {
+	        hospital2PlanStartDate = (0, _moment2.default)(new Date(takenDepartment.hospital2_plan_start_date));
+	      }
+	      if (takenDepartment.hospital2_plan_end_date) {
+	        hospital2PlanEndDate = (0, _moment2.default)(new Date(takenDepartment.hospital2_plan_end_date));
+	      }
+
+	      var clinicPlanStartDate = null;
+	      var clinicPlanEndDate = null;
+	      if (takenDepartment.clinic_plan_start_date) {
+	        clinicPlanStartDate = (0, _moment2.default)(new Date(takenDepartment.clinic_plan_start_date));
+	      }
+	      if (takenDepartment.clinic_plan_end_date) {
+	        clinicPlanEndDate = (0, _moment2.default)(new Date(takenDepartment.clinic_plan_end_date));
+	      }
 
 	      return _react2.default.createElement(
 	        _form2.default,
-	        { onSubmit: this.handleSubmit, className: 'login-form' },
+	        {
+	          onSubmit: this.handleSubmit,
+	          className: 'login-form',
+	          style: { paddingLeft: 20, paddingRight: 20 }
+	        },
 	        _react2.default.createElement(
-	          FormItem,
-	          _extends({}, formItemLayout, {
-	            label: _react2.default.createElement(
-	              'span',
-	              null,
-	              'Rumah Sakit\xA0',
+	          _tabs2.default,
+	          { defaultActiveKey: '1', type: 'card' },
+	          _react2.default.createElement(
+	            TabPane,
+	            { tab: 'Jadwal RS 1', key: '1' },
+	            _react2.default.createElement(
+	              _row2.default,
+	              { gutter: 15 },
 	              _react2.default.createElement(
-	                _tooltip2.default,
-	                { title: 'Isi rumah sakit dengan memilih.' },
-	                _react2.default.createElement(_icon2.default, { type: 'question-circle-o' })
+	                _col2.default,
+	                { span: 12 },
+	                _react2.default.createElement(
+	                  FormItem,
+	                  {
+	                    label: _react2.default.createElement(
+	                      'span',
+	                      null,
+	                      'Rumah Sakit\xA0',
+	                      _react2.default.createElement(
+	                        _tooltip2.default,
+	                        { title: 'Isi rumah sakit dengan memilih.' },
+	                        _react2.default.createElement(_icon2.default, { type: 'question-circle-o' })
+	                      )
+	                    )
+	                  },
+	                  getFieldDecorator('kode_rs', {
+	                    // initialValue: takenDepartment.kode_rs,
+	                    rules: []
+	                  })(_react2.default.createElement(_input2.default, { maxLength: '10', disabled: true }))
+	                )
+	              ),
+	              _react2.default.createElement(
+	                _col2.default,
+	                { span: 12 },
+	                _react2.default.createElement(
+	                  _button2.default,
+	                  {
+	                    type: 'dashed',
+	                    icon: 'search',
+	                    size: 'large',
+	                    style: { marginTop: 31, borderColor: '#33CC33', color: '#33CC33' }
+	                  },
+	                  'Pilih'
+	                )
 	              )
 	            ),
-	            hasFeedback: true
-	          }),
-	          getFieldDecorator('rumahSakit', {})(_react2.default.createElement(
-	            'div',
-	            null,
 	            _react2.default.createElement(
-	              _col2.default,
-	              { span: 18 },
-	              _react2.default.createElement(_input2.default, null)
+	              FormItem,
+	              { label: 'Tanggal Rencana' },
+	              getFieldDecorator('tanggal_rencana_rs1', {
+	                initialValue: [hospital1PlanStartDate, hospital1PlanEndDate],
+	                rules: []
+	              })(_react2.default.createElement(RangePicker, { style: { width: '48%' } }))
 	            ),
 	            _react2.default.createElement(
-	              _col2.default,
-	              { span: 6 },
+	              _row2.default,
+	              { gutter: 15 },
 	              _react2.default.createElement(
-	                _button2.default,
-	                {
-	                  type: 'dashed',
-	                  size: 'large',
-	                  onClick: this.handlePick, style: { marginLeft: 10 }
-	                },
-	                'Pilih'
+	                _col2.default,
+	                { span: 6 },
+	                _react2.default.createElement(
+	                  FormItem,
+	                  { label: 'Tanggal Mulai' },
+	                  getFieldDecorator('tanggal_mulai_rs1', {
+	                    // initialValue: takenDepartment.tanggal_mulai,
+	                    rules: []
+	                  })(_react2.default.createElement(_datePicker2.default, null))
+	                )
+	              ),
+	              _react2.default.createElement(
+	                _col2.default,
+	                { span: 6 },
+	                _react2.default.createElement(
+	                  FormItem,
+	                  { label: 'Tanggal Selesai' },
+	                  getFieldDecorator('tanggal_selesai_rs1', {
+	                    // initialValue: takenDepartment.tanggal_selesai,
+	                    rules: []
+	                  })(_react2.default.createElement(_datePicker2.default, null))
+	                )
 	              )
 	            )
-	          ))
-	        ),
-	        _react2.default.createElement(
-	          FormItem,
-	          _extends({}, formItemLayout, {
-	            label: _react2.default.createElement(
-	              'span',
-	              null,
-	              'Tanggal Rencana RS 1'
-	            )
-	          }),
-	          getFieldDecorator('hospitalPlanRangeDate1', {})(_react2.default.createElement(RangePicker, { onChange: onChange }))
-	        ),
-	        _react2.default.createElement(
-	          FormItem,
-	          _extends({}, formItemLayout, {
-	            label: _react2.default.createElement(
-	              'span',
-	              null,
-	              'Tanggal Mulai RS 1'
-	            )
-	          }),
-	          getFieldDecorator('hospitalRealStartDate1', {})(_react2.default.createElement(_datePicker2.default, { onChange: onChange }))
-	        ),
-	        _react2.default.createElement(
-	          FormItem,
-	          _extends({}, formItemLayout, {
-	            label: _react2.default.createElement(
-	              'span',
-	              null,
-	              'Tanggal Selesai RS 1'
-	            )
-	          }),
-	          getFieldDecorator('hospitalRealEndDate1', {})(_react2.default.createElement(_datePicker2.default, { onChange: onChange }))
-	        ),
-	        _react2.default.createElement(
-	          FormItem,
-	          _extends({}, formItemLayout, {
-	            label: _react2.default.createElement(
-	              'span',
-	              null,
-	              'Tanggal Rencana RS 2'
-	            )
-	          }),
-	          getFieldDecorator('hospitalPlanRangeDate2', {})(_react2.default.createElement(RangePicker, { onChange: onChange }))
-	        ),
-	        _react2.default.createElement(
-	          FormItem,
-	          _extends({}, formItemLayout, {
-	            label: _react2.default.createElement(
-	              'span',
-	              null,
-	              'Tanggal Mulai RS 2'
-	            )
-	          }),
-	          getFieldDecorator('hospitalRealStartDate2', {})(_react2.default.createElement(_datePicker2.default, { onChange: onChange }))
-	        ),
-	        _react2.default.createElement(
-	          FormItem,
-	          _extends({}, formItemLayout, {
-	            label: _react2.default.createElement(
-	              'span',
-	              null,
-	              'Tanggal Selesai RS 2'
-	            )
-	          }),
-	          getFieldDecorator('hospitalRealEndDate2', {})(_react2.default.createElement(_datePicker2.default, { onChange: onChange }))
-	        ),
-	        _react2.default.createElement(
-	          FormItem,
-	          _extends({}, formItemLayout, {
-	            label: _react2.default.createElement(
-	              'span',
-	              null,
-	              'Klinik\xA0',
-	              _react2.default.createElement(
-	                _tooltip2.default,
-	                { title: 'Isi klinik dengan memilih.' },
-	                _react2.default.createElement(_icon2.default, { type: 'question-circle-o' })
-	              )
-	            ),
-	            hasFeedback: true
-	          }),
-	          getFieldDecorator('klinik', {})(_react2.default.createElement(
-	            'div',
-	            null,
+	          ),
+	          _react2.default.createElement(
+	            TabPane,
+	            { tab: 'Jadwal RS 2', key: '2' },
 	            _react2.default.createElement(
-	              _col2.default,
-	              { span: 18 },
-	              _react2.default.createElement(_input2.default, null)
+	              FormItem,
+	              { label: 'Tanggal Rencana' },
+	              getFieldDecorator('tanggal_rencana_rs2', {
+	                initialValue: [hospital2PlanStartDate, hospital2PlanEndDate],
+	                rules: []
+	              })(_react2.default.createElement(RangePicker, { style: { width: '48%' } }))
 	            ),
 	            _react2.default.createElement(
-	              _col2.default,
-	              { span: 6 },
+	              _row2.default,
+	              { gutter: 15 },
 	              _react2.default.createElement(
-	                _button2.default,
-	                {
-	                  type: 'dashed',
-	                  size: 'large',
-	                  onClick: this.handlePick, style: { marginLeft: 10 }
-	                },
-	                'Pilih'
+	                _col2.default,
+	                { span: 6 },
+	                _react2.default.createElement(
+	                  FormItem,
+	                  { label: 'Tanggal Mulai' },
+	                  getFieldDecorator('tanggal_mulai_rs2', {
+	                    // initialValue: takenDepartment.tanggal_mulai,
+	                    rules: []
+	                  })(_react2.default.createElement(_datePicker2.default, null))
+	                )
+	              ),
+	              _react2.default.createElement(
+	                _col2.default,
+	                { span: 6 },
+	                _react2.default.createElement(
+	                  FormItem,
+	                  { label: 'Tanggal Selesai' },
+	                  getFieldDecorator('tanggal_selesai_rs2', {
+	                    // initialValue: takenDepartment.tanggal_selesai,
+	                    rules: []
+	                  })(_react2.default.createElement(_datePicker2.default, null))
+	                )
 	              )
 	            )
-	          ))
-	        ),
-	        _react2.default.createElement(
-	          FormItem,
-	          _extends({}, formItemLayout, {
-	            label: _react2.default.createElement(
-	              'span',
-	              null,
-	              'Tanggal Rencana Klinik'
+	          ),
+	          _react2.default.createElement(
+	            TabPane,
+	            { tab: 'Jadwal Puskesmas', key: '3' },
+	            _react2.default.createElement(
+	              _row2.default,
+	              { gutter: 15 },
+	              _react2.default.createElement(
+	                _col2.default,
+	                { span: 12 },
+	                _react2.default.createElement(
+	                  FormItem,
+	                  {
+	                    label: _react2.default.createElement(
+	                      'span',
+	                      null,
+	                      'Puskesmas\xA0',
+	                      _react2.default.createElement(
+	                        _tooltip2.default,
+	                        { title: 'Isi puskesmas dengan memilih.' },
+	                        _react2.default.createElement(_icon2.default, { type: 'question-circle-o' })
+	                      )
+	                    )
+	                  },
+	                  getFieldDecorator('kode_puskesmas', {
+	                    // initialValue: takenDepartment.kode_rs,
+	                    rules: []
+	                  })(_react2.default.createElement(_input2.default, { maxLength: '10', disabled: true }))
+	                )
+	              ),
+	              _react2.default.createElement(
+	                _col2.default,
+	                { span: 12 },
+	                _react2.default.createElement(
+	                  _button2.default,
+	                  {
+	                    type: 'dashed',
+	                    icon: 'search',
+	                    size: 'large',
+	                    style: { marginTop: 31, borderColor: '#33CC33', color: '#33CC33' }
+	                  },
+	                  'Pilih'
+	                )
+	              )
+	            ),
+	            _react2.default.createElement(
+	              FormItem,
+	              { label: 'Tanggal Rencana' },
+	              getFieldDecorator('tanggal_rencana_puskesmas', {
+	                initialValue: [clinicPlanStartDate, clinicPlanEndDate],
+	                rules: []
+	              })(_react2.default.createElement(RangePicker, { style: { width: '48%' } }))
+	            ),
+	            _react2.default.createElement(
+	              _row2.default,
+	              { gutter: 15 },
+	              _react2.default.createElement(
+	                _col2.default,
+	                { span: 6 },
+	                _react2.default.createElement(
+	                  FormItem,
+	                  { label: 'Tanggal Mulai' },
+	                  getFieldDecorator('tanggal_mulai_puskesmas', {
+	                    // initialValue: takenDepartment.tanggal_mulai,
+	                    rules: []
+	                  })(_react2.default.createElement(_datePicker2.default, null))
+	                )
+	              ),
+	              _react2.default.createElement(
+	                _col2.default,
+	                { span: 6 },
+	                _react2.default.createElement(
+	                  FormItem,
+	                  { label: 'Tanggal Selesai' },
+	                  getFieldDecorator('tanggal_selesai_puskesmas', {
+	                    // initialValue: takenDepartment.tanggal_selesai,
+	                    rules: []
+	                  })(_react2.default.createElement(_datePicker2.default, null))
+	                )
+	              )
 	            )
-	          }),
-	          getFieldDecorator('klinikPlanRangeDate', {})(_react2.default.createElement(RangePicker, { onChange: onChange }))
+	          )
 	        ),
 	        _react2.default.createElement(
 	          FormItem,
-	          _extends({}, formItemLayout, {
-	            label: _react2.default.createElement(
-	              'span',
-	              null,
-	              'Tanggal Mulai Klinik'
-	            )
-	          }),
-	          getFieldDecorator('clinicRealStartDate', {})(_react2.default.createElement(_datePicker2.default, { onChange: onChange }))
-	        ),
-	        _react2.default.createElement(
-	          FormItem,
-	          _extends({}, formItemLayout, {
-	            label: _react2.default.createElement(
-	              'span',
-	              null,
-	              'Tanggal Selesai Klinik'
-	            )
-	          }),
-	          getFieldDecorator('clinicRealEndDate', {})(_react2.default.createElement(_datePicker2.default, { onChange: onChange }))
-	        ),
-	        _react2.default.createElement(
-	          FormItem,
-	          tailFormItemLayout,
+	          null,
 	          _react2.default.createElement(
 	            _button2.default,
-	            { type: 'primary', htmlType: 'submit', size: 'large' },
+	            {
+	              type: 'primary',
+	              htmlType: 'submit',
+	              size: 'large',
+	              style: { marginTop: 10 }
+	            },
 	            'Save'
 	          )
 	        )
@@ -89801,7 +89870,7 @@
 	  _createClass(Hospital, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      this.getStudents();
+	      // this.getStudents();
 	    }
 	  }, {
 	    key: 'getStudents',
@@ -90053,7 +90122,7 @@
 	  _createClass(HospitalList, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      this.getTakenDepartmentProblems();
+	      this.getHospitals();
 	    }
 	  }, {
 	    key: 'onSelectLevelChange',
@@ -90061,11 +90130,15 @@
 	      this.setState({ selectedLevel: e.target.value });
 	    }
 	  }, {
-	    key: 'getTakenDepartmentProblems',
-	    value: function getTakenDepartmentProblems() {
+	    key: 'getHospitals',
+	    value: function getHospitals() {
 	      var _this2 = this;
 
-	      _axios2.default.get('/hospitals', {}).then(function (response) {
+	      _axios2.default.get('/hospitals', {
+	        params: {
+	          tipe: 1
+	        }
+	      }).then(function (response) {
 	        _this2.setState({
 	          hospitals: response.data
 	        });
@@ -90096,7 +90169,8 @@
 	        rowKey: 'kode',
 	        rowSelection: rowSelection,
 	        columns: this.state.columns,
-	        dataSource: this.state.hospitals
+	        dataSource: this.state.hospitals,
+	        scroll: { y: 400 }
 	      });
 	    }
 	  }]);
@@ -90174,7 +90248,7 @@
 	  _createClass(HospitalDepartmentList, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      this.getTakenDepartmentProblems();
+	      // this.getTakenDepartmentProblems();
 	    }
 	  }, {
 	    key: 'onSelectLevelChange',
@@ -90355,7 +90429,7 @@
 	  _createClass(HospitalStudentList, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      this.getTakenDepartmentProblems();
+	      // this.getTakenDepartmentProblems();
 	    }
 	  }, {
 	    key: 'onSelectLevelChange',

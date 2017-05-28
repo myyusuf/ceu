@@ -48,6 +48,7 @@
   padding: 20px;
   border-right: 1px solid #F1F2F3;
   background-color: white;
+  overflow: scroll;
 }
 
 .hospital .content .center {

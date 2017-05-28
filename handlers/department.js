@@ -21,7 +21,10 @@ exports.find = function findDepartment(request, reply) {
       tingkat = ? `;
 
   db.query(query, [kodeLike, namaLike, level], (err, rows) => {
-    if (err) reply('Error while doing operation.').code(500);
+    if (err) {
+      reply('Error while doing operation.').code(500);
+      return;
+    }
     reply(rows);
   });
 };
