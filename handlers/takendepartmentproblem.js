@@ -1,3 +1,5 @@
+"use strict"
+
 exports.find = function findTakenDepartmentProblem(request, reply) {
   const db = this.db;
 

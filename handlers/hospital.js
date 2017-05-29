@@ -1,3 +1,5 @@
+"use strict"
+
 exports.find = function findHospital(request, reply) {
   const db = this.db;
 

@@ -1,3 +1,5 @@
+"use strict"
+
 const flow = require('nimble');
 const moment = require('moment');
 
