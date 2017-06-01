@@ -6,7 +6,7 @@ exports.find = function findHospital(request, reply) {
   const searchText = request.query.searchText || '';
   const namaLike = `%${searchText}%`;
   const kodeLike = `%${searchText}%`;
-  const tipe = request.query.tipe;
+  const hospitalTypes = request.query['hospitalTypes[]'] || [];
 
   const query = `
     SELECT
@@ -20,10 +20,11 @@ exports.find = function findHospital(request, reply) {
         nama LIKE ?
       )
       AND
-      tipe = ? `;
+      tipe IN (?) `;
 
-  db.query(query, [kodeLike, namaLike, tipe], (err, rows) => {
+  db.query(query, [kodeLike, namaLike, hospitalTypes], (err, rows) => {
     if (err) {
+      console.log(err);
       reply('Error while doing operation.').code(500);
       return;
     }
