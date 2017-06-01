@@ -1,4 +1,4 @@
-"use strict"
+'use strict'
 
 exports.find = function findHospital(request, reply) {
   const db = this.db;
@@ -69,11 +69,13 @@ exports.update = function updateHospital(request, reply) {
     `UPDATE
       tb_rumah_sakit
     SET
-      nama = ?
+      nama = ?,
+      tipe = ?
     WHERE
       kode = ?`,
     [
       hospital.nama,
+      hospital.tipe,
       kode,
     ], (err, result) => {
       if (err) {
