@@ -89871,7 +89871,8 @@
 
 	    _this.state = {
 	      searchText: '',
-	      hospitalTypes: ['1']
+	      hospitalTypes: ['1'],
+	      selectedHospital: null
 	    };
 
 	    _this.onSearchTextChange = _this.onSearchTextChange.bind(_this);
@@ -89919,6 +89920,25 @@
 	          hospitalType.type
 	        ));
 	      });
+
+	      var hospitalDepartmentList = _react2.default.createElement(
+	        'div',
+	        { className: 'empty-hospital-department' },
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(
+	            'span',
+	            null,
+	            'Pilih Rumah Sakit'
+	          ),
+	          _react2.default.createElement('img', { src: 'assets/images/icons/about.png', alt: 'Info' })
+	        )
+	      );
+
+	      if (this.state.selectedHospital !== null) {
+	        hospitalDepartmentList = _react2.default.createElement(_HospitalDepartmentList2.default, null);
+	      }
 
 	      return _react2.default.createElement(
 	        'div',
@@ -89982,11 +90002,6 @@
 	              _react2.default.createElement(
 	                'li',
 	                { className: 'the-li' },
-	                _react2.default.createElement(_pagination2.default, { simple: true, defaultCurrent: 1, total: 50 })
-	              ),
-	              _react2.default.createElement(
-	                'li',
-	                { className: 'the-li' },
 	                _react2.default.createElement(
 	                  _button2.default,
 	                  {
@@ -90012,7 +90027,7 @@
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'center' },
-	            _react2.default.createElement(_HospitalDepartmentList2.default, null)
+	            hospitalDepartmentList
 	          ),
 	          _react2.default.createElement(
 	            'div',
@@ -90108,6 +90123,7 @@
 	      updateHospitalFormVisible: false,
 	      hospitalToUpdate: {},
 	      hospitalToDelete: {},
+	      loading: false,
 	      columns: [{
 	        title: 'Nama',
 	        dataIndex: 'nama',
@@ -90366,6 +90382,7 @@
 	          pagination: false,
 	          rowKey: 'kode',
 	          rowSelection: rowSelection,
+	          loading: this.state.loading,
 	          columns: this.state.columns,
 	          dataSource: this.state.hospitals,
 	          scroll: { y: 400 }
